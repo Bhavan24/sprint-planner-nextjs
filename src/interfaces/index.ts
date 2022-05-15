@@ -30,6 +30,6 @@ export interface HeaderProps {
     avatar: AvatarProps;
 }
 
-export interface CookieProps {
+export interface IndexProps {
     cookies?: string;
 }

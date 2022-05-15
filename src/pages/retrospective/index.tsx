@@ -1,13 +1,12 @@
-import { CookieProps } from '../../interfaces';
+import { RETROSPECTIVE_PAGE_NAME } from '../../constants';
 import { DashboardLayout } from '../../layouts/dashboard';
-import { routes } from '../../routes';
 import { Chakra } from '../../theme/Chakra';
 
-const current_page_name = routes[1].name;
-
-const Retrospective = ({ cookies }: CookieProps) => (
-    <Chakra cookies={cookies}>
-        <DashboardLayout title={current_page_name}>{current_page_name}</DashboardLayout>
+const Retrospective = () => (
+    <Chakra>
+        <DashboardLayout title={RETROSPECTIVE_PAGE_NAME}>
+            {RETROSPECTIVE_PAGE_NAME}
+        </DashboardLayout>
     </Chakra>
 );
 

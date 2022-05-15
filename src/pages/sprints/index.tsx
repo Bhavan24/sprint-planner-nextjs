@@ -1,6 +1,5 @@
-import { CookieProps } from '../../interfaces';
+import { SPRINTS_PAGE_NAME } from '../../constants';
 import { DashboardLayout } from '../../layouts/dashboard';
-import { routes } from '../../routes';
 import { Chakra } from '../../theme/Chakra';
 
 /*
@@ -36,11 +35,9 @@ export default PropertiesPage;
 // export { getServerSideProps } from '../../theme/Chakra';
 */
 
-const current_page_name = routes[0].name;
-
-const Sprints = ({ cookies }: CookieProps) => (
-    <Chakra cookies={cookies}>
-        <DashboardLayout title={current_page_name}>{current_page_name}</DashboardLayout>
+const Sprints = () => (
+    <Chakra>
+        <DashboardLayout title={SPRINTS_PAGE_NAME}>{SPRINTS_PAGE_NAME}</DashboardLayout>
     </Chakra>
 );
 

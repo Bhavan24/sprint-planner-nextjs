@@ -13,8 +13,8 @@ export const ContainerStyle = {
 
 export const DashboardLayout = ({ children, title = APP_NAME }: DashboardLayoutProps) => {
     const avatar = {
-        name: 'dsf',
-        src: 'dsf',
+        name: 'Bhavan',
+        src: '/static/agile.png',
     };
 
     return (

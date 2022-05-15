@@ -11,7 +11,7 @@ import { HeaderProps, IconPropsExtended } from '../../interfaces';
 import { routes } from '../../routes';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 
-export const Logo = (props: IconPropsExtended) => {
+const Logo = (props: IconPropsExtended) => {
     return (
         <img
             src="/static/agile.png"
@@ -39,7 +39,7 @@ export const Header = (props: HeaderProps) => {
                                 }}
                             >
                                 <NextLink href="/" passHref>
-                                    <>
+                                    <Button variant="ghost">
                                         <Logo
                                             style={{ margin: '0 10px' }}
                                             size={50}
@@ -48,7 +48,7 @@ export const Header = (props: HeaderProps) => {
                                             mr={8}
                                         />
                                         <Heading size="lg">Sprint Planner</Heading>
-                                    </>
+                                    </Button>
                                 </NextLink>
                             </div>
                             {routes.map(route => (
