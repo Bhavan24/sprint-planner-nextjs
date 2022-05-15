@@ -1,3 +1,5 @@
+export default {};
+/*
 import { Box, Flex, Button, Grid, Heading, Badge, Image, Text } from '@chakra-ui/react';
 import { Layout } from '../../components/Layout';
 import { properties } from '../../utils/sample-data';
@@ -61,3 +63,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export default PropertyPage;
+*/

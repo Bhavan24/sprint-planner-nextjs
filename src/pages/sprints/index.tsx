@@ -1,3 +1,5 @@
+export default {};
+/*
 import { Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import { Layout } from '../../components/Layout';
 import { properties } from '../../utils/sample-data';
@@ -28,3 +30,4 @@ const PropertiesPage = ({ cookies }: PropertiesProps) => (
 
 export default PropertiesPage;
 // export { getServerSideProps } from '../../theme/Chakra';
+*/
