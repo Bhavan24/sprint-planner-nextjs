@@ -1,13 +1,3 @@
-# TypeScript Next.js Chakra example
-
-This is a really simple project that shows the usage of Next.js with TypeScript.
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript)
-
 ## How to use it?
 
 ### Using `create-next-app`
@@ -42,10 +32,6 @@ yarn
 yarn dev
 ```
 
-Deploy it to the cloud with
-[Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example)
-([Documentation](https://nextjs.org/docs/deployment)).
-
 ## Notes
 
 This example shows how to integrate the TypeScript type system into Next.js.
@@ -73,3 +59,26 @@ Next.js' modules straight away.
 A `type-check` script is also added to `package.json`, which runs TypeScript's
 `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include
 this, for example, in your `test` scripts.
+
+## Firebase
+
+`yarn add firebase firebase-tools`
+
+`npm install -g firebase-tools`
+
+`firebase login`
+
+`firebase init`
+
+`firebase deploy`
+
+## Deploy to server
+
+### `yarn build`
+
+Builds the app for production to the `build` folder.
+Make sure you have correct configuration in .env file
+
+### `firebase target:apply hosting sprint-planner-dev`
+
+### `firebase deploy --only hosting:sprint-planner-dev`
