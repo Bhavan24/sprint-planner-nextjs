@@ -11,7 +11,7 @@ import { HeaderProps, IconPropsExtended } from '../../interfaces';
 import { routes } from '../../routes';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 
-const Logo = (props: IconPropsExtended) => {
+export const Logo = (props: IconPropsExtended) => {
     return (
         <img
             src="/static/agile.png"

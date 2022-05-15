@@ -1,5 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import Head from 'next/head';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/config';
 import { Header } from '../../components/header';
 import { APP_NAME } from '../../constants';
 import { DashboardLayoutProps } from '../../interfaces';
@@ -12,9 +14,11 @@ export const ContainerStyle = {
 };
 
 export const DashboardLayout = ({ children, title = APP_NAME }: DashboardLayoutProps) => {
+    const [user] = useAuthState(auth);
+
     const avatar = {
-        name: 'Bhavan',
-        src: '/static/agile.png',
+        name: user?.displayName?.toString() || '',
+        src: user?.photoURL?.toString() || '',
     };
 
     return (
