@@ -30,16 +30,16 @@ const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => (
-    <Stack sx={{ maxWidth: 345, my: 2, mx: 2 }} spacing={8} direction="row">
-        <Box p={5} shadow="md" borderWidth="1px">
-            <Text fontSize="md">{content}</Text>
-        </Box>
-        <Box>
+    <Box p={4} maxWidth="inherit" borderWidth={1} margin={2}>
+        <Text fontSize="md" letterSpacing="inherit" maxWidth="inherit">
+            {content}
+        </Text>
+        <Flex justifyContent="flex-end" mt={2}>
             <IconButton aria-label="delete" onClick={onDelete}>
                 <DeleteIcon />
             </IconButton>
-        </Box>
-    </Stack>
+        </Flex>
+    </Box>
 );
 
 const FormActionButtons: React.FC<{
@@ -166,6 +166,9 @@ const RetrospectiveComponent = () => {
             </Box>
             <Grid gap={1} templateColumns="repeat(3, 1fr)">
                 <GridItem w="100%">
+                    <Text fontSize="lg" my={2}>
+                        What do you like about your agile practice?
+                    </Text>
                     <Textarea
                         width={'100%'}
                         placeholder={'👌 Went well'}
@@ -175,6 +178,7 @@ const RetrospectiveComponent = () => {
                         name="went_well"
                         value={formValues.went_well}
                         onChange={handleChange}
+                        maxWidth="initial"
                     />
                     {formValues.went_well && (
                         <FormActionButtons
@@ -197,8 +201,26 @@ const RetrospectiveComponent = () => {
                             }}
                         />
                     )}
+                    {data.went_well.map((went_well_item: string, index: number) => (
+                        <DetailedCard
+                            key={index}
+                            content={went_well_item}
+                            onDelete={() => {
+                                var newArray = [...data.went_well];
+                                newArray.splice(index, 1);
+                                setData({
+                                    ...data,
+                                    went_well: newArray,
+                                });
+                                saveItems(WENT_WELL_ITEMS, newArray);
+                            }}
+                        />
+                    ))}
                 </GridItem>
                 <GridItem w="100%">
+                    <Text fontSize="lg" my={2}>
+                        What do want to improve about your agile practice?
+                    </Text>
                     <Textarea
                         width={'100%'}
                         placeholder={'📈 To improve'}
@@ -208,6 +230,7 @@ const RetrospectiveComponent = () => {
                         name="to_improve"
                         value={formValues.to_improve}
                         onChange={handleChange}
+                        maxWidth="initial"
                     />
                     {formValues.to_improve && (
                         <FormActionButtons
@@ -230,8 +253,26 @@ const RetrospectiveComponent = () => {
                             }}
                         />
                     )}
+                    {data.to_improve.map((to_improve_item: string, index: number) => (
+                        <DetailedCard
+                            key={index}
+                            content={to_improve_item}
+                            onDelete={() => {
+                                const newArray = [...data.to_improve];
+                                newArray.splice(index, 1);
+                                setData({
+                                    ...data,
+                                    to_improve: newArray,
+                                });
+                                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                            }}
+                        />
+                    ))}
                 </GridItem>
                 <GridItem w="100%">
+                    <Text fontSize="lg" my={2}>
+                        What would your agile practice look like?
+                    </Text>
                     <Textarea
                         width={'100%'}
                         placeholder={'📍 Action items'}
@@ -241,6 +282,7 @@ const RetrospectiveComponent = () => {
                         name="action_item"
                         value={formValues.action_item}
                         onChange={handleChange}
+                        maxWidth="initial"
                     />
                     {formValues.action_item && (
                         <FormActionButtons
@@ -263,44 +305,6 @@ const RetrospectiveComponent = () => {
                             }}
                         />
                     )}
-                </GridItem>
-            </Grid>
-            <Grid gap={1} sx={{ mt: 2 }} templateColumns="repeat(3, 1fr)">
-                <GridItem w="100%">
-                    {data.went_well.map((went_well_item: string, index: number) => (
-                        <DetailedCard
-                            key={index}
-                            content={went_well_item}
-                            onDelete={() => {
-                                var newArray = [...data.went_well];
-                                newArray.splice(index, 1);
-                                setData({
-                                    ...data,
-                                    went_well: newArray,
-                                });
-                                saveItems(WENT_WELL_ITEMS, newArray);
-                            }}
-                        />
-                    ))}
-                </GridItem>
-                <GridItem w="100%">
-                    {data.to_improve.map((to_improve_item: string, index: number) => (
-                        <DetailedCard
-                            key={index}
-                            content={to_improve_item}
-                            onDelete={() => {
-                                const newArray = [...data.to_improve];
-                                newArray.splice(index, 1);
-                                setData({
-                                    ...data,
-                                    to_improve: newArray,
-                                });
-                                saveItems(TO_IMRPOVE_ITEMS, newArray);
-                            }}
-                        />
-                    ))}
-                </GridItem>
-                <GridItem w="100%">
                     {data.action_items.map((action_item: string, index: number) => (
                         <DetailedCard
                             key={index}
