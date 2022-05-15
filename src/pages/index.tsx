@@ -1,5 +1,5 @@
 import { Box, Code, Text, Link, VStack, Grid } from '@chakra-ui/react';
-import { Chakra } from '../Chakra';
+import { Chakra } from '../theme/Chakra';
 import { Layout } from '../components/Layout';
 import { Logo } from '../components/Logo';
 import { NextChakraLink } from '../components/NextChakraLink';
@@ -41,4 +41,4 @@ const IndexPage = ({ cookies }: IndexProps) => (
 );
 
 export default IndexPage;
-export { getServerSideProps } from '../Chakra';
+export { getServerSideProps } from '../theme/Chakra';

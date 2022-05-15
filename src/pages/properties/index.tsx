@@ -3,7 +3,7 @@ import { Layout } from '../../components/Layout';
 import { properties } from '../../utils/sample-data';
 import { PropertySummary } from '../../components/PropertySummary';
 import { NextChakraLink } from '../../components/NextChakraLink';
-import { Chakra } from '../../Chakra';
+import { Chakra } from '../../theme/Chakra';
 
 interface PropertiesProps {
     cookies?: string;
@@ -27,4 +27,4 @@ const PropertiesPage = ({ cookies }: PropertiesProps) => (
 );
 
 export default PropertiesPage;
-export { getServerSideProps } from '../../Chakra';
+export { getServerSideProps } from '../../theme/Chakra';

@@ -3,7 +3,7 @@ import { Layout } from '../../components/Layout';
 import { properties } from '../../utils/sample-data';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Property } from '../../interfaces/Property';
-import { Chakra } from '../../Chakra';
+import { Chakra } from '../../theme/Chakra';
 
 const PropertyPage = ({ item }: { item: Property }) => (
     <Chakra>
@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         // By returning { props: item }, the StaticPropsDetail component
         // will receive `item` as a prop at build time
         return { props: { item } };
-    } catch (err) {
+    } catch (err: any) {
         return { props: { errors: err.message } };
     }
 };

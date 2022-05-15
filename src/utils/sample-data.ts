@@ -40,17 +40,17 @@ const additionalValues = [
 const generateProperty = () => {
     const overrides = faker.helpers.randomize(additionalValues);
     return {
-        id: faker.random.uuid(),
-        isNew: faker.random.boolean(),
+        id: faker.datatype.uuid(),
+        isNew: faker.datatype.boolean(),
         imageUrl: overrides.img,
         //  empty - image adds no value for the user
         imageAlt: '',
-        beds: faker.random.number({ min: 1, max: 6 }),
-        baths: faker.random.number({ min: 1, max: 3 }),
+        beds: faker.datatype.number({ min: 1, max: 6 }),
+        baths: faker.datatype.number({ min: 1, max: 3 }),
         title: overrides.title,
         formattedPrice: faker.commerce.price(1000, 5000, 2, '£'),
-        reviewCount: faker.random.number(100),
-        rating: faker.random.number({ min: 1, max: 5, precision: 2 }),
+        reviewCount: faker.datatype.number(100),
+        rating: faker.datatype.number({ min: 1, max: 5, precision: 2 }),
         description: faker.lorem.paragraphs(2, '\n\n'),
     };
 };
