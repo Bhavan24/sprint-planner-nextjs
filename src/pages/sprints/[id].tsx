@@ -1,15 +1,14 @@
-export default {};
-/*
-import { Box, Flex, Button, Grid, Heading, Badge, Image, Text } from '@chakra-ui/react';
-import { Layout } from '../../components/Layout';
-import { properties } from '../../utils/sample-data';
-import { GetStaticProps, GetStaticPaths } from 'next';
-import { Property } from '../../interfaces/Property';
+import { Badge, Box, Button, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { APP_NAME } from '../../constants';
+import { SprintDetailsProps } from '../../interfaces';
+import { DashboardLayout } from '../../layouts/dashboard';
 import { Chakra } from '../../theme/Chakra';
+import { properties } from '../../utils/sample-data';
 
-const PropertyPage = ({ item }: { item: Property }) => (
+const SprintDetailsPage = ({ item }: { item: SprintDetailsProps }) => (
     <Chakra>
-        <Layout title={`Next.js + TypeScript | Viewing ${item.title}`}>
+        <DashboardLayout title={`Sprint: ${item.title} | ${APP_NAME}`}>
             <Grid templateColumns={['1fr', '1fr', '2fr 1fr']} gap={[0, 2, 10]}>
                 <Box>
                     <Heading mb={2}>{item.title}</Heading>
@@ -19,14 +18,25 @@ const PropertyPage = ({ item }: { item: Property }) => (
                                 New
                             </Badge>
                         )}
-                        <Box mb={6} fontWeight="semibold" letterSpacing="wide" fontSize="xs" textTransform="uppercase">
+                        <Box
+                            mb={6}
+                            fontWeight="semibold"
+                            letterSpacing="wide"
+                            fontSize="xs"
+                            textTransform="uppercase"
+                        >
                             {item.beds} beds &bull; {item.baths} baths
                         </Box>
                     </Flex>
                     <Image src={item.imageUrl} alt={item.imageAlt} borderRadius="md" />
                 </Box>
                 <Box>
-                    <Flex pt={[2, 2, 4]} pb={[4, 4, 12]} justifyContent="space-between" alignItems="center">
+                    <Flex
+                        pt={[2, 2, 4]}
+                        pb={[4, 4, 12]}
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
                         <Heading>{item.formattedPrice}</Heading>
                         <Button size="lg" colorScheme="purple">
                             Book now
@@ -35,7 +45,7 @@ const PropertyPage = ({ item }: { item: Property }) => (
                     <Text whiteSpace="pre-line">{item.description}</Text>
                 </Box>
             </Grid>
-        </Layout>
+        </DashboardLayout>
     </Chakra>
 );
 
@@ -53,14 +63,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     try {
         const id = params?.id;
-        const item = properties.find(data => data.id === id);
+        const sprint = properties.find(data => data.id === id);
         // By returning { props: item }, the StaticPropsDetail component
         // will receive `item` as a prop at build time
-        return { props: { item } };
+        return { props: { sprint } };
     } catch (err: any) {
         return { props: { errors: err.message } };
     }
 };
 
-export default PropertyPage;
-*/
+export default SprintDetailsPage;

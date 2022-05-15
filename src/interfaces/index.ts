@@ -33,3 +33,17 @@ export interface HeaderProps {
 export interface IndexProps {
     cookies?: string;
 }
+
+export interface SprintDetailsProps {
+    id: string;
+    isNew: boolean;
+    imageUrl: string;
+    imageAlt: string;
+    beds: number;
+    baths: number;
+    title: string;
+    formattedPrice: string;
+    reviewCount: number;
+    rating: number;
+    description: string;
+}
