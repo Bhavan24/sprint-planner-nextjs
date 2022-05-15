@@ -10,11 +10,10 @@ interface IndexProps {
 
 const IndexPage = ({ cookies }: IndexProps) => (
     <Chakra cookies={cookies}>
-        <Layout title="Next.js + TypeScript example">
+        <Layout title="Sprint Planner">
             <Box textAlign="center" fontSize="xl">
                 <Grid minH="100vh" p={3}>
                     <VStack spacing={8}>
-                        <Logo h="40vmin" pointerEvents="none" />
                         <Text>
                             Edit <Code fontSize="xl">pages/index.tsx</Code> and save to reload.
                             <br />
