@@ -1,12 +1,9 @@
-import { Box, Code, Text, Link, VStack, Grid } from '@chakra-ui/react';
-import { Chakra } from '../theme/Chakra';
+import { Box, Grid, VStack } from '@chakra-ui/react';
+import { CookieProps } from '../interfaces';
 import { DashboardLayout } from '../layouts/dashboard';
+import { Chakra } from '../theme/Chakra';
 
-interface IndexProps {
-    cookies?: string;
-}
-
-const IndexPage = ({ cookies }: IndexProps) => (
+const IndexPage = ({ cookies }: CookieProps) => (
     <Chakra cookies={cookies}>
         <DashboardLayout title="Sprint Planner">
             <Box textAlign="center" fontSize="xl">
@@ -19,4 +16,3 @@ const IndexPage = ({ cookies }: IndexProps) => (
 );
 
 export default IndexPage;
-// export { getServerSideProps } from '../theme/Chakra';

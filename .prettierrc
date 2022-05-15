@@ -2,6 +2,6 @@
     "arrowParens": "avoid",
     "singleQuote": true,
     "formatOnSave": true,
-    "printWidth": 100,
+    "printWidth": 90,
     "tabWidth": 4
 }

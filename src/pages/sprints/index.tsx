@@ -1,4 +1,8 @@
-export default {};
+import { CookieProps } from '../../interfaces';
+import { DashboardLayout } from '../../layouts/dashboard';
+import { routes } from '../../routes';
+import { Chakra } from '../../theme/Chakra';
+
 /*
 import { Heading, Wrap, WrapItem } from '@chakra-ui/react';
 import { Layout } from '../../components/Layout';
@@ -31,3 +35,13 @@ const PropertiesPage = ({ cookies }: PropertiesProps) => (
 export default PropertiesPage;
 // export { getServerSideProps } from '../../theme/Chakra';
 */
+
+const current_page_name = routes[0].name;
+
+const Sprints = ({ cookies }: CookieProps) => (
+    <Chakra cookies={cookies}>
+        <DashboardLayout title={current_page_name}>{current_page_name}</DashboardLayout>
+    </Chakra>
+);
+
+export default Sprints;

@@ -1,8 +1,7 @@
 import { Container } from '@chakra-ui/react';
 import Head from 'next/head';
-import { Header } from '../../components/header';
 import { APP_NAME } from '../../constants';
-import { DashboardLayoutProps } from '../../interfaces';
+import { AuthenticationLayoutProps } from '../../interfaces';
 
 // styles
 export const ContainerStyle = {
@@ -11,12 +10,10 @@ export const ContainerStyle = {
     margin: 0,
 };
 
-export const DashboardLayout = ({ children, title = APP_NAME }: DashboardLayoutProps) => {
-    const avatar = {
-        name: 'dsf',
-        src: 'dsf',
-    };
-
+export const AuthenticationLayout = ({
+    children,
+    title = APP_NAME,
+}: AuthenticationLayoutProps) => {
     return (
         <>
             <Head>
@@ -24,10 +21,7 @@ export const DashboardLayout = ({ children, title = APP_NAME }: DashboardLayoutP
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <Container sx={ContainerStyle}>
-                <Header avatar={avatar} />
-                {children}
-            </Container>
+            <Container sx={ContainerStyle}>{children}</Container>
         </>
     );
 };
