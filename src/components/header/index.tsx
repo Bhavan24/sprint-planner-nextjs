@@ -52,7 +52,7 @@ export const Header = (props: HeaderProps) => {
                                 </NextLink>
                             </div>
                             {routes.map(route => (
-                                <NextLink href={route.path}>
+                                <NextLink key={route.key} href={route.path}>
                                     <Button
                                         rightIcon={route.icon}
                                         colorScheme="teal"

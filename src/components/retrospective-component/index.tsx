@@ -3,17 +3,18 @@ import {
     DeleteIcon,
     DownloadIcon,
     MinusIcon,
-    NotAllowedIcon
+    NotAllowedIcon,
 } from '@chakra-ui/icons';
 import {
     Box,
     Button,
+    Flex,
     Grid,
     GridItem,
     IconButton,
     Stack,
     Text,
-    Textarea
+    Textarea,
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
 
@@ -39,38 +40,22 @@ const DetailedCard: React.FC<{
             </IconButton>
         </Box>
     </Stack>
-    // <Card sx={{ maxWidth: 345, my: 2, mx: 2 }}>
-    //     <CardContent>
-    //         <Typography variant="body2" color="text.secondary">
-    //             {content}
-    //         </Typography>
-    //     </CardContent>
-    //     <CardActions
-    //         sx={{
-    //             justifyContent: 'flex-end',
-    //         }}
-    //     >
-    //         <IconButton aria-label="delete" onClick={onDelete}>
-    //             <DeleteIcon />
-    //         </IconButton>
-    //     </CardActions>
-    // </Card>
 );
 
 const FormActionButtons: React.FC<{
     onAdd: MouseEventHandler;
     onClear: MouseEventHandler;
 }> = ({ onAdd, onClear }) => (
-    <>
-        <Button variant="text" onClick={onAdd} sx={{ mx: 2, color: 'green' }}>
+    <Flex justifyContent="flex-end" my={2}>
+        <Button variant="outline" onClick={onAdd} sx={{ mx: 2, color: 'green.400' }}>
             <span style={{ marginRight: '10px' }}>Add</span>
             <AddIcon />
         </Button>
-        <Button variant="text" onClick={onClear} sx={{ mx: 2, color: 'red' }}>
+        <Button variant="outline" onClick={onClear} sx={{ mx: 2, color: 'red.600' }}>
             <span style={{ marginRight: '10px' }}>Clear</span>
             <MinusIcon />
         </Button>
-    </>
+    </Flex>
 );
 
 const RetrospectiveComponent = () => {
@@ -161,31 +146,31 @@ const RetrospectiveComponent = () => {
 
     return (
         <>
-            <Grid gap={1}>
-                <GridItem>
-                    <Button
-                        variant="outlined"
-                        sx={{ mx: 2, color: 'blue' }}
-                        onClick={exportItems}
-                    >
-                        <span style={{ marginRight: '10px' }}>Export</span>
-                        <DownloadIcon />
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ mx: 2, color: 'red' }}
-                        onClick={resetItems}
-                    >
-                        <span style={{ marginRight: '10px' }}>Delete All</span>
-                        <NotAllowedIcon />
-                    </Button>
-                </GridItem>
-                <GridItem>
+            <Box w="100%" my={5}>
+                <Button
+                    variant="outline"
+                    sx={{ mx: 2, color: 'purple.400' }}
+                    onClick={exportItems}
+                >
+                    <span style={{ marginRight: '10px' }}>Export</span>
+                    <DownloadIcon />
+                </Button>
+                <Button
+                    variant="outline"
+                    sx={{ mx: 2, color: 'red.500' }}
+                    onClick={resetItems}
+                >
+                    <span style={{ marginRight: '10px' }}>Delete All</span>
+                    <NotAllowedIcon />
+                </Button>
+            </Box>
+            <Grid gap={1} templateColumns="repeat(3, 1fr)">
+                <GridItem w="100%">
                     <Textarea
                         width={'100%'}
                         placeholder={'👌 Went well'}
                         margin="normal"
-                        variant="outlined"
+                        variant="filled"
                         rows={5}
                         name="went_well"
                         value={formValues.went_well}
@@ -213,12 +198,12 @@ const RetrospectiveComponent = () => {
                         />
                     )}
                 </GridItem>
-                <GridItem>
+                <GridItem w="100%">
                     <Textarea
                         width={'100%'}
                         placeholder={'📈 To improve'}
                         margin="normal"
-                        variant="outlined"
+                        variant="filled"
                         rows={5}
                         name="to_improve"
                         value={formValues.to_improve}
@@ -246,12 +231,12 @@ const RetrospectiveComponent = () => {
                         />
                     )}
                 </GridItem>
-                <GridItem>
+                <GridItem w="100%">
                     <Textarea
                         width={'100%'}
                         placeholder={'📍 Action items'}
                         margin="normal"
-                        variant="outlined"
+                        variant="filled"
                         rows={5}
                         name="action_item"
                         value={formValues.action_item}
@@ -280,8 +265,8 @@ const RetrospectiveComponent = () => {
                     )}
                 </GridItem>
             </Grid>
-            <Grid gap={1} sx={{ mt: 2 }}>
-                <GridItem>
+            <Grid gap={1} sx={{ mt: 2 }} templateColumns="repeat(3, 1fr)">
+                <GridItem w="100%">
                     {data.went_well.map((went_well_item: string, index: number) => (
                         <DetailedCard
                             key={index}
@@ -298,7 +283,7 @@ const RetrospectiveComponent = () => {
                         />
                     ))}
                 </GridItem>
-                <GridItem>
+                <GridItem w="100%">
                     {data.to_improve.map((to_improve_item: string, index: number) => (
                         <DetailedCard
                             key={index}
@@ -315,7 +300,7 @@ const RetrospectiveComponent = () => {
                         />
                     ))}
                 </GridItem>
-                <GridItem>
+                <GridItem w="100%">
                     {data.action_items.map((action_item: string, index: number) => (
                         <DetailedCard
                             key={index}
