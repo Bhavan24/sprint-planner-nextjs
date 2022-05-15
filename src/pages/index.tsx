@@ -41,4 +41,4 @@ const IndexPage = ({ cookies }: IndexProps) => (
 );
 
 export default IndexPage;
-export { getServerSideProps } from '../theme/Chakra';
+// export { getServerSideProps } from '../theme/Chakra';

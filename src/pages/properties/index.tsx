@@ -27,4 +27,4 @@ const PropertiesPage = ({ cookies }: PropertiesProps) => (
 );
 
 export default PropertiesPage;
-export { getServerSideProps } from '../../theme/Chakra';
+// export { getServerSideProps } from '../../theme/Chakra';

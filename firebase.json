@@ -1,7 +1,7 @@
 {
     "hosting": {
         "site": "sprint-planner-dev",
-        "public": "public",
+        "public": "out",
         "ignore": [
             "firebase.json",
             "**/.*",
