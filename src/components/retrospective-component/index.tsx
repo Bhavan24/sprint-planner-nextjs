@@ -130,7 +130,12 @@ const RetrospectiveComponent = () => {
             localStorage.getItem(ACTION_ITEMS) || JSON.stringify([])
         );
 
-        const file = new Blob([JSON.stringify(result, null, 4)], {
+        var result_str = `Sprint: ${1}\n\n`;
+        result_str += `\nWent well\n -${result.went_well.join('\n -')}\n`;
+        result_str += `\nTo improve\n -${result.to_improve.join('\n -')}\n`;
+        result_str += `\nAction items\n -${result.action_items.join('\n -')}\n`;
+
+        const file = new Blob([result_str], {
             type: 'text/plain',
         });
 
