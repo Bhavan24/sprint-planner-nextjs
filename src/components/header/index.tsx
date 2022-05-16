@@ -4,12 +4,18 @@ import {
     Flex,
     Heading,
     HStack,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Portal,
     useColorModeValue,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { HeaderProps, IconPropsExtended } from '../../interfaces';
 import { routes } from '../../routes';
 import { ColorModeSwitcher } from '../color-mode-switcher';
+import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
 
 export const Logo = (props: IconPropsExtended) => {
     return (
@@ -67,7 +73,26 @@ export const Header = (props: HeaderProps) => {
                     </nav>
                 </Flex>
                 <Flex justifyContent="space-between" alignItems="center">
-                    <Avatar size="sm" name={props.avatar.name} src={props.avatar.src} />
+                    <Menu>
+                        <MenuButton>
+                            <Avatar
+                                size="sm"
+                                name={props.avatar.name}
+                                src={props.avatar.src}
+                            />
+                        </MenuButton>
+                        <Portal>
+                            <MenuList>
+                                <MenuItem icon={<AiFillProfile />}>Profile</MenuItem>
+                                <MenuItem
+                                    icon={<AiOutlineLogin />}
+                                    onClick={props.logOut}
+                                >
+                                    Logout
+                                </MenuItem>
+                            </MenuList>
+                        </Portal>
+                    </Menu>
                     <ColorModeSwitcher justifySelf="flex-end" />
                 </Flex>
             </Flex>

@@ -1,5 +1,5 @@
 import { IconProps } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
 export interface ChakraProps {
     cookies?: string;
@@ -28,6 +28,7 @@ interface AvatarProps {
 
 export interface HeaderProps {
     avatar: AvatarProps;
+    logOut: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface IndexProps {
