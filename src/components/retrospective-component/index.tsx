@@ -14,6 +14,7 @@ import {
     IconButton,
     Text,
     Textarea,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
 
@@ -28,42 +29,49 @@ export const style = {
 const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
-}> = ({ content, onDelete }) => (
-    <Box p={4} maxWidth="inherit" borderWidth={1} margin={2}>
-        <Text
-            fontSize="md"
-            letterSpacing="inherit"
-            maxWidth="inherit"
-            style={{
-                wordBreak: 'break-all',
-                whiteSpace: 'normal',
-            }}
-        >
-            {content}
-        </Text>
-        <Flex justifyContent="flex-end" mt={2}>
-            <IconButton aria-label="delete" onClick={onDelete}>
-                <DeleteIcon />
-            </IconButton>
-        </Flex>
-    </Box>
-);
+}> = ({ content, onDelete }) => {
+    const bg = useColorModeValue('cyan.100', 'cyan.600');
+    return (
+        <Box p={4} maxWidth="inherit" borderWidth={1} my={2} borderRadius="lg" bg={bg}>
+            <Text
+                fontSize="md"
+                letterSpacing="inherit"
+                maxWidth="inherit"
+                style={{
+                    wordBreak: 'break-all',
+                    whiteSpace: 'normal',
+                }}
+            >
+                {content}
+            </Text>
+            <Flex justifyContent="flex-end" mt={2}>
+                <IconButton aria-label="delete" onClick={onDelete}>
+                    <DeleteIcon />
+                </IconButton>
+            </Flex>
+        </Box>
+    );
+};
 
 const FormActionButtons: React.FC<{
     onAdd: MouseEventHandler;
     onClear: MouseEventHandler;
-}> = ({ onAdd, onClear }) => (
-    <Flex justifyContent="flex-end" my={2}>
-        <Button variant="outline" onClick={onAdd} sx={{ mx: 2, color: 'green.400' }}>
-            <span style={{ marginRight: '10px' }}>Add</span>
-            <AddIcon />
-        </Button>
-        <Button variant="outline" onClick={onClear} sx={{ mx: 2, color: 'red.600' }}>
-            <span style={{ marginRight: '10px' }}>Clear</span>
-            <MinusIcon />
-        </Button>
-    </Flex>
-);
+}> = ({ onAdd, onClear }) => {
+    const addColor = useColorModeValue('green.400', 'green.400');
+    const clearColor = useColorModeValue('red.600', 'red.400');
+    return (
+        <Flex justifyContent="flex-end">
+            <Button variant="outline" onClick={onAdd} sx={{ mx: 2, color: addColor }}>
+                <span style={{ marginRight: '10px' }}>Add</span>
+                <AddIcon />
+            </Button>
+            <Button variant="outline" onClick={onClear} sx={{ mx: 2, color: clearColor }}>
+                <span style={{ marginRight: '10px' }}>Clear</span>
+                <MinusIcon />
+            </Button>
+        </Flex>
+    );
+};
 
 const RetrospectiveComponent = () => {
     const [formValues, setFormValues] = useState({
@@ -256,12 +264,15 @@ const RetrospectiveComponent = () => {
         }
     };
 
+    const exportbtnColor = useColorModeValue('purple.800', 'purple.600');
+    const deleteBtnColor = useColorModeValue('red.400', 'red.600');
+
     return (
         <>
             <Box w="100%" my={5}>
                 <Button
                     variant="outline"
-                    sx={{ mx: 2, color: 'purple.400' }}
+                    sx={{ mx: 2, color: exportbtnColor }}
                     onClick={exportItems}
                 >
                     <span style={{ marginRight: '10px' }}>Export</span>
@@ -269,7 +280,7 @@ const RetrospectiveComponent = () => {
                 </Button>
                 <Button
                     variant="outline"
-                    sx={{ mx: 2, color: 'red.500' }}
+                    sx={{ mx: 2, color: deleteBtnColor }}
                     onClick={resetItems}
                 >
                     <span style={{ marginRight: '10px' }}>Delete All</span>
@@ -278,109 +289,144 @@ const RetrospectiveComponent = () => {
             </Box>
             <Grid gap={1} templateColumns="repeat(3, 1fr)">
                 <GridItem w="100%">
-                    <Text fontSize="lg" my={2}>
-                        What do you like about your agile practice?
-                    </Text>
-                    <Textarea
-                        width={'100%'}
-                        placeholder={'👌 Went well'}
-                        margin="normal"
-                        variant="filled"
-                        rows={5}
-                        name="went_well"
-                        value={formValues.went_well}
-                        onChange={handleChange}
-                        maxWidth="initial"
-                    />
-                    {formValues.went_well && (
-                        <FormActionButtons
-                            onAdd={() => {
-                                addValue(WENT_WELL_ITEMS);
-                            }}
-                            onClear={() => {
-                                clearValue(WENT_WELL_ITEMS);
-                            }}
+                    <Box
+                        p={4}
+                        maxWidth="inherit"
+                        minHeight="100vh"
+                        borderWidth={1}
+                        my={2}
+                        borderRadius="lg"
+                    >
+                        <Flex alignItems="center" justifyContent="space-between" my={2}>
+                            <Text fontSize="lg" my={2}>
+                                👌 Went well
+                            </Text>
+                            {formValues.went_well && (
+                                <FormActionButtons
+                                    onAdd={() => {
+                                        addValue(WENT_WELL_ITEMS);
+                                    }}
+                                    onClear={() => {
+                                        clearValue(WENT_WELL_ITEMS);
+                                    }}
+                                />
+                            )}
+                        </Flex>
+                        <Textarea
+                            width={'100%'}
+                            placeholder={'What do you like about your agile practice?'}
+                            margin="normal"
+                            variant="filled"
+                            rows={5}
+                            name="went_well"
+                            value={formValues.went_well}
+                            onChange={handleChange}
+                            maxWidth="initial"
                         />
-                    )}
-                    {data.went_well.map((went_well_item: string, index: number) => (
-                        <DetailedCard
-                            key={index}
-                            content={went_well_item}
-                            onDelete={() => {
-                                deleteValue(WENT_WELL_ITEMS, index);
-                            }}
-                        />
-                    ))}
+                        {data.went_well.map((went_well_item: string, index: number) => (
+                            <DetailedCard
+                                key={index}
+                                content={went_well_item}
+                                onDelete={() => {
+                                    deleteValue(WENT_WELL_ITEMS, index);
+                                }}
+                            />
+                        ))}
+                    </Box>
                 </GridItem>
                 <GridItem w="100%">
-                    <Text fontSize="lg" my={2}>
-                        What do want to improve about your agile practice?
-                    </Text>
-                    <Textarea
-                        width={'100%'}
-                        placeholder={'📈 To improve'}
-                        margin="normal"
-                        variant="filled"
-                        rows={5}
-                        name="to_improve"
-                        value={formValues.to_improve}
-                        onChange={handleChange}
-                        maxWidth="initial"
-                    />
-                    {formValues.to_improve && (
-                        <FormActionButtons
-                            onAdd={() => {
-                                addValue(TO_IMRPOVE_ITEMS);
-                            }}
-                            onClear={() => {
-                                clearValue(TO_IMRPOVE_ITEMS);
-                            }}
+                    <Box
+                        p={4}
+                        maxWidth="inherit"
+                        minHeight="100vh"
+                        borderWidth={1}
+                        my={2}
+                        borderRadius="lg"
+                    >
+                        <Flex alignItems="center" justifyContent="space-between" my={2}>
+                            <Text fontSize="lg" my={2}>
+                                📈 To improve
+                            </Text>
+                            {formValues.to_improve && (
+                                <FormActionButtons
+                                    onAdd={() => {
+                                        addValue(TO_IMRPOVE_ITEMS);
+                                    }}
+                                    onClear={() => {
+                                        clearValue(TO_IMRPOVE_ITEMS);
+                                    }}
+                                />
+                            )}
+                        </Flex>
+                        <Textarea
+                            width={'100%'}
+                            placeholder={
+                                'What do want to improve about your agile practice?'
+                            }
+                            margin="normal"
+                            variant="filled"
+                            rows={5}
+                            name="to_improve"
+                            value={formValues.to_improve}
+                            onChange={handleChange}
+                            maxWidth="initial"
                         />
-                    )}
-                    {data.to_improve.map((to_improve_item: string, index: number) => (
-                        <DetailedCard
-                            key={index}
-                            content={to_improve_item}
-                            onDelete={() => {
-                                deleteValue(TO_IMRPOVE_ITEMS, index);
-                            }}
-                        />
-                    ))}
+                        {data.to_improve.map((to_improve_item: string, index: number) => (
+                            <DetailedCard
+                                key={index}
+                                content={to_improve_item}
+                                onDelete={() => {
+                                    deleteValue(TO_IMRPOVE_ITEMS, index);
+                                }}
+                            />
+                        ))}
+                    </Box>
                 </GridItem>
                 <GridItem w="100%">
-                    <Text fontSize="lg" my={2}>
-                        What would your agile practice look like?
-                    </Text>
-                    <Textarea
-                        width={'100%'}
-                        placeholder={'📍 Action items'}
-                        margin="normal"
-                        variant="filled"
-                        rows={5}
-                        name="action_item"
-                        value={formValues.action_item}
-                        onChange={handleChange}
-                        maxWidth="initial"
-                    />
-                    {formValues.action_item && (
-                        <FormActionButtons
-                            onAdd={() => {
-                                addValue(ACTION_ITEMS);
-                            }}
-                            onClear={() => {
-                                clearValue(ACTION_ITEMS);
-                            }}
+                    <Box
+                        p={4}
+                        maxWidth="inherit"
+                        minHeight="100vh"
+                        borderWidth={1}
+                        my={2}
+                        borderRadius="lg"
+                    >
+                        <Flex alignItems="center" justifyContent="space-between" my={2}>
+                            <Text fontSize="lg" my={2}>
+                                📍 Action items
+                            </Text>
+                            {formValues.action_item && (
+                                <FormActionButtons
+                                    onAdd={() => {
+                                        addValue(ACTION_ITEMS);
+                                    }}
+                                    onClear={() => {
+                                        clearValue(ACTION_ITEMS);
+                                    }}
+                                />
+                            )}
+                        </Flex>
+                        <Textarea
+                            width={'100%'}
+                            placeholder={'What would your agile practice look like?'}
+                            margin="normal"
+                            variant="filled"
+                            rows={5}
+                            name="action_item"
+                            value={formValues.action_item}
+                            onChange={handleChange}
+                            maxWidth="initial"
                         />
-                    )}
-                    {data.action_items.map((action_item: string, index: number) => (
-                        <DetailedCard
-                            key={index}
-                            content={action_item}
-                            onDelete={() => {
-                                deleteValue(ACTION_ITEMS, index);
-                            }}
-                        />
-                    ))}
+                        {data.action_items.map((action_item: string, index: number) => (
+                            <DetailedCard
+                                key={index}
+                                content={action_item}
+                                onDelete={() => {
+                                    deleteValue(ACTION_ITEMS, index);
+                                }}
+                            />
+                        ))}
+                    </Box>
                 </GridItem>
             </Grid>
         </>
