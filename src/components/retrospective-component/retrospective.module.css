@@ -1,0 +1,11 @@
+.topBar {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+@media screen and (max-width: 580px) {
+    .topBar {
+        display: flex;
+        flex-direction: column !important;
+    }
+}

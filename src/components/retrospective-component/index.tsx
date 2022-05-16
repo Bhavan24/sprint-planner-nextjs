@@ -1,11 +1,12 @@
 import {
     AddIcon,
+    CheckCircleIcon,
     DeleteIcon,
     DownloadIcon,
     MinusIcon,
     NotAllowedIcon,
     RepeatClockIcon,
-    TimeIcon
+    TimeIcon,
 } from '@chakra-ui/icons';
 import {
     Box,
@@ -19,11 +20,11 @@ import {
     Text,
     Textarea,
     Tooltip,
-    useColorModeValue
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
-
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
+import styles from './retrospective.module.css';
 
 export const style = {
     display: 'flex',
@@ -307,7 +308,13 @@ const RetrospectiveComponent = () => {
 
     return (
         <>
-            <Flex w="100%" my={5} justifyContent="space-between">
+            <Flex
+                w="100%"
+                my={5}
+                justifyContent="space-between"
+                gap={2}
+                className={styles.topBar}
+            >
                 <Flex gap={2}>
                     <Tag
                         size="lg"
@@ -333,13 +340,17 @@ const RetrospectiveComponent = () => {
                         </Tooltip>
                     </Button>
                 </Flex>
-                <Flex alignItems="center">
-                    <Text>SPRINT: 1</Text>
-                </Flex>
                 <Flex>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: exportbtnColor }}
+                        sx={{ mx: 2, color: 'green.500', w: '10em' }}
+                        rightIcon={<CheckCircleIcon />}
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        variant="outline"
+                        sx={{ mx: 2, color: exportbtnColor, w: '10em' }}
                         onClick={exportItems}
                         rightIcon={<DownloadIcon />}
                     >
@@ -347,7 +358,7 @@ const RetrospectiveComponent = () => {
                     </Button>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: deleteBtnColor }}
+                        sx={{ mx: 2, color: deleteBtnColor, w: '10em' }}
                         onClick={resetItems}
                         rightIcon={<NotAllowedIcon />}
                     >
