@@ -16,6 +16,7 @@ import { HeaderProps, IconPropsExtended } from '../../interfaces';
 import { routes } from '../../routes';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
+import styles from './header.module.css';
 
 export const Logo = (props: IconPropsExtended) => {
     return (
@@ -36,14 +37,8 @@ export const Header = (props: HeaderProps) => {
             <Flex px={5} py={5} justifyContent="space-between" alignItems="center" mb={4}>
                 <Flex justifyContent="space-between" alignItems="center">
                     <nav>
-                        <HStack spacing={12}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
+                        <HStack className={styles.navStack} spacing={12} gap={5}>
+                            <Flex justifyContent="center" alignItems="center">
                                 <NextLink href="/" passHref>
                                     <Button variant="ghost">
                                         <Logo
@@ -56,7 +51,7 @@ export const Header = (props: HeaderProps) => {
                                         <Heading size="lg">Sprint Planner</Heading>
                                     </Button>
                                 </NextLink>
-                            </div>
+                            </Flex>
                             {routes.map(route => (
                                 <NextLink key={route.key} href={route.path}>
                                     <Button

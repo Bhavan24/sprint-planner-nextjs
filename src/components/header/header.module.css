@@ -1,0 +1,11 @@
+.navStack {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+@media screen and (max-width: 580px) {
+    .navStack {
+        display: flex;
+        flex-direction: column !important;
+    }
+}

@@ -30,7 +30,15 @@ const DetailedCard: React.FC<{
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => (
     <Box p={4} maxWidth="inherit" borderWidth={1} margin={2}>
-        <Text fontSize="md" letterSpacing="inherit" maxWidth="inherit">
+        <Text
+            fontSize="md"
+            letterSpacing="inherit"
+            maxWidth="inherit"
+            style={{
+                wordBreak: 'break-all',
+                whiteSpace: 'normal',
+            }}
+        >
             {content}
         </Text>
         <Flex justifyContent="flex-end" mt={2}>
