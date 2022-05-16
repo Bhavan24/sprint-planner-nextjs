@@ -5,7 +5,7 @@ import {
     MinusIcon,
     NotAllowedIcon,
     RepeatClockIcon,
-    TimeIcon,
+    TimeIcon
 } from '@chakra-ui/icons';
 import {
     Box,
@@ -19,7 +19,7 @@ import {
     Text,
     Textarea,
     Tooltip,
-    useColorModeValue,
+    useColorModeValue
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
 
@@ -35,7 +35,7 @@ const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => {
-    const bg = useColorModeValue('cyan.100', 'cyan.600');
+    const bg = useColorModeValue('cyan.100', 'cyan.700');
     return (
         <Box p={4} maxWidth="inherit" borderWidth={1} my={2} borderRadius="lg" bg={bg}>
             <Text
@@ -96,8 +96,8 @@ const RetrospectiveComponent = () => {
         action_items: [],
     });
 
-    const exportbtnColor = useColorModeValue('purple.800', 'purple.600');
-    const deleteBtnColor = useColorModeValue('red.400', 'red.600');
+    const exportbtnColor = useColorModeValue('purple.600', 'purple.400');
+    const deleteBtnColor = useColorModeValue('red.600', 'red.400');
 
     const handleChange = (event: any) => {
         const name = event.target.name;
@@ -320,7 +320,7 @@ const RetrospectiveComponent = () => {
                     </Tag>
                     <Button
                         leftIcon={<TimeIcon />}
-                        colorScheme="teal"
+                        colorScheme="blue"
                         variant="solid"
                         width="10em"
                         onClick={handleTimer}
@@ -351,7 +351,7 @@ const RetrospectiveComponent = () => {
                         onClick={resetItems}
                         rightIcon={<NotAllowedIcon />}
                     >
-                        Delete All
+                        Clear All
                     </Button>
                 </Flex>
             </Flex>
