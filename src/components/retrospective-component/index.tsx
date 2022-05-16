@@ -18,6 +18,7 @@ import {
     TagLabel,
     Text,
     Textarea,
+    Tooltip,
     useColorModeValue,
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
@@ -310,7 +311,7 @@ const RetrospectiveComponent = () => {
                 <Flex gap={2}>
                     <Tag
                         size="lg"
-                        colorScheme="green"
+                        colorScheme={seconds > 540 ? 'red' : 'green'}
                         borderRadius="full"
                         width="6em"
                         justifyContent="center"
@@ -327,7 +328,9 @@ const RetrospectiveComponent = () => {
                         {isTimerActive ? 'Stop Timer' : 'Start Timer'}
                     </Button>
                     <Button onClick={resetTimer}>
-                        <RepeatClockIcon />
+                        <Tooltip label="Reset Timer" fontSize="md">
+                            <RepeatClockIcon />
+                        </Tooltip>
                     </Button>
                 </Flex>
                 <Flex alignItems="center">
