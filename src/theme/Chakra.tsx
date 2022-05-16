@@ -4,7 +4,6 @@ import {
     localStorageManager,
 } from '@chakra-ui/react';
 import { GetServerSidePropsContext } from 'next';
-import { ReactNode } from 'react';
 import { ChakraProps } from '../interfaces';
 
 export const Chakra = ({ children, cookies }: ChakraProps) => {

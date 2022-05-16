@@ -4,6 +4,8 @@ import {
     DownloadIcon,
     MinusIcon,
     NotAllowedIcon,
+    RepeatClockIcon,
+    TimeIcon,
 } from '@chakra-ui/icons';
 import {
     Box,
@@ -12,6 +14,8 @@ import {
     Grid,
     GridItem,
     IconButton,
+    Tag,
+    TagLabel,
     Text,
     Textarea,
     useColorModeValue,
@@ -74,12 +78,13 @@ const FormActionButtons: React.FC<{
 };
 
 const RetrospectiveComponent = () => {
+    const [seconds, setSeconds] = useState(0);
+    const [isTimerActive, setTimerActive] = useState(false);
     const [formValues, setFormValues] = useState({
         went_well: '',
         to_improve: '',
         action_item: '',
     });
-
     const [data, setData] = useState<{
         went_well: string[];
         to_improve: string[];
@@ -89,6 +94,9 @@ const RetrospectiveComponent = () => {
         to_improve: [],
         action_items: [],
     });
+
+    const exportbtnColor = useColorModeValue('purple.800', 'purple.600');
+    const deleteBtnColor = useColorModeValue('red.400', 'red.600');
 
     const handleChange = (event: any) => {
         const name = event.target.name;
@@ -145,6 +153,33 @@ const RetrospectiveComponent = () => {
         document.body.appendChild(element);
         element.click();
     };
+
+    const handleTimer = () => {
+        setTimerActive(!isTimerActive);
+    };
+
+    const resetTimer = () => {
+        setSeconds(0);
+    };
+
+    const getTime = (seconds: number) => {
+        var date = new Date(0);
+        date.setSeconds(seconds);
+        var timeString = date.toISOString().substr(11, 8);
+        return timeString;
+    };
+
+    useEffect(() => {
+        let interval: any = null;
+        if (isTimerActive) {
+            interval = setInterval(() => {
+                setSeconds(seconds => seconds + 1);
+            }, 1000);
+        } else if (!isTimerActive && seconds !== 0) {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [isTimerActive, seconds]);
 
     useEffect(() => {
         const went_well: string[] = JSON.parse(
@@ -269,29 +304,54 @@ const RetrospectiveComponent = () => {
         }
     };
 
-    const exportbtnColor = useColorModeValue('purple.800', 'purple.600');
-    const deleteBtnColor = useColorModeValue('red.400', 'red.600');
-
     return (
         <>
-            <Box w="100%" my={5}>
-                <Button
-                    variant="outline"
-                    sx={{ mx: 2, color: exportbtnColor }}
-                    onClick={exportItems}
-                >
-                    <span style={{ marginRight: '10px' }}>Export</span>
-                    <DownloadIcon />
-                </Button>
-                <Button
-                    variant="outline"
-                    sx={{ mx: 2, color: deleteBtnColor }}
-                    onClick={resetItems}
-                >
-                    <span style={{ marginRight: '10px' }}>Delete All</span>
-                    <NotAllowedIcon />
-                </Button>
-            </Box>
+            <Flex w="100%" my={5} justifyContent="space-between">
+                <Flex gap={2}>
+                    <Tag
+                        size="lg"
+                        colorScheme="green"
+                        borderRadius="full"
+                        width="6em"
+                        justifyContent="center"
+                    >
+                        <TagLabel>{getTime(seconds)}</TagLabel>
+                    </Tag>
+                    <Button
+                        leftIcon={<TimeIcon />}
+                        colorScheme="teal"
+                        variant="solid"
+                        width="10em"
+                        onClick={handleTimer}
+                    >
+                        {isTimerActive ? 'Stop Timer' : 'Start Timer'}
+                    </Button>
+                    <Button onClick={resetTimer}>
+                        <RepeatClockIcon />
+                    </Button>
+                </Flex>
+                <Flex alignItems="center">
+                    <Text>SPRINT: 1</Text>
+                </Flex>
+                <Flex>
+                    <Button
+                        variant="outline"
+                        sx={{ mx: 2, color: exportbtnColor }}
+                        onClick={exportItems}
+                        rightIcon={<DownloadIcon />}
+                    >
+                        Export
+                    </Button>
+                    <Button
+                        variant="outline"
+                        sx={{ mx: 2, color: deleteBtnColor }}
+                        onClick={resetItems}
+                        rightIcon={<NotAllowedIcon />}
+                    >
+                        Delete All
+                    </Button>
+                </Flex>
+            </Flex>
             <Grid gap={1} templateColumns="repeat(3, 1fr)">
                 <GridItem w="100%">
                     <Box
