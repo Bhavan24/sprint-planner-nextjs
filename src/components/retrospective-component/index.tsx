@@ -144,7 +144,7 @@ const RetrospectiveComponent = () => {
     }, [data]);
 
     const addValue = (item: string) => {
-        var newArray: string[];
+        var newArray: string[] = [];
         switch (item) {
             case WENT_WELL_ITEMS:
                 newArray = [...data.went_well, formValues.went_well];
@@ -213,6 +213,41 @@ const RetrospectiveComponent = () => {
         }
     };
 
+    const deleteValue = (item: string, index: number) => {
+        var newArray: string[] = [];
+        switch (item) {
+            case WENT_WELL_ITEMS:
+                newArray = [...data.went_well];
+                newArray.splice(index, 1);
+                setData({
+                    ...data,
+                    went_well: newArray,
+                });
+                saveItems(WENT_WELL_ITEMS, newArray);
+                break;
+            case TO_IMRPOVE_ITEMS:
+                newArray = [...data.to_improve];
+                newArray.splice(index, 1);
+                setData({
+                    ...data,
+                    to_improve: newArray,
+                });
+                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                break;
+            case ACTION_ITEMS:
+                newArray = [...data.action_items];
+                newArray.splice(index, 1);
+                setData({
+                    ...data,
+                    action_items: newArray,
+                });
+                saveItems(ACTION_ITEMS, newArray);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <>
             <Box w="100%" my={5}>
@@ -252,25 +287,10 @@ const RetrospectiveComponent = () => {
                     {formValues.went_well && (
                         <FormActionButtons
                             onAdd={() => {
-                                const newArray = [
-                                    ...data.went_well,
-                                    formValues.went_well,
-                                ];
-                                setData({
-                                    ...data,
-                                    went_well: newArray,
-                                });
-                                saveItems(WENT_WELL_ITEMS, newArray);
-                                setFormValues({
-                                    ...formValues,
-                                    went_well: '',
-                                });
+                                addValue(WENT_WELL_ITEMS);
                             }}
                             onClear={() => {
-                                setFormValues({
-                                    ...formValues,
-                                    went_well: '',
-                                });
+                                clearValue(WENT_WELL_ITEMS);
                             }}
                         />
                     )}
@@ -279,13 +299,7 @@ const RetrospectiveComponent = () => {
                             key={index}
                             content={went_well_item}
                             onDelete={() => {
-                                var newArray = [...data.went_well];
-                                newArray.splice(index, 1);
-                                setData({
-                                    ...data,
-                                    went_well: newArray,
-                                });
-                                saveItems(WENT_WELL_ITEMS, newArray);
+                                deleteValue(WENT_WELL_ITEMS, index);
                             }}
                         />
                     ))}
@@ -308,25 +322,10 @@ const RetrospectiveComponent = () => {
                     {formValues.to_improve && (
                         <FormActionButtons
                             onAdd={() => {
-                                const newArray = [
-                                    ...data.to_improve,
-                                    formValues.to_improve,
-                                ];
-                                setData({
-                                    ...data,
-                                    to_improve: newArray,
-                                });
-                                saveItems(TO_IMRPOVE_ITEMS, newArray);
-                                setFormValues({
-                                    ...formValues,
-                                    to_improve: '',
-                                });
+                                addValue(TO_IMRPOVE_ITEMS);
                             }}
                             onClear={() => {
-                                setFormValues({
-                                    ...formValues,
-                                    to_improve: '',
-                                });
+                                clearValue(TO_IMRPOVE_ITEMS);
                             }}
                         />
                     )}
@@ -335,13 +334,7 @@ const RetrospectiveComponent = () => {
                             key={index}
                             content={to_improve_item}
                             onDelete={() => {
-                                const newArray = [...data.to_improve];
-                                newArray.splice(index, 1);
-                                setData({
-                                    ...data,
-                                    to_improve: newArray,
-                                });
-                                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                                deleteValue(TO_IMRPOVE_ITEMS, index);
                             }}
                         />
                     ))}
@@ -364,25 +357,10 @@ const RetrospectiveComponent = () => {
                     {formValues.action_item && (
                         <FormActionButtons
                             onAdd={() => {
-                                const newArray = [
-                                    ...data.action_items,
-                                    formValues.action_item,
-                                ];
-                                setData({
-                                    ...data,
-                                    action_items: newArray,
-                                });
-                                saveItems(ACTION_ITEMS, newArray);
-                                setFormValues({
-                                    ...formValues,
-                                    action_item: '',
-                                });
+                                addValue(ACTION_ITEMS);
                             }}
                             onClear={() => {
-                                setFormValues({
-                                    ...formValues,
-                                    action_item: '',
-                                });
+                                clearValue(ACTION_ITEMS);
                             }}
                         />
                     )}
@@ -391,13 +369,7 @@ const RetrospectiveComponent = () => {
                             key={index}
                             content={action_item}
                             onDelete={() => {
-                                const newArray = [...data.action_items];
-                                newArray.splice(index, 1);
-                                setData({
-                                    ...data,
-                                    action_items: newArray,
-                                });
-                                saveItems(ACTION_ITEMS, newArray);
+                                deleteValue(ACTION_ITEMS, index);
                             }}
                         />
                     ))}
