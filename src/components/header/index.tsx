@@ -83,7 +83,9 @@ export const Header = (props: HeaderProps) => {
                         </MenuButton>
                         <Portal>
                             <MenuList>
-                                <MenuItem icon={<AiFillProfile />}>Profile</MenuItem>
+                                <NextLink href="/profile">
+                                    <MenuItem icon={<AiFillProfile />}>Profile</MenuItem>
+                                </NextLink>
                                 <MenuItem
                                     icon={<AiOutlineLogin />}
                                     onClick={props.logOut}

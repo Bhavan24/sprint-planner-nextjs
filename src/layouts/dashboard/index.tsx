@@ -18,6 +18,7 @@ export const DashboardLayout = ({ children, title = APP_NAME }: DashboardLayoutP
 
     const googleSignOut = () => {
         signOut(auth);
+        window.location.href = '/';
     };
 
     const avatar = {

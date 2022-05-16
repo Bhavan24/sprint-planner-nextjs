@@ -12,7 +12,6 @@ import {
     Grid,
     GridItem,
     IconButton,
-    Stack,
     Text,
     Textarea,
 } from '@chakra-ui/react';
@@ -144,6 +143,76 @@ const RetrospectiveComponent = () => {
         });
     }, [data]);
 
+    const addValue = (item: string) => {
+        var newArray: string[];
+        switch (item) {
+            case WENT_WELL_ITEMS:
+                newArray = [...data.went_well, formValues.went_well];
+                setData({
+                    ...data,
+                    went_well: newArray,
+                });
+                saveItems(WENT_WELL_ITEMS, newArray);
+                setFormValues({
+                    ...formValues,
+                    went_well: '',
+                });
+
+                break;
+            case TO_IMRPOVE_ITEMS:
+                newArray = [...data.to_improve, formValues.to_improve];
+                setData({
+                    ...data,
+                    to_improve: newArray,
+                });
+                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                setFormValues({
+                    ...formValues,
+                    to_improve: '',
+                });
+                break;
+            case ACTION_ITEMS:
+                newArray = [...data.action_items, formValues.action_item];
+                setData({
+                    ...data,
+                    action_items: newArray,
+                });
+                saveItems(ACTION_ITEMS, newArray);
+                setFormValues({
+                    ...formValues,
+                    action_item: '',
+                });
+                break;
+            default:
+                break;
+        }
+    };
+
+    const clearValue = (item: string) => {
+        switch (item) {
+            case WENT_WELL_ITEMS:
+                setFormValues({
+                    ...formValues,
+                    went_well: '',
+                });
+                break;
+            case TO_IMRPOVE_ITEMS:
+                setFormValues({
+                    ...formValues,
+                    to_improve: '',
+                });
+                break;
+            case ACTION_ITEMS:
+                setFormValues({
+                    ...formValues,
+                    action_item: '',
+                });
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <>
             <Box w="100%" my={5}>
@@ -192,6 +261,10 @@ const RetrospectiveComponent = () => {
                                     went_well: newArray,
                                 });
                                 saveItems(WENT_WELL_ITEMS, newArray);
+                                setFormValues({
+                                    ...formValues,
+                                    went_well: '',
+                                });
                             }}
                             onClear={() => {
                                 setFormValues({
@@ -244,6 +317,10 @@ const RetrospectiveComponent = () => {
                                     to_improve: newArray,
                                 });
                                 saveItems(TO_IMRPOVE_ITEMS, newArray);
+                                setFormValues({
+                                    ...formValues,
+                                    to_improve: '',
+                                });
                             }}
                             onClear={() => {
                                 setFormValues({
@@ -296,6 +373,10 @@ const RetrospectiveComponent = () => {
                                     action_items: newArray,
                                 });
                                 saveItems(ACTION_ITEMS, newArray);
+                                setFormValues({
+                                    ...formValues,
+                                    action_item: '',
+                                });
                             }}
                             onClear={() => {
                                 setFormValues({
