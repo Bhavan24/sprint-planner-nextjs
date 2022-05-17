@@ -63,3 +63,10 @@ export interface SprintDetailsProps {
     rating: number;
     description: string;
 }
+
+export interface INewSession {
+    name: string;
+    gameType: string;
+    createdBy: string;
+    createdAt: Date;
+}

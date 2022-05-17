@@ -14,17 +14,27 @@ import {
     Tabs,
     useBreakpointValue,
     useColorModeValue,
+    useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/config';
 import { GAME_TYPES } from '../../constants';
+import { INewSession } from '../../interfaces';
 
 const PokerMainComponent = () => {
+    // router
     const router = useRouter();
+    // user
+    const [user] = useAuthState(auth);
+    // states
     const [sessionName, setSessionName] = useState('');
-    const [cardsMode, setCardsMode] = useState(1);
+    const [cardsMode, setCardsMode] = useState(GAME_TYPES[0].type);
     const [sessionCode, setSessionCode] = useState('');
     const [tabIndex, setTabIndex] = useState(0);
+    // toast
+    const toast = useToast();
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -33,23 +43,40 @@ const PokerMainComponent = () => {
         setSessionCode(join?.toString() || '');
     }, [router.isReady]);
 
-    const handleSessionNameChange = (e: any) => {
+    const handleSessionNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSessionName(e.target.value);
     };
 
-    const handleCardsModeChange = (e: any) => {
+    const handleCardsModeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setCardsMode(e.target.value);
     };
 
-    const handleSessionCodeChange = (e: any) => {
+    const handleSessionCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSessionCode(e.target.value);
     };
 
-    const createSession = (e: any) => {
-        console.log(sessionName, cardsMode);
+    const createSession = () => {
+        if (sessionName && user?.email && cardsMode) {
+            const game: INewSession = {
+                name: sessionName,
+                createdBy: user.email,
+                gameType: cardsMode,
+                createdAt: new Date(),
+            };
+            console.log(game);
+        } else {
+            toast({
+                title: 'Please fill all fields !!!',
+                status: 'error',
+                isClosable: true,
+            });
+        }
+        // const newGameId = await addNewGame(game);
+        // router.push(`/game/${newGameId}`);
+        // console.log(sessionName, cardsMode);
     };
 
-    const joinSession = (e: any) => {
+    const joinSession = () => {
         console.log(sessionCode);
     };
 
@@ -73,14 +100,14 @@ const PokerMainComponent = () => {
                         }}
                         borderRadius={{ base: 'none', sm: 'xl' }}
                     >
-                        <Stack spacing="6">
-                            <Stack spacing="5">
+                        <Stack spacing="5">
+                            <Stack spacing="4">
                                 <Tabs
                                     variant="soft-rounded"
                                     colorScheme="green"
                                     index={tabIndex}
                                 >
-                                    <TabList>
+                                    <TabList sx={{ justifyContent: 'space-around' }}>
                                         <Tab
                                             onClick={() => {
                                                 setTabIndex(0);
@@ -117,13 +144,12 @@ const PokerMainComponent = () => {
                                                     <Select
                                                         value={cardsMode}
                                                         id="cards-mode"
-                                                        placeholder="Cards Mode"
                                                         onChange={handleCardsModeChange}
                                                     >
                                                         {GAME_TYPES.map(game => (
                                                             <option
                                                                 key={game.id}
-                                                                value={game.id}
+                                                                value={game.type}
                                                             >
                                                                 {game.label}
                                                             </option>
