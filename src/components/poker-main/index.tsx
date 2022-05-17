@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { GAME_TYPES } from '../../constants';
 
 const PokerMainComponent = () => {
     const router = useRouter();
@@ -119,14 +120,14 @@ const PokerMainComponent = () => {
                                                         placeholder="Cards Mode"
                                                         onChange={handleCardsModeChange}
                                                     >
-                                                        <option value={1}>
-                                                            Fibonacci (0, 1, 2, 3, 5, 8,
-                                                            13, 21, 34, 55, 89)
-                                                        </option>
-                                                        <option value={2}>
-                                                            Short Fibonacci (0, ½, 1, 2,
-                                                            3, 5, 8, 13, 20, 40, 100)
-                                                        </option>
+                                                        {GAME_TYPES.map(game => (
+                                                            <option
+                                                                key={game.id}
+                                                                value={game.id}
+                                                            >
+                                                                {game.label}
+                                                            </option>
+                                                        ))}
                                                     </Select>
                                                 </FormControl>
                                             </Stack>

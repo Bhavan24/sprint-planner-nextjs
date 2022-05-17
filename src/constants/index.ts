@@ -48,3 +48,25 @@ export const BOX_DETAILS = [
         link: '/sprint-poker',
     },
 ];
+
+// Poker Constants
+export const GAME_TYPES = [
+    {
+        id: 0,
+        type: 'FIBONACCI',
+        label: 'Fibonacci (0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)',
+        values: [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89],
+    },
+    {
+        id: 1,
+        type: 'SHORT_FIBONACCI',
+        label: 'Short Fibonacci (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100)',
+        values: [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100],
+    },
+    {
+        id: 2,
+        type: 'TSHIRT',
+        label: 'T-Shirt (XXS, XS, S, M, L, XL, XXL)',
+        values: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    },
+];
