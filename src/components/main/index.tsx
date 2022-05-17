@@ -87,7 +87,7 @@ export const MainComponent = () => {
         <Box textAlign="center" fontSize="xl" p={3}>
             <Grid p={3} templateColumns="repeat(3, 1fr)">
                 {BOX_DETAILS.map(box => (
-                    <GridItem w="100%">
+                    <GridItem w="100%" key={box.link}>
                         <SprintBox box={box} />
                     </GridItem>
                 ))}
