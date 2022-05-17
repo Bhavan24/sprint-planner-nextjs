@@ -67,7 +67,8 @@ export interface SprintDetailsProps {
 export interface INewSession {
     name: string;
     gameType: string;
-    createdBy: string;
+    userName: string;
+    userId: string;
     createdAt: Date;
 }
 

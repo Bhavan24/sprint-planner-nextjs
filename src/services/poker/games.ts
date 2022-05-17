@@ -14,16 +14,18 @@ import { resetPlayers, updatePlayerGames } from './players';
 
 export const addNewGame = async (newSession: INewSession): Promise<string> => {
     const player = {
-        name: newSession.createdBy,
-        id: ulid(),
+        name: newSession.userName,
+        id: newSession.userId,
         status: GAME_STATUS.NOT_STARTED,
     };
     const gameData = {
-        ...newSession,
         id: ulid(),
-        average: 0,
+        name: newSession.name,
+        gameType: newSession.gameType,
+        createdAt: newSession.createdAt,
         createdById: player.id,
         gameStatus: GAME_STATUS.STARTED,
+        average: 0,
     };
     await addGameToStore(gameData.id, gameData);
     await addPlayerToGameInStore(gameData.id, player);

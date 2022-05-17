@@ -6,6 +6,7 @@ import { getAuth, GoogleAuthProvider, signOut } from 'firebase/auth';
 const firebaseConfig = {
     apiKey: 'AIzaSyD7qVgCUIBGO3oCNCgWEeLIq0hqk11tKRU',
     authDomain: 'sprint-planner-ab5df.firebaseapp.com',
+    databaseURL: 'https://sprint-planner-ab5df-default-rtdb.firebaseio.com',
     projectId: 'sprint-planner-ab5df',
     storageBucket: 'sprint-planner-ab5df.appspot.com',
     messagingSenderId: '476682090893',

@@ -61,17 +61,13 @@ export const getPlayerRecentGames = async (): Promise<IGame[]> => {
 
 export const getCurrentPlayerId = (gameId: string): string | undefined => {
     let playerGames: IPlayerGame[] = getPlayerGamesFromCache();
-
     const game = playerGames.find(playerGame => playerGame.gameId === gameId);
-
     return game && game.playerId;
 };
 
 export const updatePlayerGames = (gameId: string, playerId: string) => {
     let playerGames: IPlayerGame[] = getPlayerGamesFromCache();
-
     playerGames.push({ gameId, playerId });
-
     updatePlayerGamesInCache(playerGames);
 };
 

@@ -22,6 +22,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
 import { GAME_TYPES } from '../../constants';
 import { INewSession } from '../../interfaces';
+import { addNewGame } from '../../services/poker/games';
 
 const PokerMainComponent = () => {
     // router
@@ -55,15 +56,18 @@ const PokerMainComponent = () => {
         setSessionCode(e.target.value);
     };
 
-    const createSession = () => {
-        if (sessionName && user?.email && cardsMode) {
+    const createSession = async () => {
+        if (sessionName && user?.displayName && cardsMode) {
             const game: INewSession = {
                 name: sessionName,
-                createdBy: user.email,
+                userName: user.displayName,
+                userId: user.uid,
                 gameType: cardsMode,
                 createdAt: new Date(),
             };
-            console.log(game);
+            const newGameId = await addNewGame(game);
+            console.log('newGameId:', newGameId);
+            router.push(`/sprint-poker/${newGameId}`);
         } else {
             toast({
                 title: 'Please fill all fields !!!',
@@ -71,16 +75,19 @@ const PokerMainComponent = () => {
                 isClosable: true,
             });
         }
-        // const newGameId = await addNewGame(game);
-        // router.push(`/game/${newGameId}`);
-        // console.log(sessionName, cardsMode);
     };
 
     const joinSession = () => {
-        console.log(sessionCode);
+        if (sessionCode) {
+            router.push(`/sprint-poker/${sessionCode}`);
+        } else {
+            toast({
+                title: 'Please fill all fields !!!',
+                status: 'error',
+                isClosable: true,
+            });
+        }
     };
-
-    useEffect(() => {}, []);
 
     return (
         <>

@@ -1,8 +1,12 @@
 import {
-    addDoc, collection, doc,
+    addDoc,
+    collection,
+    doc,
     getDoc,
     getDocs,
-    query, setDoc, updateDoc
+    query,
+    setDoc,
+    updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { FB_DB_GAMES, FB_DB_PLAYERS } from '../../constants';
@@ -10,8 +14,8 @@ import { IGame, IPlayer } from '../../interfaces';
 
 // Firebase
 export const addGameToStore = async (gameId: string, data: any) => {
-    const gamesRef = doc(firestore, FB_DB_GAMES, gameId);
-    await setDoc(gamesRef, data);
+    const docRef = doc(firestore, FB_DB_GAMES, gameId);
+    await setDoc(docRef, data);
     return true;
 };
 
@@ -76,8 +80,8 @@ export const updateGameDataInStore = async (
 };
 
 export const addPlayerToGameInStore = async (gameId: string, player: IPlayer) => {
-    const colRef = collection(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS, player.id);
-    await addDoc(colRef, player);
+    const docRef = doc(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS, player.id);
+    await setDoc(docRef, player);
     return true;
 };
 
