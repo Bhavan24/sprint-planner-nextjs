@@ -1,5 +1,14 @@
 import { IconProps } from '@chakra-ui/react';
 import { MouseEventHandler, ReactNode } from 'react';
+import type { NextComponentType, NextPageContext } from 'next';
+import type { NextRouter } from 'next/router';
+
+export interface AppRenderProps {
+    pageProps: object;
+    err?: Error;
+    Component: NextComponentType<NextPageContext, AppRenderProps, object>;
+    router: NextRouter;
+}
 
 export interface ChakraProps {
     cookies?: string;

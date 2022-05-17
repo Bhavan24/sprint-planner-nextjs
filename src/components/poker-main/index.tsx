@@ -15,12 +15,22 @@ import {
     useBreakpointValue,
     useColorModeValue,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const PokerMainComponent = () => {
+    const router = useRouter();
     const [sessionName, setSessionName] = useState('');
     const [cardsMode, setCardsMode] = useState(1);
     const [sessionCode, setSessionCode] = useState('');
+    const [tabIndex, setTabIndex] = useState(0);
+
+    useEffect(() => {
+        if (!router.isReady) return;
+        const { join } = router.query;
+        join && setTabIndex(1);
+        setSessionCode(join?.toString() || '');
+    }, [router.isReady]);
 
     const handleSessionNameChange = (e: any) => {
         setSessionName(e.target.value);
@@ -64,10 +74,26 @@ const PokerMainComponent = () => {
                     >
                         <Stack spacing="6">
                             <Stack spacing="5">
-                                <Tabs variant="soft-rounded" colorScheme="green">
+                                <Tabs
+                                    variant="soft-rounded"
+                                    colorScheme="green"
+                                    index={tabIndex}
+                                >
                                     <TabList>
-                                        <Tab>Create Session</Tab>
-                                        <Tab>Join Session</Tab>
+                                        <Tab
+                                            onClick={() => {
+                                                setTabIndex(0);
+                                            }}
+                                        >
+                                            Create Session
+                                        </Tab>
+                                        <Tab
+                                            onClick={() => {
+                                                setTabIndex(1);
+                                            }}
+                                        >
+                                            Join Session
+                                        </Tab>
                                     </TabList>
                                     <TabPanels>
                                         <TabPanel>
