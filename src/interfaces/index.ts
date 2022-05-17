@@ -1,7 +1,7 @@
 import { IconProps } from '@chakra-ui/react';
-import { MouseEventHandler, ReactNode } from 'react';
 import type { NextComponentType, NextPageContext } from 'next';
 import type { NextRouter } from 'next/router';
+import { MouseEventHandler, ReactNode } from 'react';
 
 export interface AppRenderProps {
     pageProps: object;
@@ -69,4 +69,29 @@ export interface INewSession {
     gameType: string;
     createdBy: string;
     createdAt: Date;
+}
+
+export interface IPlayer {
+    name: string;
+    id: string;
+    status: string;
+    value?: number;
+    emoji?: string;
+}
+
+export interface IPlayerGame {
+    gameId: string;
+    playerId: string;
+}
+
+export interface IGame {
+    id: string;
+    name: string;
+    average: number;
+    gameStatus: string;
+    gameType?: string;
+    createdBy: string;
+    createdById: string;
+    createdAt: Date;
+    updatedAt?: Date;
 }

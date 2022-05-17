@@ -16,6 +16,11 @@ export const TODOS = 'todos';
 export const WENT_WELL_ITEMS = 'went_well_items';
 export const TO_IMRPOVE_ITEMS = 'to_improve_items';
 export const ACTION_ITEMS = 'action_items';
+export const POKER_PLAYER_GAMES = 'player_games';
+
+// Firebase collections constants
+export const FB_DB_GAMES = 'games';
+export const FB_DB_PLAYERS = 'players';
 
 // Main page constants
 export const BOX_DETAILS = [
@@ -70,3 +75,10 @@ export const GAME_TYPES = [
         values: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
     },
 ];
+
+export enum GAME_STATUS {
+    NOT_STARTED = 'NOT_STARTED',
+    STARTED = 'STARTED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FINISHED = 'FINISHED',
+}
