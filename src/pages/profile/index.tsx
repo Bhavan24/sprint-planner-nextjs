@@ -1,10 +1,9 @@
-import { Avatar, Box, FormControl, FormLabel, Input, Link, Text } from '@chakra-ui/react';
+import { Avatar, Box, Link, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
+import BasePage from '../../components/auth-base-component';
 import { PROFILE_PAGE_NAME } from '../../constants';
-import { DashboardLayout } from '../../layouts/dashboard';
-import { Chakra } from '../../theme/Chakra';
 
 async function get_current_user_info() {
     let value = await fetch('https://ipapi.co/json/');
@@ -48,25 +47,23 @@ const Profile = () => {
     }, []);
 
     return (
-        <Chakra>
-            <DashboardLayout title={PROFILE_PAGE_NAME}>
-                <Box textAlign="center" fontSize="xl" m={5}>
-                    <Box>
-                        <Avatar src={userInfo.avatar} />
-                        <Text color="red.700">
-                            {`${userInfo.firstName} ${userInfo.lastName}`}
-                        </Text>
-                        <Link href={userInfo.email} color="gray.400">
-                            {`${userInfo.email}`}
-                        </Link>
-                        <Text color="gray.400">
-                            {`${userInfo.city}, ${userInfo.region}, ${userInfo.country}`}
-                        </Text>
-                        <Text color="gray.400">{`${userInfo.timezone}`}</Text>
-                    </Box>
+        <BasePage title={PROFILE_PAGE_NAME}>
+            <Box textAlign="center" fontSize="xl" m={5}>
+                <Box>
+                    <Avatar src={userInfo.avatar} />
+                    <Text color="red.700">
+                        {`${userInfo.firstName} ${userInfo.lastName}`}
+                    </Text>
+                    <Link href={userInfo.email} color="gray.400">
+                        {`${userInfo.email}`}
+                    </Link>
+                    <Text color="gray.400">
+                        {`${userInfo.city}, ${userInfo.region}, ${userInfo.country}`}
+                    </Text>
+                    <Text color="gray.400">{`${userInfo.timezone}`}</Text>
                 </Box>
-            </DashboardLayout>
-        </Chakra>
+            </Box>
+        </BasePage>
     );
 };
 

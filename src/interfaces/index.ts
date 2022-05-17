@@ -44,6 +44,12 @@ export interface IndexProps {
     cookies?: string;
 }
 
+export interface BasePageProps {
+    cookies?: string;
+    children?: ReactNode;
+    title: string;
+}
+
 export interface SprintDetailsProps {
     id: string;
     isNew: boolean;
