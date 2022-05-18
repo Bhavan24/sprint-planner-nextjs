@@ -119,4 +119,5 @@ export interface INewRetroItemProps {
     name: string;
     title: string;
     desc: string;
+    refresh: boolean;
 }

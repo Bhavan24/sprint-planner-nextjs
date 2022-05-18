@@ -87,7 +87,7 @@ const NewRetroItem = (props: INewRetroItemProps) => {
 
     useEffect(() => {
         setData(getRetroList(props.name));
-    }, [setData]);
+    }, [setData, props.refresh]);
 
     return (
         <>

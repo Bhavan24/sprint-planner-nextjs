@@ -59,9 +59,11 @@ const RetrospectiveComponent = () => {
     }, [isTimerActive, seconds]);
 
     // retro data
+    const [refresh, setRefresh] = useState(false);
+
     const resetItems = () => {
         resetAllItems();
-        window.location.reload();
+        setRefresh(!refresh);
     };
 
     const exportItems = () => {
@@ -153,6 +155,7 @@ const RetrospectiveComponent = () => {
                         name={WENT_WELL_ITEMS}
                         title={'👌 Went well'}
                         desc={'What do you like about your agile practice?'}
+                        refresh={refresh}
                     />
                 </GridItem>
                 <GridItem w="100%">
@@ -160,6 +163,7 @@ const RetrospectiveComponent = () => {
                         name={TO_IMRPOVE_ITEMS}
                         title={'📈 To improve'}
                         desc={'What do want to improve about your agile practice?'}
+                        refresh={refresh}
                     />
                 </GridItem>
                 <GridItem w="100%">
@@ -167,6 +171,7 @@ const RetrospectiveComponent = () => {
                         name={ACTION_ITEMS}
                         title={'📍 Action items'}
                         desc={'What would your agile practice look like?'}
+                        refresh={refresh}
                     />
                 </GridItem>
             </Grid>
