@@ -39,6 +39,7 @@ export const PokerCard = ({
                     setCardClicked(!isCardClicked);
                 }}
                 height="8em"
+                width="5em"
                 m="1"
                 flexDirection="column"
                 sx={getCardStyle(isCardClicked)}
@@ -53,7 +54,7 @@ export const PokerCard = ({
                     alignContent="center"
                     w="100%"
                 >
-                    <Text fontSize="3xl">{id}</Text>
+                    <Text fontSize="2xl">{id}</Text>
                 </Flex>
                 <Flex textAlign="right" w="100%" justifyContent="flex-end">
                     <Text fontSize="xs">{id}</Text>
