@@ -16,7 +16,7 @@ const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => {
-    const bg = useColorModeValue('cyan.100', 'cyan.700');
+    const bg = useColorModeValue('cyan.100', 'cyan.600');
     return (
         <Box p={4} maxWidth="inherit" borderWidth={1} my={2} borderRadius="lg" bg={bg}>
             <Text

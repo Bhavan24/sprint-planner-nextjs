@@ -34,6 +34,9 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
 const PokerPlayers = () => {
     return (
         <>
+            <Text fontSize="md" m={2}>
+                👍 - Voting Done 🤔 - Yet to Vote
+            </Text>
             <Flex alignContent="center" alignItems="center" justifyContent="center">
                 <PlayerCard name={'bhavaneetharan'} value={'1'} />
                 <PlayerCard name={'keerthu'} value={'4'} />
