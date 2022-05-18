@@ -105,7 +105,11 @@ export interface ICardPickerProps {
 
 export interface IPokerControllerProps {
     game: IGame;
+}
 
+export interface IPlayerCardProps {
+    name: string;
+    value: string;
 }
 
 export interface ICardConfig {
