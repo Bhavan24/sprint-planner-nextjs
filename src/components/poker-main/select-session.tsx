@@ -1,5 +1,5 @@
 import {
-    Button,
+    IconButton,
     Stack,
     Table,
     TableContainer,
@@ -7,12 +7,14 @@ import {
     Td,
     Th,
     Thead,
+    Tooltip,
     Tr,
     useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { BiLogIn } from 'react-icons/bi';
 import { auth } from '../../../firebase/config';
 import { IGame } from '../../interfaces';
 import { getPlayerRecentGames } from '../../services/poker/players';
@@ -69,14 +71,18 @@ const SelectSession = () => {
                                         <Td>{recentGame.name}</Td>
                                         <Td>{recentGame.id}</Td>
                                         <Td>
-                                            <Button
-                                                color="cyan.500"
-                                                onClick={() => {
-                                                    joinSelectedSession(recentGame.id);
-                                                }}
-                                            >
-                                                JOIN
-                                            </Button>
+                                            <Tooltip label="Join Session">
+                                                <IconButton
+                                                    aria-label="session"
+                                                    colorScheme="blue"
+                                                    icon={<BiLogIn />}
+                                                    onClick={() => {
+                                                        joinSelectedSession(
+                                                            recentGame.id
+                                                        );
+                                                    }}
+                                                />
+                                            </Tooltip>
                                         </Td>
                                     </Tr>
                                 ))}
