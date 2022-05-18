@@ -8,10 +8,17 @@ import {
     Select,
     Stack,
     Tab,
+    Table,
+    TableContainer,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
     useBreakpointValue,
     useColorModeValue,
     useToast,
@@ -21,8 +28,9 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
 import { GAME_TYPES } from '../../constants';
-import { INewSession } from '../../interfaces';
+import { IGame, INewSession } from '../../interfaces';
 import { addNewGame } from '../../services/poker/games';
+import { getPlayerRecentGames } from '../../services/poker/players';
 
 const PokerMainComponent = () => {
     // router
@@ -34,8 +42,19 @@ const PokerMainComponent = () => {
     const [cardsMode, setCardsMode] = useState(GAME_TYPES[0].type);
     const [sessionCode, setSessionCode] = useState('');
     const [tabIndex, setTabIndex] = useState(0);
+    const [recentGames, setRecentGames] = useState<IGame[] | undefined>(undefined);
     // toast
     const toast = useToast();
+
+    useEffect(() => {
+        async function fetchData() {
+            const games = await getPlayerRecentGames();
+            if (games) {
+                setRecentGames(games);
+            }
+        }
+        fetchData();
+    }, []);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -79,6 +98,7 @@ const PokerMainComponent = () => {
 
     const joinSession = () => {
         if (sessionCode) {
+            // add player to game
             router.push(`/sprint-poker/${sessionCode}`);
         } else {
             toast({
@@ -89,10 +109,23 @@ const PokerMainComponent = () => {
         }
     };
 
+    const joinSelectedSession = (code: string) => {
+        if (code) {
+            // add player to game
+            router.push(`/sprint-poker/${code}`);
+        } else {
+            toast({
+                title: 'An error occured !!!',
+                status: 'error',
+                isClosable: true,
+            });
+        }
+    };
+
     return (
         <>
             <Container
-                maxW="lg"
+                maxW="max-content"
                 py={{ base: '12', md: '24' }}
                 px={{ base: '0', sm: '8' }}
             >
@@ -128,6 +161,13 @@ const PokerMainComponent = () => {
                                             }}
                                         >
                                             Join Session
+                                        </Tab>
+                                        <Tab
+                                            onClick={() => {
+                                                setTabIndex(2);
+                                            }}
+                                        >
+                                            Select Session
                                         </Tab>
                                     </TabList>
                                     <TabPanels>
@@ -203,6 +243,57 @@ const PokerMainComponent = () => {
                                             >
                                                 Join Session
                                             </Button>
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <Stack spacing="6">
+                                                <TableContainer>
+                                                    <Table variant="striped">
+                                                        <Thead>
+                                                            <Tr>
+                                                                <Th>Session Name</Th>
+                                                                <Th colSpan={2}>
+                                                                    Session Code
+                                                                </Th>
+                                                            </Tr>
+                                                        </Thead>
+                                                        <Tbody>
+                                                            {recentGames &&
+                                                                recentGames.map(
+                                                                    recentGame => (
+                                                                        <Tr
+                                                                            key={
+                                                                                recentGame.id
+                                                                            }
+                                                                        >
+                                                                            <Td>
+                                                                                {
+                                                                                    recentGame.name
+                                                                                }
+                                                                            </Td>
+                                                                            <Td>
+                                                                                {
+                                                                                    recentGame.id
+                                                                                }
+                                                                            </Td>
+                                                                            <Td>
+                                                                                <Button
+                                                                                    color="cyan.500"
+                                                                                    onClick={() => {
+                                                                                        joinSelectedSession(
+                                                                                            recentGame.id
+                                                                                        );
+                                                                                    }}
+                                                                                >
+                                                                                    JOIN
+                                                                                </Button>
+                                                                            </Td>
+                                                                        </Tr>
+                                                                    )
+                                                                )}
+                                                        </Tbody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Stack>
                                         </TabPanel>
                                     </TabPanels>
                                 </Tabs>
