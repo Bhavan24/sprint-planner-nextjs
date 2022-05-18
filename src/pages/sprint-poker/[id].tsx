@@ -1,9 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import BasePage from '../../components/auth-base-component';
-import { PokerCard } from '../../components/poker-main/poker-card';
+import PokerCardPicker from '../../components/poker-main/poker-card-picker';
 import PokerController from '../../components/poker-main/poker-controller';
 import PokerPlayers from '../../components/poker-main/poker-players';
-import { GAME_TYPES, SPRINT_POKER_PAGE_NAME } from '../../constants';
+import { SPRINT_POKER_PAGE_NAME } from '../../constants';
+import { IGame } from '../../interfaces';
 
 const SprintDetails = () => {
     return (
@@ -16,16 +17,11 @@ const SprintDetails = () => {
                     <PokerController />
                 </Box>
                 <Box textAlign="center" m={5}>
-                    {/* <Slide direction="bottom" in={true} style={{ zIndex: 10 }}> */}
-                    {GAME_TYPES[0].values.map(val => (
-                        <PokerCard
-                            id={val.toString()}
-                            bgcolor="blue.500"
-                            onPress={() => {}}
-                        />
-                    ))}
-                    <PokerCard id={'🙄'} bgcolor="blue.500" onPress={() => {}} />
-                    {/* </Slide> */}
+                    <PokerCardPicker
+                        game={{} as IGame}
+                        players={[]}
+                        currentPlayerId={''}
+                    />
                 </Box>
             </Box>
         </BasePage>

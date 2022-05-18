@@ -1,10 +1,9 @@
-import { SearchIcon } from '@chakra-ui/icons';
-import { Box, Text, IconButton, Stack, Tooltip, useToast } from '@chakra-ui/react';
+import { Box, IconButton, Stack, Text, Tooltip, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaLink, FaRegEye } from 'react-icons/fa';
-import { VscDebugRestart } from 'react-icons/vsc';
 import { MdExitToApp } from 'react-icons/md';
+import { VscDebugRestart } from 'react-icons/vsc';
 
 const PokerController = () => {
     const router = useRouter();
@@ -19,7 +18,29 @@ const PokerController = () => {
         id && setGameId(id?.toString() || '');
     }, [router.isReady]);
 
-    const copyInviteLink = () => {
+    const handleRevealCards = () => {
+        toast({
+            position: 'top-right',
+            title: 'Cards Revealed!',
+            status: 'success',
+            isClosable: true,
+        });
+    };
+
+    const handleRestartSession = () => {
+        toast({
+            position: 'top-right',
+            title: 'Session Restarted!',
+            status: 'info',
+            isClosable: true,
+        });
+    };
+
+    const handleExitSession = () => {
+        router.push('/');
+    };
+
+    const handleCopyInviteLink = () => {
         const url = `${window.location.origin}/sprint-poker?join=${gameId}`;
         navigator.clipboard.writeText(url);
         toast({
@@ -71,6 +92,7 @@ const PokerController = () => {
                                     isRound
                                     size="lg"
                                     m={2}
+                                    onClick={handleRevealCards}
                                 />
                             </Tooltip>
                             <Tooltip label="Restart Session">
@@ -81,6 +103,7 @@ const PokerController = () => {
                                     isRound
                                     size="lg"
                                     m={2}
+                                    onClick={handleRestartSession}
                                 />
                             </Tooltip>
                             <Tooltip label="Exit Session">
@@ -91,6 +114,7 @@ const PokerController = () => {
                                     isRound
                                     size="lg"
                                     m={2}
+                                    onClick={handleExitSession}
                                 />
                             </Tooltip>
                             <Tooltip label="Copy Invitation Link">
@@ -101,7 +125,7 @@ const PokerController = () => {
                                     isRound
                                     size="lg"
                                     m={2}
-                                    onClick={copyInviteLink}
+                                    onClick={handleCopyInviteLink}
                                 />
                             </Tooltip>
                         </Box>

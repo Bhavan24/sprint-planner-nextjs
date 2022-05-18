@@ -96,3 +96,15 @@ export interface IGame {
     createdAt: Date;
     updatedAt?: Date;
 }
+
+export interface ICardPickerProps {
+    game: IGame;
+    players: IPlayer[];
+    currentPlayerId: string;
+}
+
+export interface ICardConfig {
+    value: number;
+    displayValue: string;
+    color: string;
+}

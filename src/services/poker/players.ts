@@ -25,8 +25,7 @@ export const addPlayer = async (gameId: string, player: IPlayer) => {
 export const updatePlayerValue = async (
     gameId: string,
     playerId: string,
-    value: number,
-    randomEmoji: string
+    value: number
 ) => {
     const player = await getPlayerFromStore(gameId, playerId);
 
@@ -34,7 +33,6 @@ export const updatePlayerValue = async (
         const updatedPlayer = {
             ...player,
             value: value,
-            emoji: randomEmoji,
             status: GAME_STATUS.FINISHED,
         };
         await updatePlayerInStore(gameId, updatedPlayer);
