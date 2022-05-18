@@ -103,6 +103,11 @@ export interface ICardPickerProps {
     currentPlayerId: string;
 }
 
+export interface IPokerControllerProps {
+    game: IGame;
+
+}
+
 export interface ICardConfig {
     value: number;
     displayValue: string;

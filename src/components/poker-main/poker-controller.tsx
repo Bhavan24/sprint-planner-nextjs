@@ -1,13 +1,15 @@
 import { Box, IconButton, Stack, Text, Tooltip, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaLink, FaRegEye } from 'react-icons/fa';
+import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
+import { IPokerControllerProps } from '../../interfaces';
 
-const PokerController = () => {
+const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
     const [gameId, setGameId] = useState('');
+    const [average, setAverage] = useState(props.game.average);
 
     // toast
     const toast = useToast();
@@ -22,6 +24,15 @@ const PokerController = () => {
         toast({
             position: 'top-right',
             title: 'Cards Revealed!',
+            status: 'success',
+            isClosable: true,
+        });
+    };
+
+    const handleSaveIssueCards = () => {
+        toast({
+            position: 'top-right',
+            title: 'Issue Saved!',
             status: 'success',
             isClosable: true,
         });
@@ -71,8 +82,8 @@ const PokerController = () => {
                             alignContent="center"
                             gap="1"
                         >
-                            <Text>Session Name</Text>
-                            <Text>Session Status</Text>
+                            <Text fontSize="md">{props.game.name}</Text>
+                            <Text>{props.game.gameStatus}</Text>
                         </Box>
                         <Box
                             mt="1"
@@ -81,12 +92,12 @@ const PokerController = () => {
                             lineHeight="tight"
                             noOfLines={1}
                         >
-                            Average : 2.5
+                            Average : {average}
                         </Box>
                         <Box gap="2" p="2">
                             <Tooltip label="Reveal Cards">
                                 <IconButton
-                                    colorScheme="blue"
+                                    colorScheme="green"
                                     aria-label="Reveal"
                                     icon={<FaRegEye />}
                                     isRound
@@ -95,9 +106,20 @@ const PokerController = () => {
                                     onClick={handleRevealCards}
                                 />
                             </Tooltip>
+                            <Tooltip label="Save Issue">
+                                <IconButton
+                                    colorScheme="teal"
+                                    aria-label="Save Issue"
+                                    icon={<FaSave />}
+                                    isRound
+                                    size="lg"
+                                    m={2}
+                                    onClick={handleSaveIssueCards}
+                                />
+                            </Tooltip>
                             <Tooltip label="Restart Session">
                                 <IconButton
-                                    colorScheme="blue"
+                                    colorScheme="orange"
                                     aria-label="Restart"
                                     icon={<VscDebugRestart />}
                                     isRound
@@ -108,7 +130,7 @@ const PokerController = () => {
                             </Tooltip>
                             <Tooltip label="Exit Session">
                                 <IconButton
-                                    colorScheme="blue"
+                                    colorScheme="red"
                                     aria-label="Exit"
                                     icon={<MdExitToApp />}
                                     isRound
