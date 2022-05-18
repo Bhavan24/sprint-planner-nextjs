@@ -108,3 +108,9 @@ export interface ICardConfig {
     displayValue: string;
     color: string;
 }
+
+export interface IRetrospectiveData {
+    went_well: string[];
+    to_improve: string[];
+    action_items: string[];
+}

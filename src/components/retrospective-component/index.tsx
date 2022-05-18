@@ -24,6 +24,16 @@ import {
 } from '@chakra-ui/react';
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
+import { IRetrospectiveData } from '../../interfaces';
+import {
+    getActionItemsList,
+    getToImproveItemsList,
+    getWentWellList,
+    resetAllItems,
+    saveActionItemsList,
+    saveToImproveItemsList,
+    saveWentWellList,
+} from '../../services/retrospective/storage';
 import styles from './retrospective.module.css';
 
 export const style = {
@@ -82,16 +92,15 @@ const FormActionButtons: React.FC<{
 const RetrospectiveComponent = () => {
     const [seconds, setSeconds] = useState(0);
     const [isTimerActive, setTimerActive] = useState(false);
+
+    // formValues
     const [formValues, setFormValues] = useState({
-        went_well: '',
-        to_improve: '',
-        action_item: '',
+        wentWellItem: '',
+        toImproveItem: '',
+        actionItem: '',
     });
-    const [data, setData] = useState<{
-        went_well: string[];
-        to_improve: string[];
-        action_items: string[];
-    }>({
+
+    const [data, setData] = useState<IRetrospectiveData>({
         went_well: [],
         to_improve: [],
         action_items: [],
@@ -106,39 +115,16 @@ const RetrospectiveComponent = () => {
         setFormValues(values => ({ ...values, [name]: value }));
     };
 
-    const saveItems = (item: string, item_array: string[]) => {
-        localStorage.setItem(item, JSON.stringify([]));
-        localStorage.setItem(item, JSON.stringify(item_array));
-    };
-
     const resetItems = () => {
-        localStorage.setItem(WENT_WELL_ITEMS, JSON.stringify([]));
-        localStorage.setItem(TO_IMRPOVE_ITEMS, JSON.stringify([]));
-        localStorage.setItem(ACTION_ITEMS, JSON.stringify([]));
+        resetAllItems();
     };
 
     const exportItems = () => {
-        interface resultObj {
-            went_well: string[];
-            to_improve: string[];
-            action_items: string[];
-        }
-
-        var result: resultObj = {
-            went_well: [],
-            to_improve: [],
-            action_items: [],
+        var result: IRetrospectiveData = {
+            went_well: getWentWellList(),
+            to_improve: getToImproveItemsList(),
+            action_items: getActionItemsList(),
         };
-
-        result.went_well = JSON.parse(
-            localStorage.getItem(WENT_WELL_ITEMS) || JSON.stringify([])
-        );
-        result.to_improve = JSON.parse(
-            localStorage.getItem(TO_IMRPOVE_ITEMS) || JSON.stringify([])
-        );
-        result.action_items = JSON.parse(
-            localStorage.getItem(ACTION_ITEMS) || JSON.stringify([])
-        );
 
         var result_str = `Sprint: ${1}\n\n`;
         result_str += `\nWent well\n -${result.went_well.join('\n -')}\n`;
@@ -184,20 +170,11 @@ const RetrospectiveComponent = () => {
     }, [isTimerActive, seconds]);
 
     useEffect(() => {
-        const went_well: string[] = JSON.parse(
-            localStorage.getItem(WENT_WELL_ITEMS) || JSON.stringify([])
-        );
-        const to_improve: string[] = JSON.parse(
-            localStorage.getItem(TO_IMRPOVE_ITEMS) || JSON.stringify([])
-        );
-        const action_items: string[] = JSON.parse(
-            localStorage.getItem(ACTION_ITEMS) || JSON.stringify([])
-        );
         setData({
             ...data,
-            went_well: went_well,
-            to_improve: to_improve,
-            action_items: action_items,
+            went_well: getWentWellList(),
+            to_improve: getToImproveItemsList(),
+            action_items: getActionItemsList(),
         });
     }, [data]);
 
@@ -205,40 +182,39 @@ const RetrospectiveComponent = () => {
         var newArray: string[] = [];
         switch (item) {
             case WENT_WELL_ITEMS:
-                newArray = [...data.went_well, formValues.went_well];
+                newArray = [...data.went_well, formValues.wentWellItem];
                 setData({
                     ...data,
                     went_well: newArray,
                 });
-                saveItems(WENT_WELL_ITEMS, newArray);
+                saveWentWellList(newArray);
                 setFormValues({
                     ...formValues,
-                    went_well: '',
+                    wentWellItem: '',
                 });
-
                 break;
             case TO_IMRPOVE_ITEMS:
-                newArray = [...data.to_improve, formValues.to_improve];
+                newArray = [...data.to_improve, formValues.toImproveItem];
                 setData({
                     ...data,
                     to_improve: newArray,
                 });
-                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                saveToImproveItemsList(newArray);
                 setFormValues({
                     ...formValues,
-                    to_improve: '',
+                    toImproveItem: '',
                 });
                 break;
             case ACTION_ITEMS:
-                newArray = [...data.action_items, formValues.action_item];
+                newArray = [...data.action_items, formValues.actionItem];
                 setData({
                     ...data,
                     action_items: newArray,
                 });
-                saveItems(ACTION_ITEMS, newArray);
+                saveActionItemsList(newArray);
                 setFormValues({
                     ...formValues,
-                    action_item: '',
+                    actionItem: '',
                 });
                 break;
             default:
@@ -251,19 +227,19 @@ const RetrospectiveComponent = () => {
             case WENT_WELL_ITEMS:
                 setFormValues({
                     ...formValues,
-                    went_well: '',
+                    wentWellItem: '',
                 });
                 break;
             case TO_IMRPOVE_ITEMS:
                 setFormValues({
                     ...formValues,
-                    to_improve: '',
+                    toImproveItem: '',
                 });
                 break;
             case ACTION_ITEMS:
                 setFormValues({
                     ...formValues,
-                    action_item: '',
+                    actionItem: '',
                 });
                 break;
             default:
@@ -281,7 +257,7 @@ const RetrospectiveComponent = () => {
                     ...data,
                     went_well: newArray,
                 });
-                saveItems(WENT_WELL_ITEMS, newArray);
+                saveWentWellList(newArray);
                 break;
             case TO_IMRPOVE_ITEMS:
                 newArray = [...data.to_improve];
@@ -290,7 +266,7 @@ const RetrospectiveComponent = () => {
                     ...data,
                     to_improve: newArray,
                 });
-                saveItems(TO_IMRPOVE_ITEMS, newArray);
+                saveToImproveItemsList(newArray);
                 break;
             case ACTION_ITEMS:
                 newArray = [...data.action_items];
@@ -299,7 +275,7 @@ const RetrospectiveComponent = () => {
                     ...data,
                     action_items: newArray,
                 });
-                saveItems(ACTION_ITEMS, newArray);
+                saveActionItemsList(newArray);
                 break;
             default:
                 break;
@@ -380,7 +356,7 @@ const RetrospectiveComponent = () => {
                             <Text fontSize="lg" my={2}>
                                 👌 Went well
                             </Text>
-                            {formValues.went_well && (
+                            {formValues.wentWellItem && (
                                 <FormActionButtons
                                     onAdd={() => {
                                         addValue(WENT_WELL_ITEMS);
@@ -397,8 +373,8 @@ const RetrospectiveComponent = () => {
                             margin="normal"
                             variant="filled"
                             rows={5}
-                            name="went_well"
-                            value={formValues.went_well}
+                            name="wentWellItem"
+                            value={formValues.wentWellItem}
                             onChange={handleChange}
                             maxWidth="initial"
                         />
@@ -426,7 +402,7 @@ const RetrospectiveComponent = () => {
                             <Text fontSize="lg" my={2}>
                                 📈 To improve
                             </Text>
-                            {formValues.to_improve && (
+                            {formValues.toImproveItem && (
                                 <FormActionButtons
                                     onAdd={() => {
                                         addValue(TO_IMRPOVE_ITEMS);
@@ -445,8 +421,8 @@ const RetrospectiveComponent = () => {
                             margin="normal"
                             variant="filled"
                             rows={5}
-                            name="to_improve"
-                            value={formValues.to_improve}
+                            name="toImproveItem"
+                            value={formValues.toImproveItem}
                             onChange={handleChange}
                             maxWidth="initial"
                         />
@@ -474,7 +450,7 @@ const RetrospectiveComponent = () => {
                             <Text fontSize="lg" my={2}>
                                 📍 Action items
                             </Text>
-                            {formValues.action_item && (
+                            {formValues.actionItem && (
                                 <FormActionButtons
                                     onAdd={() => {
                                         addValue(ACTION_ITEMS);
@@ -491,8 +467,8 @@ const RetrospectiveComponent = () => {
                             margin="normal"
                             variant="filled"
                             rows={5}
-                            name="action_item"
-                            value={formValues.action_item}
+                            name="actionItem"
+                            value={formValues.actionItem}
                             onChange={handleChange}
                             maxWidth="initial"
                         />
