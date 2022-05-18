@@ -1,0 +1,91 @@
+import {
+    Button,
+    Stack,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+    useToast,
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/config';
+import { IGame } from '../../interfaces';
+import { getPlayerRecentGames } from '../../services/poker/players';
+
+const SelectSession = () => {
+    // router
+    const router = useRouter();
+    // user
+    const [user] = useAuthState(auth);
+    // states
+    const [recentGames, setRecentGames] = useState<IGame[] | undefined>(undefined);
+    // toast
+    const toast = useToast();
+
+    useEffect(() => {
+        async function fetchData() {
+            const games = await getPlayerRecentGames();
+            if (games) {
+                setRecentGames(games);
+            }
+        }
+        fetchData();
+    }, []);
+
+    const joinSelectedSession = (code: string) => {
+        if (code) {
+            // add player to game
+            console.log(user);
+            router.push(`/sprint-poker/${code}`);
+        } else {
+            toast({
+                title: 'An error occured !!!',
+                status: 'error',
+                isClosable: true,
+            });
+        }
+    };
+
+    return (
+        <>
+            <Stack spacing="6">
+                <TableContainer>
+                    <Table variant="striped">
+                        <Thead>
+                            <Tr>
+                                <Th>Session Name</Th>
+                                <Th colSpan={2}>Session Code</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {recentGames &&
+                                recentGames.map(recentGame => (
+                                    <Tr key={recentGame.id}>
+                                        <Td>{recentGame.name}</Td>
+                                        <Td>{recentGame.id}</Td>
+                                        <Td>
+                                            <Button
+                                                color="cyan.500"
+                                                onClick={() => {
+                                                    joinSelectedSession(recentGame.id);
+                                                }}
+                                            >
+                                                JOIN
+                                            </Button>
+                                        </Td>
+                                    </Tr>
+                                ))}
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </Stack>
+        </>
+    );
+};
+
+export default SelectSession;
