@@ -1,5 +1,20 @@
-import { Box, Button } from '@chakra-ui/react';
-import { MouseEventHandler } from 'react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { MouseEventHandler, useState } from 'react';
+
+const getCardStyle = (clicked: boolean) => {
+    return clicked
+        ? {
+              marginTop: '-1em',
+              zIndex: 5,
+              backgroundColor: 'gray.400',
+              border: '2px dashed black',
+              boxShadow: '0 0px 12px 0 grey',
+          }
+        : {
+              marginTop: '0',
+              zIndex: 0,
+          };
+};
 
 export const PokerCard = ({
     id,
@@ -10,27 +25,39 @@ export const PokerCard = ({
     bgcolor: string;
     onPress: MouseEventHandler;
 }) => {
+    const [isCardClicked, setCardClicked] = useState(false);
+
     return (
         <>
             <Button
                 maxW="sm"
                 maxH="lg"
-                borderWidth="1px"
+                borderWidth="2px"
                 borderRadius="lg"
                 bg={bgcolor}
-                onClick={onPress}
+                onClick={() => {
+                    setCardClicked(!isCardClicked);
+                }}
                 height="8em"
                 m="1"
+                flexDirection="column"
+                sx={getCardStyle(isCardClicked)}
             >
-                <Box
+                <Flex textAlign="left" w="100%">
+                    <Text fontSize="xs">{id}</Text>
+                </Flex>
+                <Flex
                     p="6"
-                    display="flex"
                     alignItems="center"
                     justifyContent="center"
                     alignContent="center"
+                    w="100%"
                 >
-                    {id}
-                </Box>
+                    <Text fontSize="3xl">{id}</Text>
+                </Flex>
+                <Flex textAlign="right" w="100%" justifyContent="flex-end">
+                    <Text fontSize="xs">{id}</Text>
+                </Flex>
             </Button>
         </>
     );
