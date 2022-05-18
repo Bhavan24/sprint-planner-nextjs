@@ -1,36 +1,17 @@
 import {
     Box,
-    Button,
     Container,
-    FormControl,
-    FormLabel,
-    Input,
-    Select,
     Stack,
     Tab,
-    Table,
-    TableContainer,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
     useBreakpointValue,
     useColorModeValue,
-    useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebase/config';
-import { GAME_TYPES } from '../../constants';
-import { IGame, INewSession } from '../../interfaces';
-import { addNewGame } from '../../services/poker/games';
-import { getPlayerRecentGames } from '../../services/poker/players';
+import { useEffect, useState } from 'react';
 import CreateSession from './create-session';
 import JoinSession from './join-session';
 import SelectSession from './select-session';
@@ -39,15 +20,12 @@ const PokerMainComponent = () => {
     // router
     const router = useRouter();
     // states
-    const [sessionCode, setSessionCode] = useState('');
     const [tabIndex, setTabIndex] = useState(0);
 
     useEffect(() => {
         if (!router.isReady) return;
         const { join } = router.query;
         join && setTabIndex(1);
-        join && setSessionCode(join.toString());
-        console.log(join);
     }, [router.isReady]);
 
     return (
@@ -103,7 +81,7 @@ const PokerMainComponent = () => {
                                             <CreateSession />
                                         </TabPanel>
                                         <TabPanel>
-                                            <JoinSession code={sessionCode} />
+                                            <JoinSession />
                                         </TabPanel>
                                         <TabPanel>
                                             <SelectSession />

@@ -8,19 +8,25 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
 
-const JoinSession = ({ code }: { code: string }) => {
+const JoinSession = () => {
     // router
     const router = useRouter();
     // user
     const [user] = useAuthState(auth);
     // states
-    const [sessionCode, setSessionCode] = useState(code);
+    const [sessionCode, setSessionCode] = useState('');
     // toast
     const toast = useToast();
+
+    useEffect(() => {
+        if (!router.isReady) return;
+        const { join } = router.query;
+        join && setSessionCode(join.toString());
+    }, [router.isReady]);
 
     const handleSessionCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSessionCode(e.target.value);
