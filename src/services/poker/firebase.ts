@@ -1,12 +1,11 @@
 import {
-    addDoc,
     collection,
     doc,
     getDoc,
     getDocs,
     query,
     setDoc,
-    updateDoc,
+    updateDoc
 } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { FB_DB_GAMES, FB_DB_PLAYERS } from '../../constants';
@@ -66,8 +65,8 @@ export const streamData = (id: string) => {
     return docRef;
 };
 export const streamPlayersFromStore = (id: string) => {
-    const docRef = doc(firestore, FB_DB_GAMES, id, FB_DB_PLAYERS);
-    return docRef;
+    const colRef = collection(firestore, FB_DB_GAMES, id, FB_DB_PLAYERS);
+    return colRef;
 };
 
 export const updateGameDataInStore = async (
