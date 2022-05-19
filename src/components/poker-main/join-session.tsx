@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
+import { getGame } from '../../services/poker/games';
+import { addPlayerToGame, isCurrentPlayerInGame } from '../../services/poker/players';
 
 const JoinSession = () => {
     // router
@@ -28,15 +30,29 @@ const JoinSession = () => {
         join && setSessionCode(join.toString());
     }, [router.isReady]);
 
+    useEffect(() => {
+        async function fetchData() {
+            if (sessionCode) {
+                if (await getGame(sessionCode)) {
+                    if (isCurrentPlayerInGame(sessionCode)) {
+                        router.push(`/sprint-poker/${sessionCode}`);
+                    }
+                }
+            }
+        }
+        fetchData();
+    }, [sessionCode, router]);
+
     const handleSessionCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSessionCode(e.target.value);
     };
 
-    const joinSession = () => {
+    const joinSession = async () => {
         if (sessionCode) {
-            // add player to game
-            console.log(user);
-            router.push(`/sprint-poker/${sessionCode}`);
+            const res = user
+                ? await addPlayerToGame(sessionCode, user.displayName || user.email || '')
+                : null;
+            res && router.push(`/sprint-poker/${sessionCode}`);
         } else {
             toast({
                 title: 'Please fill all fields !!!',
