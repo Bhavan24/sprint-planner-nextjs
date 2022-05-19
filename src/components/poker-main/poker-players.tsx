@@ -1,5 +1,38 @@
-import { Box, Button, Flex, Text, Tooltip } from '@chakra-ui/react';
-import { IPlayerCardProps, IPokerPlayersProps } from '../../interfaces';
+import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
+import { GAME_STATUS } from '../../constants';
+import { IGame, IPlayer, IPlayerCardProps, IPokerPlayersProps } from '../../interfaces';
+import { getCards } from '../../utils/poker-util';
+
+const getCardColor = (game: IGame, value: number | undefined): string => {
+    if (game.gameStatus !== GAME_STATUS.FINISHED) {
+        return 'gray.400';
+    }
+    const card = getCards(game.gameType).find(card => card.value === value);
+    return card ? card.color : 'teal';
+};
+
+const getCardValue = (player: IPlayer, game: IGame) => {
+    if (game.gameStatus !== GAME_STATUS.FINISHED) {
+        return player.status === GAME_STATUS.FINISHED ? '👍' : '🤔';
+    }
+
+    if (game.gameStatus === GAME_STATUS.FINISHED) {
+        if (player.status === GAME_STATUS.FINISHED) {
+            return getCardDisplayValue(game.gameType, player.value);
+        }
+        return '🤔';
+    }
+};
+
+const getCardDisplayValue = (
+    gameType: string | undefined,
+    cardValue: number | undefined
+): string | number | undefined => {
+    return (
+        getCards(gameType).find(card => card.value === cardValue)?.displayValue ||
+        cardValue
+    );
+};
 
 const PlayerCard: React.FC<IPlayerCardProps> = props => {
     return (
@@ -12,6 +45,7 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
             height="8em"
             width="6em"
             m="1"
+            bg={getCardColor(props.game, props.player.value)}
         >
             <Flex
                 p="8"
@@ -20,7 +54,7 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
                 alignContent="center"
                 w="100%"
             >
-                <Text fontSize="2xl">{props.player.value}</Text>
+                <Text fontSize="2xl">{getCardValue(props.player, props.game)}</Text>
             </Flex>
             <Tooltip label={props.player.name}>
                 <Text fontSize="md" overflow="hidden">

@@ -5,6 +5,7 @@ import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
 import { IPokerControllerProps } from '../../interfaces';
+import { finishGame, resetGame } from '../../services/poker/games';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
@@ -21,12 +22,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     }, [router.isReady]);
 
     const handleRevealCards = () => {
-        toast({
-            position: 'top-right',
-            title: 'Cards Revealed!',
-            status: 'success',
-            isClosable: true,
-        });
+        finishGame(gameId);
     };
 
     const handleSaveIssueCards = () => {
@@ -39,12 +35,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     };
 
     const handleRestartSession = () => {
-        toast({
-            position: 'top-right',
-            title: 'Session Restarted!',
-            status: 'info',
-            isClosable: true,
-        });
+        resetGame(gameId);
     };
 
     const handleExitSession = () => {
@@ -60,6 +51,10 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
             status: 'success',
             isClosable: true,
         });
+    };
+
+    const isModerator = (moderatorId: string, currentPlayerId: string) => {
+        return moderatorId === currentPlayerId;
     };
 
     return (
@@ -95,39 +90,46 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                             Average : {average}
                         </Box>
                         <Box gap="2" p="2">
-                            <Tooltip label="Reveal Cards">
-                                <IconButton
-                                    colorScheme="green"
-                                    aria-label="Reveal"
-                                    icon={<FaRegEye />}
-                                    isRound
-                                    size="lg"
-                                    m={2}
-                                    onClick={handleRevealCards}
-                                />
-                            </Tooltip>
-                            <Tooltip label="Save Issue">
-                                <IconButton
-                                    colorScheme="teal"
-                                    aria-label="Save Issue"
-                                    icon={<FaSave />}
-                                    isRound
-                                    size="lg"
-                                    m={2}
-                                    onClick={handleSaveIssueCards}
-                                />
-                            </Tooltip>
-                            <Tooltip label="Restart Session">
-                                <IconButton
-                                    colorScheme="orange"
-                                    aria-label="Restart"
-                                    icon={<VscDebugRestart />}
-                                    isRound
-                                    size="lg"
-                                    m={2}
-                                    onClick={handleRestartSession}
-                                />
-                            </Tooltip>
+                            {isModerator(
+                                props.game.createdById,
+                                props.currentPlayerId
+                            ) && (
+                                <>
+                                    <Tooltip label="Reveal Cards">
+                                        <IconButton
+                                            colorScheme="green"
+                                            aria-label="Reveal"
+                                            icon={<FaRegEye />}
+                                            isRound
+                                            size="lg"
+                                            m={2}
+                                            onClick={handleRevealCards}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip label="Save Issue">
+                                        <IconButton
+                                            colorScheme="teal"
+                                            aria-label="Save Issue"
+                                            icon={<FaSave />}
+                                            isRound
+                                            size="lg"
+                                            m={2}
+                                            onClick={handleSaveIssueCards}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip label="Restart Session">
+                                        <IconButton
+                                            colorScheme="orange"
+                                            aria-label="Restart"
+                                            icon={<VscDebugRestart />}
+                                            isRound
+                                            size="lg"
+                                            m={2}
+                                            onClick={handleRestartSession}
+                                        />
+                                    </Tooltip>
+                                </>
+                            )}
                             <Tooltip label="Exit Session">
                                 <IconButton
                                     colorScheme="red"
