@@ -5,7 +5,7 @@ import {
     getDocs,
     query,
     setDoc,
-    updateDoc
+    updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { FB_DB_GAMES, FB_DB_PLAYERS } from '../../constants';
@@ -46,7 +46,7 @@ export const getPlayerFromStore = async (
     gameId: string,
     playerId: string
 ): Promise<IPlayer | undefined> => {
-    const playerRef = doc(firestore, FB_DB_GAMES, gameId, FB_DB_GAMES, playerId);
+    const playerRef = doc(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS, playerId);
     const playerSnap = await getDoc(playerRef);
 
     let player = undefined;

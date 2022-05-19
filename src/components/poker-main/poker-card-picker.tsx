@@ -29,7 +29,6 @@ const PokerCardPicker: React.FC<ICardPickerProps> = ({
                         borderRadius="lg"
                         onClick={() => {
                             playPlayer(game.id, currentPlayerId, card);
-                            alert('done');
                         }}
                         height="8em"
                         width="5em"
