@@ -72,10 +72,13 @@ const SprintPokerGame = () => {
                 {game && players && currentPlayerId ? (
                     <>
                         <Box textAlign="center" m={5}>
-                            <PokerPlayers />
+                            <PokerPlayers game={game} players={players} />
                         </Box>
                         <Box textAlign="center" m={5}>
-                            <PokerController game={game} />
+                            <PokerController
+                                game={game}
+                                currentPlayerId={currentPlayerId}
+                            />
                         </Box>
                         <Box textAlign="center" m={5}>
                             <Box m={2}>{'Choose your card 👇'}</Box>

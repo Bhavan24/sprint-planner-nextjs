@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Text, Tooltip } from '@chakra-ui/react';
-import { IPlayerCardProps } from '../../interfaces';
+import { IPlayerCardProps, IPokerPlayersProps } from '../../interfaces';
 
 const PlayerCard: React.FC<IPlayerCardProps> = props => {
     return (
@@ -20,26 +20,27 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
                 alignContent="center"
                 w="100%"
             >
-                <Text fontSize="2xl">{props.value}</Text>
+                <Text fontSize="2xl">{props.player.value}</Text>
             </Flex>
-            <Tooltip label={props.name}>
+            <Tooltip label={props.player.name}>
                 <Text fontSize="md" overflow="hidden">
-                    {props.name}
+                    {props.player.name}
                 </Text>
             </Tooltip>
         </Box>
     );
 };
 
-const PokerPlayers = () => {
+const PokerPlayers: React.FC<IPokerPlayersProps> = props => {
     return (
         <>
             <Text fontSize="md" m={2}>
                 👍 - Voting Done 🤔 - Yet to Vote
             </Text>
             <Flex alignContent="center" alignItems="center" justifyContent="center">
-                <PlayerCard name={'bhavaneetharan'} value={'1'} />
-                <PlayerCard name={'keerthu'} value={'4'} />
+                {props.players.map((player, index: number) => (
+                    <PlayerCard key={index} game={props.game} player={player} />
+                ))}
             </Flex>
         </>
     );
