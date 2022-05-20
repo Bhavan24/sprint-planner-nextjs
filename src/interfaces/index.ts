@@ -136,3 +136,8 @@ export interface INewRetroItemProps {
     desc: string;
     refresh: boolean;
 }
+
+export interface INotesEditorProps {
+    value: string;
+    onChange: (value: string) => void;
+}

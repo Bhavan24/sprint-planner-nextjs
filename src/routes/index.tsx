@@ -1,4 +1,9 @@
-import { AiFillSwitcher, AiOutlineAppstoreAdd, AiOutlineBarChart } from 'react-icons/ai';
+import {
+    AiFillSwitcher,
+    AiOutlineAppstoreAdd,
+    AiOutlineBarChart,
+    AiOutlineFileText,
+} from 'react-icons/ai';
 
 export const routes = [
     {
@@ -21,5 +26,12 @@ export const routes = [
         key: 'sprint-poker',
         path: '/sprint-poker',
         icon: <AiFillSwitcher />,
+    },
+    {
+        id: 2,
+        name: 'Notes',
+        key: 'notes',
+        path: '/notes',
+        icon: <AiOutlineFileText />,
     },
 ];
