@@ -59,6 +59,9 @@ export const Header = (props: HeaderProps) => {
                                         colorScheme="teal"
                                         variant="outline"
                                         width={'10em'}
+                                        sx={{
+                                            margin: '0 1em !important',
+                                        }}
                                     >
                                         {route.name}
                                     </Button>
