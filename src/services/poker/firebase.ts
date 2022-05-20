@@ -34,7 +34,7 @@ export const getGameFromStore = async (id: string): Promise<IGame | undefined> =
 };
 
 export const getPlayersFromStore = async (gameId: string): Promise<IPlayer[]> => {
-    const playersQuery = query(collection(firestore, FB_DB_GAMES, gameId, FB_DB_GAMES));
+    const playersQuery = query(collection(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS));
     const playersSnap = await getDocs(playersQuery);
 
     let players: IPlayer[] = [];

@@ -9,7 +9,7 @@ const PokerCardPicker: React.FC<ICardPickerProps> = ({
     players,
     currentPlayerId,
 }) => {
-    const cards = getCards(game.gameType);
+    const cards = getCards(game);
 
     const playPlayer = (gameId: string, playerId: string, card: ICardConfig) => {
         if (game.gameStatus !== GAME_STATUS.FINISHED) {

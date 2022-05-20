@@ -5,7 +5,6 @@ import { IPlayerGame } from '../../interfaces';
 export const getPlayerGamesFromCache = (): IPlayerGame[] => {
     const store = localStorage.getItem(POKER_PLAYER_GAMES);
     const playerGames: IPlayerGame[] = store ? JSON.parse(store) : [];
-    console.log(playerGames);
     return playerGames;
 };
 
@@ -13,7 +12,6 @@ export const isGameInPlayerCache = (gameId: string): boolean => {
     const playerGames = getPlayerGamesFromCache();
     const found = playerGames.find(playerGames => playerGames.gameId === gameId);
     const result = Boolean(found);
-    console.log(result);
     return result;
 };
 

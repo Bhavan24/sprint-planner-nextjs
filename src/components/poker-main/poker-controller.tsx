@@ -10,7 +10,6 @@ import { finishGame, resetGame } from '../../services/poker/games';
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
     const [gameId, setGameId] = useState('');
-    const [average, setAverage] = useState(props.game.average);
 
     // toast
     const toast = useToast();
@@ -87,7 +86,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                             lineHeight="tight"
                             noOfLines={1}
                         >
-                            Average : {average}
+                            Average : {props.game.average || 0}
                         </Box>
                         <Box gap="2" p="2">
                             {isModerator(

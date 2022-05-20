@@ -7,7 +7,7 @@ const getCardColor = (game: IGame, value: number | undefined): string => {
     if (game.gameStatus !== GAME_STATUS.FINISHED) {
         return 'gray.400';
     }
-    const card = getCards(game.gameType).find(card => card.value === value);
+    const card = getCards(game).find(card => card.value === value);
     return card ? card.color : 'teal';
 };
 
@@ -18,19 +18,18 @@ const getCardValue = (player: IPlayer, game: IGame) => {
 
     if (game.gameStatus === GAME_STATUS.FINISHED) {
         if (player.status === GAME_STATUS.FINISHED) {
-            return getCardDisplayValue(game.gameType, player.value);
+            return getCardDisplayValue(game, player.value);
         }
         return '🤔';
     }
 };
 
 const getCardDisplayValue = (
-    gameType: string | undefined,
+    game: IGame,
     cardValue: number | undefined
 ): string | number | undefined => {
     return (
-        getCards(gameType).find(card => card.value === cardValue)?.displayValue ||
-        cardValue
+        getCards(game).find(card => card.value === cardValue)?.displayValue || cardValue
     );
 };
 

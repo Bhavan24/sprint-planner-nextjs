@@ -1,9 +1,10 @@
+import { IGame } from './../interfaces/index';
 import { GAME_TYPES } from '../constants';
 import { ICardConfig } from '../interfaces';
 
-export const getCards = (gameType: string | undefined) => {
+export const getCards = (game: IGame | undefined) => {
     let id = 0;
-
+    const gameType = game?.gameType;
     switch (gameType) {
         case GAME_TYPES[0].type:
             id = 0;
