@@ -97,7 +97,7 @@ const RetrospectiveComponent = () => {
                 className={styles.topBar}
             >
                 <TimerComponent />
-                <Flex>
+                <Flex alignItems="center">
                     <Button
                         variant="outline"
                         sx={{

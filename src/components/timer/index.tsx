@@ -1,26 +1,38 @@
-import { RepeatClockIcon, TimeIcon } from '@chakra-ui/icons';
 import {
-    Button,
     Flex,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
     Tag,
     TagLabel,
-    Tooltip,
-    useColorModeValue,
+    useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { colors } from '../../theme/colors';
+import { GiBackwardTime } from 'react-icons/gi';
+import { MdTimer, MdTimerOff } from 'react-icons/md';
+import { RiTimerLine } from 'react-icons/ri';
 
 const TimerComponent = () => {
     // timer
     const [seconds, setSeconds] = useState(0);
     const [isTimerActive, setTimerActive] = useState(false);
 
-    const handleTimer = () => {
-        setTimerActive(!isTimerActive);
+    // toast
+    const toast = useToast();
+
+    const startTimer = () => {
+        setTimerActive(true);
     };
 
     const resetTimer = () => {
         setSeconds(0);
+    };
+
+    const stopTimer = () => {
+        setSeconds(0);
+        setTimerActive(false);
     };
 
     const getTime = (seconds: number) => {
@@ -39,35 +51,63 @@ const TimerComponent = () => {
         } else if (!isTimerActive && seconds !== 0) {
             clearInterval(interval);
         }
+        if (seconds == 600) {
+            toast({
+                title: 'Time Limit Reached!!!',
+                status: 'warning',
+                isClosable: true,
+            });
+        }
         return () => clearInterval(interval);
     }, [isTimerActive, seconds]);
 
     return (
         <>
             <Flex gap={2}>
-                <Tag
-                    size="lg"
-                    colorScheme={seconds > 540 ? 'red' : 'green'}
-                    borderRadius="full"
-                    width="6em"
-                    justifyContent="center"
-                >
-                    <TagLabel>{getTime(seconds)}</TagLabel>
-                </Tag>
-                <Button
-                    leftIcon={<TimeIcon />}
-                    bg={useColorModeValue(colors.btn_timer.light, colors.btn_timer.dark)}
-                    variant="solid"
-                    width="10em"
-                    onClick={handleTimer}
-                >
-                    {isTimerActive ? 'Stop Timer' : 'Start Timer'}
-                </Button>
-                <Button onClick={resetTimer}>
-                    <Tooltip label="Reset Timer" fontSize="md">
-                        <RepeatClockIcon />
-                    </Tooltip>
-                </Button>
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label="Start Timer"
+                        icon={<RiTimerLine />}
+                        size="lg"
+                        fontSize="1.5em"
+                        m={2}
+                    />
+                    <MenuList>
+                        <MenuItem
+                            icon={<MdTimer size="2em" />}
+                            fontSize="0.8em"
+                            onClick={startTimer}
+                        >
+                            Start Timer
+                        </MenuItem>
+                        <MenuItem
+                            icon={<GiBackwardTime size="2em" />}
+                            fontSize="0.8em"
+                            onClick={resetTimer}
+                        >
+                            Restart Timer
+                        </MenuItem>
+                        <MenuItem
+                            icon={<MdTimerOff size="2em" />}
+                            fontSize="0.8em"
+                            onClick={stopTimer}
+                        >
+                            Cancel Timer
+                        </MenuItem>
+                    </MenuList>
+                </Menu>
+                <Flex m={2}>
+                    <Tag
+                        size="lg"
+                        colorScheme={seconds > 540 ? 'red' : 'green'}
+                        borderRadius="full"
+                        width="6em"
+                        justifyContent="center"
+                    >
+                        <TagLabel>{getTime(seconds)}</TagLabel>
+                    </Tag>
+                </Flex>
             </Flex>
         </>
     );
