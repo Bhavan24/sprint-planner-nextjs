@@ -1,7 +1,8 @@
 import { IconProps } from '@chakra-ui/react';
+import { FocusableElement } from '@chakra-ui/utils';
 import type { NextComponentType, NextPageContext } from 'next';
 import type { NextRouter } from 'next/router';
-import { MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler, ReactNode, RefObject } from 'react';
 
 export interface AppRenderProps {
     pageProps: object;
@@ -139,4 +140,16 @@ export interface INewRetroItemProps {
 export interface INotesEditorProps {
     value: string;
     onChange: (value: string) => void;
+}
+
+export interface IAlertBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    cancelRef: RefObject<FocusableElement>;
+    onAction: MouseEventHandler<HTMLButtonElement>;
+    btnText: string;
+    btnColor: string;
+    title: string;
+    body?: string;
 }

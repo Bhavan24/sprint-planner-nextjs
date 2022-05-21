@@ -1,21 +1,34 @@
 import { CheckCircleIcon, DownloadIcon, NotAllowedIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, GridItem, useColorModeValue } from '@chakra-ui/react';
-import { useState } from 'react';
+import {
+    Box,
+    Button,
+    Flex,
+    GridItem,
+    useColorModeValue,
+    useDisclosure,
+} from '@chakra-ui/react';
+import { FocusableElement } from '@chakra-ui/utils';
+import { RefObject, useRef, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import { IRetrospectiveData } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
+import AlertBox from '../alertbox';
 import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
 import styles from './retro.module.css';
 
 const RetrospectiveComponent = () => {
+    // popup
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef() as RefObject<FocusableElement>;
     // retro data
     const [refresh, setRefresh] = useState(false);
 
     const resetItems = () => {
         resetAllItems();
         setRefresh(!refresh);
+        onClose();
     };
 
     const exportItems = () => {
@@ -91,7 +104,7 @@ const RetrospectiveComponent = () => {
                             ),
                             w: '10em',
                         }}
-                        onClick={resetItems}
+                        onClick={onOpen}
                         rightIcon={<NotAllowedIcon />}
                     >
                         Clear All
@@ -124,6 +137,17 @@ const RetrospectiveComponent = () => {
                     />
                 </GridItem>
             </Box>
+            <AlertBox
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                cancelRef={cancelRef}
+                onAction={resetItems}
+                btnText={'Delete'}
+                btnColor={'red'}
+                title={'Clear All Items'}
+                body={`Are you sure? You can't undo this action afterwards.`}
+            />
         </>
     );
 };

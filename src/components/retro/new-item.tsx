@@ -7,16 +7,23 @@ import {
     Text,
     Textarea,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { FocusableElement } from '@chakra-ui/utils';
+import { MouseEventHandler, RefObject, useEffect, useRef, useState } from 'react';
 import { INewRetroItemProps } from '../../interfaces';
 import { getRetroList, saveRetroList } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
+import AlertBox from '../alertbox';
 
 const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => {
+    // popup
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef() as RefObject<FocusableElement>;
+
     return (
         <Box
             p={4}
@@ -38,9 +45,20 @@ const DetailedCard: React.FC<{
                 {content}
             </Text>
             <Flex justifyContent="flex-end" mt={2}>
-                <IconButton aria-label="delete" onClick={onDelete}>
+                <IconButton aria-label="delete" onClick={onOpen}>
                     <DeleteIcon />
                 </IconButton>
+                <AlertBox
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    cancelRef={cancelRef}
+                    onAction={onDelete}
+                    btnText={'Delete'}
+                    btnColor={'red'}
+                    title={'Delete Item'}
+                    body={`Are you sure? You can't undo this action afterwards.`}
+                />
             </Flex>
         </Box>
     );
