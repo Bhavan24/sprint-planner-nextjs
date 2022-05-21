@@ -43,8 +43,8 @@ const FormActionButtons: React.FC<{
     onAdd: MouseEventHandler;
     onClear: MouseEventHandler;
 }> = ({ onAdd, onClear }) => {
-    const addColor = useColorModeValue('green.400', 'green.400');
-    const clearColor = useColorModeValue('red.600', 'red.400');
+    const addColor = useColorModeValue('blue.400', 'blue.500');
+    const clearColor = useColorModeValue('gray.400', 'gray.300');
     return (
         <Flex justifyContent="flex-end">
             <Button variant="outline" onClick={onAdd} sx={{ mx: 2, color: addColor }}>

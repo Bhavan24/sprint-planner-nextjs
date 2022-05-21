@@ -1,14 +1,14 @@
-import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 import { GAME_STATUS } from '../../constants';
 import { IGame, IPlayer, IPlayerCardProps, IPokerPlayersProps } from '../../interfaces';
 import { getCards } from '../../utils/poker-util';
 
 const getCardColor = (game: IGame, value: number | undefined): string => {
     if (game.gameStatus !== GAME_STATUS.FINISHED) {
-        return 'gray.400';
+        return useColorModeValue('gray.300', 'gray.600');
     }
     const card = getCards(game).find(card => card.value === value);
-    return card ? card.color : 'teal';
+    return card ? card.color : '#3993ff';
 };
 
 const getCardValue = (player: IPlayer, game: IGame) => {
@@ -47,13 +47,13 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
             bg={getCardColor(props.game, props.player.value)}
         >
             <Flex
-                p="8"
+                p="3"
                 alignItems="center"
                 justifyContent="center"
                 alignContent="center"
                 w="100%"
             >
-                <Text fontSize="2xl">{getCardValue(props.player, props.game)}</Text>
+                <Text fontSize="5xl">{getCardValue(props.player, props.game)}</Text>
             </Flex>
             <Tooltip label={props.player.name}>
                 <Text fontSize="md" overflow="hidden">

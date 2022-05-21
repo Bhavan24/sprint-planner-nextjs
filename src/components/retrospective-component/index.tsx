@@ -24,8 +24,10 @@ import styles from './retrospective.module.css';
 
 const RetrospectiveComponent = () => {
     // theme
+    const savebtnColor = useColorModeValue('green.600', 'green.400');
     const exportbtnColor = useColorModeValue('purple.600', 'purple.400');
     const deleteBtnColor = useColorModeValue('red.600', 'red.400');
+    const timerBtnColor = useColorModeValue('blue.400', 'blue.500');
 
     // timer
     const [seconds, setSeconds] = useState(0);
@@ -110,7 +112,7 @@ const RetrospectiveComponent = () => {
                     </Tag>
                     <Button
                         leftIcon={<TimeIcon />}
-                        colorScheme="blue"
+                        bg={timerBtnColor}
                         variant="solid"
                         width="10em"
                         onClick={handleTimer}
@@ -126,7 +128,7 @@ const RetrospectiveComponent = () => {
                 <Flex>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: 'green.500', w: '10em' }}
+                        sx={{ mx: 2, color: savebtnColor, w: '10em' }}
                         rightIcon={<CheckCircleIcon />}
                     >
                         Save
