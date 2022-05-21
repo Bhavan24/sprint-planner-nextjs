@@ -1,6 +1,5 @@
 import {
     Box,
-    Grid,
     GridItem,
     Table,
     TableCaption,
@@ -13,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { BOX_DETAILS } from '../../constants';
+import styles from './main.module.css';
 
 interface SprintBoxProps {
     box: {
@@ -83,16 +83,13 @@ export const SprintTable = () => {
 export const MainComponent = () => {
     return (
         <Box textAlign="center" fontSize="xl" p={3}>
-            <Grid p={3} templateColumns="repeat(3, 1fr)">
+            <Box p={3} className={styles.itemsContainer}>
                 {BOX_DETAILS.map(box => (
                     <GridItem w="100%" key={box.link}>
                         <SprintBox box={box} />
                     </GridItem>
                 ))}
-                {/* <GridItem w="100%" colSpan={3}>
-                    <SprintTable />
-                </GridItem> */}
-            </Grid>
+            </Box>
         </Box>
     );
 };
