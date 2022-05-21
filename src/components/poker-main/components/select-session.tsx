@@ -57,7 +57,7 @@ const SelectSession = () => {
         <>
             <Stack spacing="6">
                 <TableContainer>
-                    <Table variant="striped">
+                    <Table variant="striped" size="sm">
                         <Thead>
                             <Tr>
                                 <Th>Session Name</Th>

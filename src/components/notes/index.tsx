@@ -86,7 +86,11 @@ const NotesComponent = () => {
                                         {notes.map((note: string, index: number) => (
                                             <Tr key={index}>
                                                 <Td>
-                                                    <div>{note}</div>
+                                                    <div
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: note,
+                                                        }}
+                                                    />
                                                 </Td>
                                                 <Td>
                                                     <Flex justifyContent="center">

@@ -1,16 +1,14 @@
 import { Box } from '@chakra-ui/react';
-import 'easymde/dist/easymde.min.css';
 import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 import { INotesEditorProps } from '../../interfaces';
 
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-    ssr: false,
-});
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export const TextEditorComponent = (editor: INotesEditorProps) => {
     return (
         <Box m={2} alignContent="center">
-            <SimpleMDE value={editor.value} onChange={editor.onChange} />
+            <ReactQuill value={editor.value} onChange={editor.onChange} />
         </Box>
     );
 };
