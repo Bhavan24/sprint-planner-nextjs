@@ -54,32 +54,6 @@ const SprintBox = (props: SprintBoxProps) => {
     );
 };
 
-export const SprintTable = () => {
-    return (
-        <Box borderWidth="1px" borderRadius="lg" p={3} m={2}>
-            <TableContainer m={3}>
-                <Table variant="simple">
-                    <TableCaption>All Users</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Logo</Th>
-                            <Th>Username</Th>
-                            <Th>Email</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        <Tr>
-                            <Td>logo1</Td>
-                            <Td>user1</Td>
-                            <Td>email1</Td>
-                        </Tr>
-                    </Tbody>
-                </Table>
-            </TableContainer>
-        </Box>
-    );
-};
-
 export const MainComponent = () => {
     return (
         <Box textAlign="center" fontSize="xl" p={3}>

@@ -47,6 +47,10 @@ export const colors = {
         dark: 'gray.600',
         light: 'gray.300',
     },
+    btn_save_sprint: {
+        dark: 'blue.400',
+        light: 'blue.500',
+    },
 };
 
 /*
