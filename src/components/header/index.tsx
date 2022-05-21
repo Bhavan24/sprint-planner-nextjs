@@ -17,6 +17,7 @@ import { routes } from '../../routes';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
 import styles from './header.module.css';
+import { colors } from '../../theme/colors';
 
 export const Logo = (props: IconPropsExtended) => {
     return (
@@ -31,9 +32,15 @@ export const Logo = (props: IconPropsExtended) => {
 };
 
 export const Header = (props: HeaderProps) => {
-    const headerColor = useColorModeValue('#EDF2F7', '#2D3748');
     return (
-        <header style={{ background: headerColor }}>
+        <header
+            style={{
+                background: useColorModeValue(
+                    colors.header_bg.light,
+                    colors.header_bg.dark
+                ),
+            }}
+        >
             <Flex px={5} py={5} justifyContent="space-between" alignItems="center" mb={4}>
                 <Flex justifyContent="space-between" alignItems="center">
                     <nav>
@@ -56,7 +63,10 @@ export const Header = (props: HeaderProps) => {
                                 <NextLink key={route.key} href={route.path}>
                                     <Button
                                         rightIcon={route.icon}
-                                        colorScheme="teal"
+                                        color={useColorModeValue(
+                                            colors.nav_button.light,
+                                            colors.nav_button.dark
+                                        )}
                                         variant="outline"
                                         width={'10em'}
                                         sx={{
