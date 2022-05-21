@@ -4,13 +4,28 @@ import {
     Button,
     Flex,
     GridItem,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Select,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
     useColorModeValue,
     useDisclosure,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useRef, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
-import { IRetrospectiveData } from '../../interfaces';
+import { IRetrospectiveData, ISaveSprintBoxProps } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
 import AlertBox from '../alertbox';
@@ -18,9 +33,82 @@ import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
 import styles from './retro.module.css';
 
+const SaveSprint = (props: ISaveSprintBoxProps) => {
+    const [name, setName] = useState('');
+
+    const handleSubmit = () => {
+        console.log(name);
+    };
+
+    return (
+        <>
+            <Modal
+                initialFocusRef={props.initialRef}
+                finalFocusRef={props.finalRef}
+                isOpen={props.isOpen}
+                onClose={props.onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Select Sprint</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <Select
+                            placeholder="Sprint name"
+                            onChange={(e: any) => {
+                                setName(e.target.value);
+                            }}
+                        >
+                            <option value="sprint1">Sprint 1</option>
+                            <option value="sprint2">Sprint 2</option>
+                            <option value="sprint3">Sprint 3</option>
+                        </Select>
+
+                        <Flex justifyContent="center">
+                            <TableContainer>
+                                <Table variant="striped">
+                                    <Thead>
+                                        <Tr>
+                                            <Th>👌 Went well</Th>
+                                            <Th>📈 To improve</Th>
+                                            <Th>📍 Action items</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        <Tr>
+                                            <Td>This item went well</Td>
+                                            <Td>This item To improve</Td>
+                                            <Td>This is action item</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>This item went well</Td>
+                                            <Td>This item To improve</Td>
+                                            <Td>This is action item</Td>
+                                        </Tr>
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        </Flex>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                            Save
+                        </Button>
+                        <Button onClick={props.onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
+};
+
 const RetrospectiveComponent = () => {
-    // popup
+    // model
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const initialRef = useRef() as RefObject<FocusableElement>;
+    const finalRef = useRef() as RefObject<FocusableElement>;
+    // popup
+    const model = useDisclosure();
     const cancelRef = useRef() as RefObject<FocusableElement>;
     // retro data
     const [refresh, setRefresh] = useState(false);
@@ -76,9 +164,20 @@ const RetrospectiveComponent = () => {
                             w: '10em',
                         }}
                         rightIcon={<CheckCircleIcon />}
+                        onClick={model.onOpen}
                     >
                         Save
                     </Button>
+                    <SaveSprint
+                        isOpen={model.isOpen}
+                        onOpen={model.onOpen}
+                        onClose={model.onClose}
+                        initialRef={initialRef}
+                        finalRef={finalRef}
+                        btnText={''}
+                        btnColor={''}
+                        title={''}
+                    />
                     <Button
                         variant="outline"
                         sx={{

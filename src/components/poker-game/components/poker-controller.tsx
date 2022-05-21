@@ -1,10 +1,26 @@
 import {
     Box,
+    Button,
     Flex,
     IconButton,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Select,
     Stack,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
     Text,
+    Th,
+    Thead,
     Tooltip,
+    Tr,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
@@ -14,10 +30,83 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
-import { IPokerControllerProps } from '../../../interfaces';
+import { IPokerControllerProps, ISaveSprintBoxProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import AlertBox from '../../alertbox';
 import TimerComponent from '../../timer';
+
+const SaveSprint = (props: ISaveSprintBoxProps) => {
+    const [name, setName] = useState('');
+
+    const handleSubmit = () => {
+        console.log(name);
+    };
+
+    return (
+        <>
+            <Modal
+                initialFocusRef={props.initialRef}
+                finalFocusRef={props.finalRef}
+                isOpen={props.isOpen}
+                onClose={props.onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Select Sprint</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <Select
+                            placeholder="Sprint name"
+                            onChange={(e: any) => {
+                                setName(e.target.value);
+                            }}
+                        >
+                            <option value="sprint1">Sprint 1</option>
+                            <option value="sprint2">Sprint 2</option>
+                            <option value="sprint3">Sprint 3</option>
+                        </Select>
+
+                        <Flex justifyContent="center">
+                            <TableContainer>
+                                <Table variant="striped">
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Ticket Title</Th>
+                                            <Th>Link</Th>
+                                            <Th>Story Points</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        <Tr>
+                                            <Td>Fix the sprint planner 1</Td>
+                                            <Td>
+                                                https://techlabsglobal.atlassian.net/browse/W3G-2786
+                                            </Td>
+                                            <Td>5</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Fix the sprint planner 2</Td>
+                                            <Td>
+                                                https://techlabsglobal.atlassian.net/browse/W3G-2786
+                                            </Td>
+                                            <Td>5</Td>
+                                        </Tr>
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
+                        </Flex>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                            Save
+                        </Button>
+                        <Button onClick={props.onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
+};
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
@@ -26,6 +115,11 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     // popup
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef() as RefObject<FocusableElement>;
+
+    // model
+    const model = useDisclosure();
+    const initialRef = useRef() as RefObject<FocusableElement>;
+    const finalRef = useRef() as RefObject<FocusableElement>;
 
     // toast
     const toast = useToast();
@@ -41,12 +135,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     };
 
     const handleSaveIssueCards = () => {
-        toast({
-            position: 'top-right',
-            title: 'Issue Saved!',
-            status: 'success',
-            isClosable: true,
-        });
+        model.onOpen();
     };
 
     const handleRestartSession = () => {
@@ -132,6 +221,16 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                             onClick={handleSaveIssueCards}
                                         />
                                     </Tooltip>
+                                    <SaveSprint
+                                        isOpen={model.isOpen}
+                                        onOpen={model.onOpen}
+                                        onClose={model.onClose}
+                                        initialRef={initialRef}
+                                        finalRef={finalRef}
+                                        btnText={''}
+                                        btnColor={''}
+                                        title={''}
+                                    />
                                     <Tooltip label="Restart Session">
                                         <IconButton
                                             colorScheme="orange"

@@ -153,3 +153,15 @@ export interface IAlertBoxProps {
     title: string;
     body?: string;
 }
+
+export interface ISaveSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    initialRef: RefObject<FocusableElement>;
+    finalRef: RefObject<FocusableElement>;
+    btnText: string;
+    btnColor: string;
+    title: string;
+    body?: string;
+}

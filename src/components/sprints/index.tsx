@@ -1,6 +1,35 @@
-import { Box, Button, Flex, GridItem, useColorModeValue } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Flex,
+    FormControl,
+    FormLabel,
+    GridItem,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    NumberInput,
+    NumberInputField,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+    useColorModeValue,
+    useDisclosure,
+} from '@chakra-ui/react';
+import { FocusableElement } from '@chakra-ui/utils';
 import Link from 'next/link';
+import { RefObject, useRef, useState } from 'react';
 import { MdLibraryAdd } from 'react-icons/md';
+import { ISaveSprintBoxProps } from '../../interfaces';
 import { colors } from '../../theme/colors';
 import { details } from '../../utils/sample-data';
 import styles from './sprints.module.css';
@@ -78,7 +107,197 @@ const SprintBox = (props: SprintBoxProps) => {
     );
 };
 
+const SaveSprint = (props: ISaveSprintBoxProps) => {
+    const [form, setForm] = useState({
+        name: '',
+        open: '',
+        reopen: '',
+        inprogress: '',
+        prcreated: '',
+        prmerged: '',
+        inverification: '',
+        resolved: '',
+    });
+
+    const handleSubmit = () => {
+        console.log(form);
+    };
+
+    return (
+        <>
+            <Modal
+                initialFocusRef={props.initialRef}
+                finalFocusRef={props.finalRef}
+                isOpen={props.isOpen}
+                onClose={props.onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Create Sprint</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <FormControl>
+                            <FormLabel>Sprint name</FormLabel>
+                            <Input
+                                placeholder="Sprint name"
+                                onChange={(e: any) => {
+                                    setForm({ ...form, name: e.target.value });
+                                }}
+                            />
+                        </FormControl>
+
+                        <Flex justifyContent="center">
+                            <Box maxW="25em">
+                                <TableContainer>
+                                    <Table variant="striped">
+                                        <Thead>
+                                            <Tr>
+                                                <Th>Status</Th>
+                                                <Th>Tickets</Th>
+                                            </Tr>
+                                        </Thead>
+                                        <Tbody>
+                                            <Tr>
+                                                <Td>OPEN</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="OPEN"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    open: e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>REOPENED</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="REOPENED"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    reopen: e.target
+                                                                        .value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>IN PROGRESS</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="IN-PROGRESS"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    inprogress:
+                                                                        e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>PR CREATED</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="PR-CREATED"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    prcreated:
+                                                                        e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>PR MERGED</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="PR-MERGED"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    prmerged:
+                                                                        e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>IN VERIFICATION</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="IN-VERIFICATION"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    inverification:
+                                                                        e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>RESOLVED</Td>
+                                                <Td>
+                                                    <NumberInput>
+                                                        <NumberInputField
+                                                            id="RESOLVED"
+                                                            onChange={(e: any) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    resolved:
+                                                                        e.target.value,
+                                                                });
+                                                            }}
+                                                        />
+                                                    </NumberInput>
+                                                </Td>
+                                            </Tr>
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Flex>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                            Save
+                        </Button>
+                        <Button onClick={props.onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
+};
+
 const SprintsMainComponent = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const initialRef = useRef() as RefObject<FocusableElement>;
+    const finalRef = useRef() as RefObject<FocusableElement>;
+
     return (
         <>
             <Flex w="100%" my={5} justifyContent="center" gap={2}>
@@ -94,9 +313,20 @@ const SprintsMainComponent = () => {
                             w: '15em',
                         }}
                         rightIcon={<MdLibraryAdd />}
+                        onClick={onOpen}
                     >
                         Add Sprint
                     </Button>
+                    <SaveSprint
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        initialRef={initialRef}
+                        finalRef={finalRef}
+                        btnText={''}
+                        btnColor={''}
+                        title={''}
+                    />
                 </Flex>
             </Flex>
             <Box textAlign="center" fontSize="xl" p={3}>

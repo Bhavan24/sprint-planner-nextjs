@@ -7,7 +7,7 @@ import {
     Td,
     Th,
     Thead,
-    Tr
+    Tr,
 } from '@chakra-ui/react';
 
 const style1 = {
