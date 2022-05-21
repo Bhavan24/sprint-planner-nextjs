@@ -10,9 +10,9 @@ import {
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebase/config';
-import { getGame } from '../../services/poker/games';
-import { addPlayerToGame, isCurrentPlayerInGame } from '../../services/poker/players';
+import { auth } from '../../../../firebase/config';
+import { getGame } from '../../../services/poker/games';
+import { addPlayerToGame, isCurrentPlayerInGame } from '../../../services/poker/players';
 
 const JoinSession = () => {
     // router

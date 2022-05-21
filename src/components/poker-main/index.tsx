@@ -8,13 +8,13 @@ import {
     TabPanels,
     Tabs,
     useBreakpointValue,
-    useColorModeValue,
+    useColorModeValue
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import CreateSession from './create-session';
-import JoinSession from './join-session';
-import SelectSession from './select-session';
+import CreateSession from './components/create-session';
+import JoinSession from './components/join-session';
+import SelectSession from './components/select-session';
 
 const PokerMainComponent = () => {
     // router

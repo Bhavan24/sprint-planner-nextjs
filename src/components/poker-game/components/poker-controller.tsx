@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
-import { IPokerControllerProps } from '../../interfaces';
-import { finishGame, resetGame } from '../../services/poker/games';
+import { IPokerControllerProps } from '../../../interfaces';
+import { finishGame, resetGame } from '../../../services/poker/games';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();

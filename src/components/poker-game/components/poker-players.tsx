@@ -1,14 +1,19 @@
 import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
-import { GAME_STATUS } from '../../constants';
-import { IGame, IPlayer, IPlayerCardProps, IPokerPlayersProps } from '../../interfaces';
-import { getCards } from '../../utils/poker-util';
+import { GAME_STATUS } from '../../../constants';
+import {
+    IGame,
+    IPlayer,
+    IPlayerCardProps,
+    IPokerPlayersProps
+} from '../../../interfaces';
+import { colors } from '../../../theme/colors';
+import { getCards } from '../../../utils/poker-util';
 
-const getCardColor = (game: IGame, value: number | undefined): string => {
+const getCardColor = (game: IGame): string => {
     if (game.gameStatus !== GAME_STATUS.FINISHED) {
-        return useColorModeValue('gray.300', 'gray.600');
+        return useColorModeValue(colors.poker_card_3.light, colors.poker_card_3.dark);
     }
-    const card = getCards(game).find(card => card.value === value);
-    return card ? card.color : '#3993ff';
+    return useColorModeValue(colors.poker_card_2.light, colors.poker_card_2.dark);
 };
 
 const getCardValue = (player: IPlayer, game: IGame) => {
@@ -44,7 +49,7 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
             height="8em"
             width="6em"
             m="1"
-            bg={getCardColor(props.game, props.player.value)}
+            bg={getCardColor(props.game)}
         >
             <Flex
                 p="3"

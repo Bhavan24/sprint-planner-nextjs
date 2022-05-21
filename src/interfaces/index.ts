@@ -121,7 +121,6 @@ export interface IPokerPlayersProps {
 export interface ICardConfig {
     value: number;
     displayValue: string;
-    color: string;
 }
 
 export interface IRetrospectiveData {

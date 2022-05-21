@@ -15,9 +15,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BiLogIn } from 'react-icons/bi';
-import { auth } from '../../../firebase/config';
-import { IGame } from '../../interfaces';
-import { getPlayerRecentGames } from '../../services/poker/players';
+import { auth } from '../../../../firebase/config';
+import { IGame } from '../../../interfaces';
+import { getPlayerRecentGames } from '../../../services/poker/players';
 
 const SelectSession = () => {
     // router

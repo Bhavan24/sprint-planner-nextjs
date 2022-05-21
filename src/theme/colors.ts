@@ -35,6 +35,18 @@ export const colors = {
         dark: 'blue.500',
         light: 'blue.400',
     },
+    poker_card_1: {
+        dark: '#3993ff',
+        light: '#3993ff',
+    },
+    poker_card_2: {
+        dark: '#3993ff',
+        light: '#3993ff',
+    },
+    poker_card_3: {
+        dark: 'gray.600',
+        light: 'gray.300',
+    },
 };
 
 /*

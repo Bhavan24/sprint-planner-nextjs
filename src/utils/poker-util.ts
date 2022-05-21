@@ -23,7 +23,6 @@ export const getCards = (game: IGame | undefined) => {
         cards.push({
             value: array.values[i],
             displayValue: array.displayValues[i],
-            color: array.colorValues[i],
         });
     }
 

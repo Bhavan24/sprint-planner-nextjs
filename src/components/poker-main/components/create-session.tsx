@@ -11,10 +11,10 @@ import {
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebase/config';
-import { GAME_TYPES } from '../../constants';
-import { INewSession } from '../../interfaces';
-import { addNewGame } from '../../services/poker/games';
+import { auth } from '../../../../firebase/config';
+import { GAME_TYPES } from '../../../constants';
+import { INewSession } from '../../../interfaces';
+import { addNewGame } from '../../../services/poker/games';
 
 const CreateSession = () => {
     // router
