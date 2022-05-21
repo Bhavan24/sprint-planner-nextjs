@@ -7,7 +7,6 @@ import { IGame, IPlayer } from '../../interfaces';
 import { streamGame, streamPlayers } from '../../services/poker/games';
 import { getCurrentPlayerId } from '../../services/poker/players';
 import { Chakra } from '../../theme/chakra-theme';
-import TimerComponent from '../timer';
 import PokerCardPicker from './components/poker-card-picker';
 import PokerController from './components/poker-controller';
 import PokerPlayers from './components/poker-players';
@@ -70,7 +69,6 @@ const SprintPokerGameComponent = () => {
             {game && players && currentPlayerId ? (
                 <>
                     <Box textAlign="center" m={5}>
-                        <TimerComponent />
                         <PokerPlayers game={game} players={players} />
                     </Box>
                     <Box textAlign="center" m={5}>

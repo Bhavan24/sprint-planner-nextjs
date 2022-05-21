@@ -41,3 +41,22 @@ const AlertBox = (props: IAlertBoxProps) => {
 };
 
 export default AlertBox;
+
+/*
+import { FocusableElement } from '@chakra-ui/utils';
+
+const { isOpen, onOpen, onClose } = useDisclosure();
+const cancelRef = useRef() as RefObject<FocusableElement>;
+<AlertBox
+    isOpen={isOpen}
+    onOpen={onOpen}
+    onClose={onClose}
+    cancelRef={cancelRef}
+    onAction={resetItems}
+    btnText={'Delete'}
+    btnColor={'red'}
+    title={'Clear All Items'}
+    body={`Are you sure? You can't undo this action afterwards.`}
+/>
+
+*/

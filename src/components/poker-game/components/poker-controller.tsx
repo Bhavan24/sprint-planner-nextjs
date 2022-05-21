@@ -1,15 +1,31 @@
-import { Box, IconButton, Stack, Text, Tooltip, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Flex,
+    IconButton,
+    Stack,
+    Text,
+    Tooltip,
+    useDisclosure,
+    useToast,
+} from '@chakra-ui/react';
+import { FocusableElement } from '@chakra-ui/utils';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
 import { IPokerControllerProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
+import AlertBox from '../../alertbox';
+import TimerComponent from '../../timer';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
     const [gameId, setGameId] = useState('');
+
+    // popup
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef() as RefObject<FocusableElement>;
 
     // toast
     const toast = useToast();
@@ -137,9 +153,20 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     isRound
                                     size="lg"
                                     m={2}
-                                    onClick={handleExitSession}
+                                    onClick={onOpen}
                                 />
                             </Tooltip>
+                            <AlertBox
+                                isOpen={isOpen}
+                                onOpen={onOpen}
+                                onClose={onClose}
+                                cancelRef={cancelRef}
+                                onAction={handleExitSession}
+                                btnText={'Exit'}
+                                btnColor={'red'}
+                                title={'Exit Session'}
+                                body={`Are you sure want to exit the session?`}
+                            />
                             <Tooltip label="Copy Invitation Link">
                                 <IconButton
                                     colorScheme="blue"
@@ -152,6 +179,9 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                 />
                             </Tooltip>
                         </Box>
+                        <Flex alignItems="center" justifyContent="center">
+                            <TimerComponent />
+                        </Flex>
                     </Box>
                 </Box>
             </Stack>
