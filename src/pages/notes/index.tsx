@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import BasePage from '../../components/auth-base-component';
-import NotesComponent from '../../components/notes-component';
+import BasePage from '../../components/base';
+import NotesComponent from '../../components/notes';
 import { NOTES_PAGE_NAME } from '../../constants';
 
 const Notes = () => (

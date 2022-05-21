@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import BasePage from '../../components/auth-base-component';
+import BasePage from '../../components/base';
 import { SPRINTS_PAGE_NAME } from '../../constants';
 
 const SprintDetails = () => {

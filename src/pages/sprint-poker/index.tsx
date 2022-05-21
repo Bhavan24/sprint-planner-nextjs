@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import BasePage from '../../components/auth-base-component';
+import BasePage from '../../components/base';
 import PokerMainComponent from '../../components/poker-main';
 import { SPRINT_POKER_PAGE_NAME } from '../../constants';
 

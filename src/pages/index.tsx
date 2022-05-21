@@ -1,4 +1,4 @@
-import BasePage from '../components/auth-base-component';
+import BasePage from '../components/base';
 import { MainComponent } from '../components/main';
 import { APP_NAME } from '../constants';
 import { IndexProps } from '../interfaces';

@@ -7,7 +7,7 @@ import { getRetroList, resetAllItems } from '../../services/retrospective/storag
 import { colors } from '../../theme/colors';
 import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
-import styles from './retrospective.module.css';
+import styles from './retro.module.css';
 
 const RetrospectiveComponent = () => {
     // retro data

@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import BasePage from '../../components/auth-base-component';
-import RetrospectiveComponent from '../../components/retrospective-component';
+import BasePage from '../../components/base';
+import RetrospectiveComponent from '../../components/retro';
 import { RETROSPECTIVE_PAGE_NAME } from '../../constants';
 
 const Retrospective = () => (

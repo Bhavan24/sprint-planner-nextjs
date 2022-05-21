@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import BasePage from '../components/auth-base-component';
+import BasePage from '../components/base';
 import { APP_NAME } from '../constants';
 import { IndexProps } from '../interfaces';
 
