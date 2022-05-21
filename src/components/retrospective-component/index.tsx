@@ -20,6 +20,7 @@ import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants
 import { IRetrospectiveData } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
+import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
 import styles from './retrospective.module.css';
 
@@ -95,34 +96,7 @@ const RetrospectiveComponent = () => {
                 gap={2}
                 className={styles.topBar}
             >
-                <Flex gap={2}>
-                    <Tag
-                        size="lg"
-                        colorScheme={seconds > 540 ? 'red' : 'green'}
-                        borderRadius="full"
-                        width="6em"
-                        justifyContent="center"
-                    >
-                        <TagLabel>{getTime(seconds)}</TagLabel>
-                    </Tag>
-                    <Button
-                        leftIcon={<TimeIcon />}
-                        bg={useColorModeValue(
-                            colors.btn_timer.light,
-                            colors.btn_timer.dark
-                        )}
-                        variant="solid"
-                        width="10em"
-                        onClick={handleTimer}
-                    >
-                        {isTimerActive ? 'Stop Timer' : 'Start Timer'}
-                    </Button>
-                    <Button onClick={resetTimer}>
-                        <Tooltip label="Reset Timer" fontSize="md">
-                            <RepeatClockIcon />
-                        </Tooltip>
-                    </Button>
-                </Flex>
+                <TimerComponent />
                 <Flex>
                     <Button
                         variant="outline"
