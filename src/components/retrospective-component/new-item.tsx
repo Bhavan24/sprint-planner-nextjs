@@ -11,14 +11,21 @@ import {
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { INewRetroItemProps } from '../../interfaces';
 import { getRetroList, saveRetroList } from '../../services/retrospective/storage';
+import { colors } from '../../theme/colors';
 
 const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
 }> = ({ content, onDelete }) => {
-    const bg = useColorModeValue('cyan.100', 'cyan.600');
     return (
-        <Box p={4} maxWidth="inherit" borderWidth={1} my={2} borderRadius="lg" bg={bg}>
+        <Box
+            p={4}
+            maxWidth="inherit"
+            borderWidth={1}
+            my={2}
+            borderRadius="lg"
+            bg={useColorModeValue(colors.detailed_card.light, colors.detailed_card.dark)}
+        >
             <Text
                 fontSize="md"
                 letterSpacing="inherit"
@@ -43,15 +50,30 @@ const FormActionButtons: React.FC<{
     onAdd: MouseEventHandler;
     onClear: MouseEventHandler;
 }> = ({ onAdd, onClear }) => {
-    const addColor = useColorModeValue('blue.400', 'blue.500');
-    const clearColor = useColorModeValue('gray.400', 'gray.300');
     return (
         <Flex justifyContent="flex-end">
-            <Button variant="outline" onClick={onAdd} sx={{ mx: 2, color: addColor }}>
+            <Button
+                variant="outline"
+                onClick={onAdd}
+                sx={{
+                    mx: 2,
+                    color: useColorModeValue(colors.btn_add.light, colors.btn_add.dark),
+                }}
+            >
                 <span style={{ marginRight: '10px' }}>Add</span>
                 <AddIcon />
             </Button>
-            <Button variant="outline" onClick={onClear} sx={{ mx: 2, color: clearColor }}>
+            <Button
+                variant="outline"
+                onClick={onClear}
+                sx={{
+                    mx: 2,
+                    color: useColorModeValue(
+                        colors.btn_clear.light,
+                        colors.btn_clear.dark
+                    ),
+                }}
+            >
                 <span style={{ marginRight: '10px' }}>Clear</span>
                 <MinusIcon />
             </Button>

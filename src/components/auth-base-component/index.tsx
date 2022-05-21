@@ -5,7 +5,7 @@ import { auth, firestore } from '../../../firebase/config';
 import { BasePageProps } from '../../interfaces';
 import { DashboardLayout } from '../../layouts/dashboard';
 import LoginPage from '../../pages/auth';
-import { Chakra } from '../../theme/Chakra';
+import { Chakra } from '../../theme/chakra-theme';
 import { Loading } from '../loading';
 
 const BasePage = ({ cookies, children, title }: BasePageProps) => {

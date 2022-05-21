@@ -1,5 +1,4 @@
 import {
-    Badge,
     Box,
     Grid,
     GridItem,
@@ -8,7 +7,6 @@ import {
     TableContainer,
     Tbody,
     Td,
-    Tfoot,
     Th,
     Thead,
     Tr,

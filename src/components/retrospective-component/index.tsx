@@ -19,16 +19,11 @@ import { useEffect, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import { IRetrospectiveData } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
+import { colors } from '../../theme/colors';
 import NewRetroItem from './new-item';
 import styles from './retrospective.module.css';
 
 const RetrospectiveComponent = () => {
-    // theme
-    const savebtnColor = useColorModeValue('green.600', 'green.400');
-    const exportbtnColor = useColorModeValue('purple.600', 'purple.400');
-    const deleteBtnColor = useColorModeValue('red.600', 'red.400');
-    const timerBtnColor = useColorModeValue('blue.400', 'blue.500');
-
     // timer
     const [seconds, setSeconds] = useState(0);
     const [isTimerActive, setTimerActive] = useState(false);
@@ -112,7 +107,10 @@ const RetrospectiveComponent = () => {
                     </Tag>
                     <Button
                         leftIcon={<TimeIcon />}
-                        bg={timerBtnColor}
+                        bg={useColorModeValue(
+                            colors.btn_timer.light,
+                            colors.btn_timer.dark
+                        )}
                         variant="solid"
                         width="10em"
                         onClick={handleTimer}
@@ -128,14 +126,28 @@ const RetrospectiveComponent = () => {
                 <Flex>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: savebtnColor, w: '10em' }}
+                        sx={{
+                            mx: 2,
+                            color: useColorModeValue(
+                                colors.btn_save.light,
+                                colors.btn_save.dark
+                            ),
+                            w: '10em',
+                        }}
                         rightIcon={<CheckCircleIcon />}
                     >
                         Save
                     </Button>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: exportbtnColor, w: '10em' }}
+                        sx={{
+                            mx: 2,
+                            color: useColorModeValue(
+                                colors.btn_export.light,
+                                colors.btn_export.dark
+                            ),
+                            w: '10em',
+                        }}
                         onClick={exportItems}
                         rightIcon={<DownloadIcon />}
                     >
@@ -143,7 +155,14 @@ const RetrospectiveComponent = () => {
                     </Button>
                     <Button
                         variant="outline"
-                        sx={{ mx: 2, color: deleteBtnColor, w: '10em' }}
+                        sx={{
+                            mx: 2,
+                            color: useColorModeValue(
+                                colors.btn_delete.light,
+                                colors.btn_delete.dark
+                            ),
+                            w: '10em',
+                        }}
                         onClick={resetItems}
                         rightIcon={<NotAllowedIcon />}
                     >

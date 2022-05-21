@@ -11,7 +11,7 @@ import { SPRINT_POKER_PAGE_NAME } from '../../constants';
 import { IGame, IPlayer } from '../../interfaces';
 import { streamGame, streamPlayers } from '../../services/poker/games';
 import { getCurrentPlayerId } from '../../services/poker/players';
-import { Chakra } from '../../theme/Chakra';
+import { Chakra } from '../../theme/chakra-theme';
 
 const SprintPokerGame = () => {
     const router = useRouter();

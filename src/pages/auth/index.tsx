@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { Login } from '../../components/login-component';
-import { AuthenticationLayout } from '../../layouts/authentication';
 import { LOGIN_PAGE_NAME } from '../../constants';
-import { Chakra } from '../../theme/Chakra';
+import { AuthenticationLayout } from '../../layouts/authentication';
+import { Chakra } from '../../theme/chakra-theme';
 
 const LoginPage = () => (
     <Chakra>
