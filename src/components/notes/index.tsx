@@ -2,8 +2,6 @@ import {
     Box,
     Button,
     Flex,
-    Grid,
-    GridItem,
     IconButton,
     Table,
     TableContainer,
@@ -53,9 +51,11 @@ const NotesComponent = () => {
 
     return (
         <>
-            <Grid m={3}>
-                <GridItem p={2}>
+            <Flex m={3} flexDir="row" justifyContent="center">
+                <Box p={2} justifyContent="center">
                     <TextEditorComponent value={note} onChange={onChange} />
+                </Box>
+                <Flex flexDir="column" alignItems="center" justifyContent="center">
                     <Tooltip title="Add Note">
                         <Button rightIcon={<AiOutlinePlus />} onClick={addNote} m={1}>
                             Add Note
@@ -66,53 +66,51 @@ const NotesComponent = () => {
                             Clear Note
                         </Button>
                     </Tooltip>
-                </GridItem>
-                <GridItem p={2}>
-                    <Box m={1}>
-                        <Box sx={{ minWidth: 1050 }}>
-                            <TableContainer>
-                                <Table variant="simple">
-                                    <Thead>
-                                        <Tr>
-                                            <Th width="90%">Note</Th>
-                                            <Th width="10%">
+                </Flex>
+            </Flex>
+            <Box p={2} m="5em 0">
+                <Box m={1}>
+                    <Box>
+                        <TableContainer>
+                            <Table variant="simple">
+                                <Thead>
+                                    <Tr>
+                                        <Th width="90%">Note</Th>
+                                        <Th width="10%">
+                                            <Flex justifyContent="center">Actions</Flex>
+                                        </Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {notes.map((note: string, index: number) => (
+                                        <Tr key={index}>
+                                            <Td>
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: note,
+                                                    }}
+                                                />
+                                            </Td>
+                                            <Td>
                                                 <Flex justifyContent="center">
-                                                    Actions
-                                                </Flex>
-                                            </Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        {notes.map((note: string, index: number) => (
-                                            <Tr key={index}>
-                                                <Td>
-                                                    <div
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: note,
+                                                    <IconButton
+                                                        onClick={() => {
+                                                            removeNote(index);
                                                         }}
-                                                    />
-                                                </Td>
-                                                <Td>
-                                                    <Flex justifyContent="center">
-                                                        <IconButton
-                                                            onClick={() => {
-                                                                removeNote(index);
-                                                            }}
-                                                            aria-label={'removeNote'}
-                                                        >
-                                                            <AiOutlineDelete />
-                                                        </IconButton>
-                                                    </Flex>
-                                                </Td>
-                                            </Tr>
-                                        ))}
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
-                        </Box>
+                                                        aria-label={'removeNote'}
+                                                    >
+                                                        <AiOutlineDelete />
+                                                    </IconButton>
+                                                </Flex>
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
                     </Box>
-                </GridItem>
-            </Grid>
+                </Box>
+            </Box>
         </>
     );
 };
