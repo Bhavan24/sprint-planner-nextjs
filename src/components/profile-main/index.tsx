@@ -1,4 +1,4 @@
-import { Avatar, Box, Link, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, Link, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
@@ -40,17 +40,21 @@ const ProfileMainComponent = () => {
     }, []);
 
     return (
-        <Box>
-            <Avatar src={userInfo.avatar} />
-            <Text color="red.700">{`${userInfo.firstName} ${userInfo.lastName}`}</Text>
-            <Link href={userInfo.email} color="gray.400">
-                {`${userInfo.email}`}
-            </Link>
-            <Text color="gray.400">
-                {`${userInfo.city}, ${userInfo.region}, ${userInfo.country}`}
-            </Text>
-            <Text color="gray.400">{`${userInfo.timezone}`}</Text>
-        </Box>
+        <Flex justifyContent="center" alignItems="center">
+            <Box mx={4}>
+                <Avatar size="12em" src={userInfo.avatar} />
+            </Box>
+            <Box display="flex" alignItems="flex-start" flexFlow="column">
+                <Text color="red.700">{`${userInfo.firstName} ${userInfo.lastName}`}</Text>
+                <Link href={userInfo.email} color="gray.400">
+                    {`${userInfo.email}`}
+                </Link>
+                <Text color="gray.400">
+                    {`${userInfo.city}, ${userInfo.region}, ${userInfo.country}`}
+                </Text>
+                <Text color="gray.400">{`${userInfo.timezone}`}</Text>
+            </Box>
+        </Flex>
     );
 };
 
