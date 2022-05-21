@@ -1,21 +1,6 @@
-import {
-    CheckCircleIcon,
-    DownloadIcon,
-    NotAllowedIcon,
-    RepeatClockIcon,
-    TimeIcon,
-} from '@chakra-ui/icons';
-import {
-    Button,
-    Flex,
-    Grid,
-    GridItem,
-    Tag,
-    TagLabel,
-    Tooltip,
-    useColorModeValue,
-} from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { CheckCircleIcon, DownloadIcon, NotAllowedIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, GridItem, useColorModeValue } from '@chakra-ui/react';
+import { useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import { IRetrospectiveData } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
@@ -25,37 +10,6 @@ import NewRetroItem from './new-item';
 import styles from './retrospective.module.css';
 
 const RetrospectiveComponent = () => {
-    // timer
-    const [seconds, setSeconds] = useState(0);
-    const [isTimerActive, setTimerActive] = useState(false);
-
-    const handleTimer = () => {
-        setTimerActive(!isTimerActive);
-    };
-
-    const resetTimer = () => {
-        setSeconds(0);
-    };
-
-    const getTime = (seconds: number) => {
-        var date = new Date(0);
-        date.setSeconds(seconds);
-        var timeString = date.toISOString().substr(11, 8);
-        return timeString;
-    };
-
-    useEffect(() => {
-        let interval: any = null;
-        if (isTimerActive) {
-            interval = setInterval(() => {
-                setSeconds(seconds => seconds + 1);
-            }, 1000);
-        } else if (!isTimerActive && seconds !== 0) {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [isTimerActive, seconds]);
-
     // retro data
     const [refresh, setRefresh] = useState(false);
 
@@ -144,7 +98,7 @@ const RetrospectiveComponent = () => {
                     </Button>
                 </Flex>
             </Flex>
-            <Grid gap={1} templateColumns="repeat(3, 1fr)">
+            <Box gap={1} className={styles.itemsContainer}>
                 <GridItem w="100%">
                     <NewRetroItem
                         name={WENT_WELL_ITEMS}
@@ -169,7 +123,7 @@ const RetrospectiveComponent = () => {
                         refresh={refresh}
                     />
                 </GridItem>
-            </Grid>
+            </Box>
         </>
     );
 };
