@@ -32,7 +32,7 @@ import {
     ISprintColData,
 } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
-import { getSprints } from '../../services/sprint/sprints';
+import { getSprints, updateSprintData } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
 import { getRetro } from '../../utils/retro-util';
 import AlertBox from '../alertbox';
@@ -41,7 +41,7 @@ import NewRetroItem from './new-item';
 import styles from './retro.module.css';
 
 const SaveSprint = (props: ISaveSprintBoxProps) => {
-    const [name, setName] = useState('');
+    const [sprintId, setSprintId] = useState('');
     const [sprints, setSprints] = useState<ISprintColData[]>();
     const [retro, setRetro] = useState<IRetroDetails[]>();
 
@@ -65,7 +65,21 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
     }, [props]);
 
     const handleSubmit = () => {
-        console.log(name, retro);
+        console.log(sprintId, {
+            went_well: getRetroList(WENT_WELL_ITEMS),
+            to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+            action_items: getRetroList(ACTION_ITEMS),
+        });
+        sprintId &&
+            retro &&
+            updateSprintData(sprintId, {
+                retro: {
+                    went_well: getRetroList(WENT_WELL_ITEMS),
+                    to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+                    action_items: getRetroList(ACTION_ITEMS),
+                },
+            });
+        props.onClose();
     };
 
     return (
@@ -84,7 +98,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                         <Select
                             placeholder="Sprint name"
                             onChange={(e: any) => {
-                                setName(e.target.value);
+                                setSprintId(e.target.value);
                             }}
                         >
                             {sprints &&

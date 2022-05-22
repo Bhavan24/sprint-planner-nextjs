@@ -53,9 +53,9 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
 
 export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
     const retro = getRetro({
-        went_well: props.data.retro.wentwell,
-        to_improve: props.data.retro.toimprove,
-        action_items: props.data.retro.action,
+        went_well: props.data.retro.went_well,
+        to_improve: props.data.retro.to_improve,
+        action_items: props.data.retro.action_items,
     });
 
     return (

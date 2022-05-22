@@ -195,9 +195,9 @@ export interface ISprintColData {
         resolved: number;
     };
     retro: {
-        wentwell: string[];
-        toimprove: string[];
-        action: string[];
+        went_well: string[];
+        to_improve: string[];
+        action_items: string[];
     };
     poker?: ISprintPokerColData[];
 }
