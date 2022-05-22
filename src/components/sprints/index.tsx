@@ -24,7 +24,7 @@ import {
     Tr,
     useColorModeValue,
     useDisclosure,
-    useToast
+    useToast,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import Link from 'next/link';
@@ -272,8 +272,6 @@ const SprintsMainComponent = () => {
                         onClose={onClose}
                         initialRef={initialRef}
                         finalRef={finalRef}
-                        btnText={''}
-                        btnColor={''}
                         title={''}
                     />
                 </Flex>

@@ -52,7 +52,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Select Sprint</ModalHeader>
+                    <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Select
@@ -227,9 +227,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         onClose={model.onClose}
                                         initialRef={initialRef}
                                         finalRef={finalRef}
-                                        btnText={''}
-                                        btnColor={''}
-                                        title={''}
+                                        title={'Select Sprint'}
                                     />
                                     <Tooltip label="Restart Session">
                                         <IconButton

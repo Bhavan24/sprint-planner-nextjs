@@ -160,8 +160,6 @@ export interface ISaveSprintBoxProps {
     onClose: () => void;
     initialRef: RefObject<FocusableElement>;
     finalRef: RefObject<FocusableElement>;
-    btnText: string;
-    btnColor: string;
     title: string;
     body?: string;
 }

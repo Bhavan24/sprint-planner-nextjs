@@ -50,7 +50,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Select Sprint</ModalHeader>
+                    <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Select
@@ -174,9 +174,7 @@ const RetrospectiveComponent = () => {
                         onClose={model.onClose}
                         initialRef={initialRef}
                         finalRef={finalRef}
-                        btnText={''}
-                        btnColor={''}
-                        title={''}
+                        title={'Select Sprint'}
                     />
                     <Button
                         variant="outline"
