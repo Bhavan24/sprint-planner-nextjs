@@ -11,6 +11,7 @@ import {
     Tr,
 } from '@chakra-ui/react';
 import { ISprintDetailsItemProps } from '../../interfaces';
+import { getRetro } from '../../utils/retro-util';
 import { getIssues, getTotal } from '../../utils/sprint-util';
 
 export const ProgressDetails = (props: ISprintDetailsItemProps) => {
@@ -51,6 +52,12 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
 };
 
 export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
+    const retro = getRetro({
+        went_well: props.data.retro.wentwell,
+        to_improve: props.data.retro.toimprove,
+        action_items: props.data.retro.action,
+    });
+
     return (
         <Flex justifyContent="center">
             <TableContainer>
@@ -63,11 +70,14 @@ export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>{props.data.retro.wentwell}</Td>
-                            <Td>{props.data.retro.toimprove}</Td>
-                            <Td>{props.data.retro.action}</Td>
-                        </Tr>
+                        {retro &&
+                            retro.map((item, i: number) => (
+                                <Tr key={i}>
+                                    <Td>{item.went_well}</Td>
+                                    <Td>{item.to_improve}</Td>
+                                    <Td>{item.action_items}</Td>
+                                </Tr>
+                            ))}
                     </Tbody>
                 </Table>
             </TableContainer>
