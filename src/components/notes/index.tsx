@@ -12,15 +12,21 @@ import {
     Thead,
     Tooltip,
     Tr,
+    useDisclosure,
 } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { NOTES } from '../../constants';
+import AlertBox from '../alertbox';
 import { TextEditorComponent } from './editor';
+import { FocusableElement } from '@chakra-ui/utils';
 
 const NotesComponent = () => {
     const [note, setNote] = useState('');
     const [notes, setNotes] = useState<string[]>([]);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const cancelRef = useRef() as RefObject<FocusableElement>;
 
     useEffect(() => {
         localStorage.getItem(NOTES) &&
@@ -45,6 +51,7 @@ const NotesComponent = () => {
     const deleteNotes = () => {
         localStorage.removeItem(NOTES);
         setNotes([]);
+        onClose();
     };
 
     const removeNote = (index: number) => {
@@ -85,13 +92,24 @@ const NotesComponent = () => {
                     <Tooltip title="Delete All Notes">
                         <Button
                             rightIcon={<DeleteIcon />}
-                            onClick={deleteNotes}
+                            onClick={onOpen}
                             m={1}
                             w="15em"
                         >
                             Delete All Notes
                         </Button>
                     </Tooltip>
+                    <AlertBox
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        cancelRef={cancelRef}
+                        onAction={deleteNotes}
+                        btnText={'Delete'}
+                        btnColor={'red'}
+                        title={'Clear All Items'}
+                        body={`Are you sure? You can't undo this action afterwards.`}
+                    />
                 </Flex>
             </Flex>
             <Box p={2} m="5em 0">

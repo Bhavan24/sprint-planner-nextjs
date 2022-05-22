@@ -22,7 +22,7 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
         <Flex justifyContent="center">
             <Box maxW="25em">
                 <TableContainer>
-                    <Table variant="striped">
+                    <Table variant="striped" size="sm">
                         <Thead>
                             <Tr>
                                 <Th>Status</Th>
@@ -61,7 +61,7 @@ export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
     return (
         <Flex justifyContent="center">
             <TableContainer>
-                <Table variant="striped">
+                <Table variant="striped" size="sm">
                     <Thead>
                         <Tr>
                             <Th>👌 Went well</Th>
@@ -89,7 +89,7 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
     return (
         <Flex justifyContent="center">
             <TableContainer>
-                <Table variant="striped">
+                <Table variant="striped" size="sm">
                     <Thead>
                         <Tr>
                             <Th>Title</Th>

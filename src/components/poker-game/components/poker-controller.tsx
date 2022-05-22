@@ -16,6 +16,7 @@ import {
     Select,
     Stack,
     Text,
+    Textarea,
     Tooltip,
     useDisclosure,
     useToast,
@@ -100,27 +101,32 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                 finalFocusRef={props.finalRef}
                 isOpen={props.isOpen}
                 onClose={props.onClose}
+                size="lg"
             >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <Select
-                            placeholder="Sprint name"
-                            onChange={(e: any) => {
-                                setSprintId(e.target.value);
-                            }}
-                        >
-                            {sprints &&
-                                sprints.map(sprint => (
-                                    <option key={sprint.id} value={sprint.id}>
-                                        {sprint.name}
-                                    </option>
-                                ))}
-                        </Select>
                         <Flex justifyContent="center" flexDir="column" p={4}>
-                            <FormControl isRequired>
+                            <FormControl isRequired m={1}>
+                                <FormLabel htmlFor="sprint-name">Sprint name</FormLabel>
+                                <Select
+                                    id="sprint-name"
+                                    placeholder="Sprint name"
+                                    onChange={(e: any) => {
+                                        setSprintId(e.target.value);
+                                    }}
+                                >
+                                    {sprints &&
+                                        sprints.map(sprint => (
+                                            <option key={sprint.id} value={sprint.id}>
+                                                {sprint.name}
+                                            </option>
+                                        ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="poker-title">Title</FormLabel>
                                 <Input
                                     id="title"
@@ -129,16 +135,16 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                     onChange={handleChange}
                                 />
                             </FormControl>
-                            <FormControl>
+                            <FormControl m={1}>
                                 <FormLabel htmlFor="poker-desc">Description</FormLabel>
-                                <Input
+                                <Textarea
                                     id="desc"
                                     placeholder="Description"
                                     value={inputs.desc}
                                     onChange={handleChange}
                                 />
                             </FormControl>
-                            <FormControl isRequired>
+                            <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="poker-link">Link</FormLabel>
                                 <Input
                                     id="link"
@@ -147,7 +153,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                     onChange={handleChange}
                                 />
                             </FormControl>
-                            <FormControl isRequired>
+                            <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="poker-points">Points</FormLabel>
                                 <Input
                                     id="points"
