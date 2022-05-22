@@ -22,6 +22,7 @@ export const POKER_PLAYER_GAMES = 'player_games';
 // Firebase collections constants
 export const FB_DB_GAMES = 'sprint_poker';
 export const FB_DB_PLAYERS = 'sprint_players';
+export const FB_DB_SPRINTS = 'sprints';
 
 // Main page constants
 export const BOX_DETAILS = [

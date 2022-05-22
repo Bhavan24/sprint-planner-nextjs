@@ -165,3 +165,28 @@ export interface ISaveSprintBoxProps {
     title: string;
     body?: string;
 }
+
+export interface ISprintColData {
+    id: string;
+    name: string;
+    progess: {
+        open: number;
+        reopen: number;
+        inprogress: number;
+        prcreated: number;
+        prmerged: number;
+        inverification: number;
+        resolved: number;
+    };
+    retro: {
+        wentwell: string[];
+        toimprove: string[];
+        action: string[];
+    };
+    poker: {
+        title: string;
+        desc: string;
+        link: string;
+        points: number;
+    };
+}
