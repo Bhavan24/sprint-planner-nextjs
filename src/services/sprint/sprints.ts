@@ -4,7 +4,7 @@ import {
     addSprintToStore,
     getSprintFromStore,
     getSprintsFromStore,
-    updateSprintDataInStore
+    updateSprintDataInStore,
 } from './firebase';
 
 export const addNewSprint = async (data: ISprintColData): Promise<string> => {

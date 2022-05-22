@@ -23,10 +23,15 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
-import { IRetrospectiveData, ISaveSprintBoxProps } from '../../interfaces';
+import {
+    IRetrospectiveData,
+    ISaveSprintBoxProps,
+    ISprintColData,
+} from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
+import { getSprints } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
 import AlertBox from '../alertbox';
 import TimerComponent from '../timer';
@@ -35,9 +40,33 @@ import styles from './retro.module.css';
 
 const SaveSprint = (props: ISaveSprintBoxProps) => {
     const [name, setName] = useState('');
+    const [sprints, setSprints] = useState<ISprintColData[]>();
+    const [retro, setRetro] = useState<{
+        wentwell: string[];
+        toimprove: string[];
+        action: string[];
+    }>();
+
+    useEffect(() => {
+        getSprints()
+            .then(sprints => {
+                setSprints(sprints);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    useEffect(() => {
+        setRetro({
+            wentwell: getRetroList(WENT_WELL_ITEMS),
+            toimprove: getRetroList(TO_IMRPOVE_ITEMS),
+            action: getRetroList(ACTION_ITEMS),
+        });
+    }, [props]);
 
     const handleSubmit = () => {
-        console.log(name);
+        console.log(name, retro);
     };
 
     return (
@@ -59,11 +88,13 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                 setName(e.target.value);
                             }}
                         >
-                            <option value="sprint1">Sprint 1</option>
-                            <option value="sprint2">Sprint 2</option>
-                            <option value="sprint3">Sprint 3</option>
+                            {sprints &&
+                                sprints.map(sprint => (
+                                    <option key={sprint.id} value={sprint.id}>
+                                        {sprint.name}
+                                    </option>
+                                ))}
                         </Select>
-
                         <Flex justifyContent="center">
                             <TableContainer>
                                 <Table variant="striped">
@@ -75,16 +106,14 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                         </Tr>
                                     </Thead>
                                     <Tbody>
-                                        <Tr>
-                                            <Td>This item went well</Td>
-                                            <Td>This item To improve</Td>
-                                            <Td>This is action item</Td>
-                                        </Tr>
-                                        <Tr>
-                                            <Td>This item went well</Td>
-                                            <Td>This item To improve</Td>
-                                            <Td>This is action item</Td>
-                                        </Tr>
+                                        {retro &&
+                                            retro.wentwell.map((item, i: number) => (
+                                                <Tr key={i}>
+                                                    <Td>{item}</Td>
+                                                    <Td>{item}</Td>
+                                                    <Td>{item}</Td>
+                                                </Tr>
+                                            ))}
                                     </Tbody>
                                 </Table>
                             </TableContainer>
