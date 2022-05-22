@@ -13,6 +13,7 @@ import {
     Tooltip,
     Tr,
     useDisclosure,
+    useMediaQuery,
 } from '@chakra-ui/react';
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
@@ -25,6 +26,10 @@ const NotesComponent = () => {
     const [note, setNote] = useState('');
     const [notes, setNotes] = useState<string[]>([]);
 
+    // screen
+    const [isPhone] = useMediaQuery('(max-width: 580px)');
+
+    // alerts
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef() as RefObject<FocusableElement>;
 
@@ -64,11 +69,16 @@ const NotesComponent = () => {
 
     return (
         <>
-            <Flex m={3} flexDir="row" justifyContent="center">
+            <Flex m={3} flexDir="column" justifyContent="center">
                 <Box p={2} justifyContent="center">
                     <TextEditorComponent value={note} onChange={onChange} />
                 </Box>
-                <Flex flexDir="column" alignItems="center" justifyContent="center">
+                <Flex
+                    flexDir={isPhone ? 'column' : 'row'}
+                    alignItems="center"
+                    justifyContent="center"
+                    mt={isPhone ? '5em' : '3em'}
+                >
                     <Tooltip title="Add Note">
                         <Button
                             rightIcon={<AiOutlinePlus />}
