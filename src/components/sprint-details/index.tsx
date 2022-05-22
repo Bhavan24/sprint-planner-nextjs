@@ -35,7 +35,7 @@ import {
     StoryPointsDetails,
 } from '../../components/sprints/sprint-items';
 import { IEditSprintBoxProps, ISprintColData } from '../../interfaces';
-import { getSprint } from '../../services/sprint/sprints';
+import { getSprint, updateSprintData } from '../../services/sprint/sprints';
 import { Chakra } from '../../theme/chakra-theme';
 import { getIssues } from '../../utils/sprint-util';
 import { Loading } from '../loading';
@@ -65,7 +65,16 @@ const EditSprint = (props: IEditSprintBoxProps) => {
     };
 
     const handleSubmit = async () => {
-        if (inputs && user) {
+        if (
+            inputs.open &&
+            inputs.reopen &&
+            inputs.inprogress &&
+            inputs.prcreated &&
+            inputs.prmerged &&
+            inputs.inverification &&
+            inputs.resolved &&
+            user
+        ) {
             const progess = {
                 open: inputs.open,
                 reopen: inputs.reopen,
@@ -77,6 +86,24 @@ const EditSprint = (props: IEditSprintBoxProps) => {
             };
             // update details
             console.log(progess);
+            const done =
+                props.sprint.id &&
+                progess &&
+                updateSprintData(props.sprint.id, {
+                    progess: progess,
+                });
+            props.onClose();
+            done &&
+                toast({
+                    title: 'Updated Successfully!!!',
+                    status: 'success',
+                    isClosable: true,
+                });
+            done &&
+                // TODO: temporary sollution
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
         } else {
             toast({
                 title: 'Please fill all fields !!!',

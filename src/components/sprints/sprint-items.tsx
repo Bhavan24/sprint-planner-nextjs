@@ -92,7 +92,8 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                 <Table variant="striped">
                     <Thead>
                         <Tr>
-                            <Th>Ticket Title</Th>
+                            <Th>Title</Th>
+                            <Th>Description</Th>
                             <Th>Link</Th>
                             <Th>Story Points</Th>
                         </Tr>
@@ -101,6 +102,7 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                         {props.data.poker?.map((poker, i: number) => (
                             <Tr key={i}>
                                 <Td>{poker.title}</Td>
+                                <Td>{poker.desc}</Td>
                                 <Td>{poker.link}</Td>
                                 <Td>{poker.points} Tickets</Td>
                             </Tr>
