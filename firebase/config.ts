@@ -1,12 +1,12 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider, signOut } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: 'AIzaSyD7qVgCUIBGO3oCNCgWEeLIq0hqk11tKRU',
     authDomain: 'sprint-planner-ab5df.firebaseapp.com',
+    databaseURL: 'https://sprint-planner-ab5df-default-rtdb.firebaseio.com',
     projectId: 'sprint-planner-ab5df',
     storageBucket: 'sprint-planner-ab5df.appspot.com',
     messagingSenderId: '476682090893',
@@ -15,3 +15,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+export { firestore, auth, provider, signOut };
