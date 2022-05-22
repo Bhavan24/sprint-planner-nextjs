@@ -167,8 +167,9 @@ export interface ISaveSprintBoxProps {
 }
 
 export interface ISprintColData {
-    id: string;
+    id?: string;
     name: string;
+    createdById: string;
     progess: {
         open: number;
         reopen: number;
@@ -183,10 +184,12 @@ export interface ISprintColData {
         toimprove: string[];
         action: string[];
     };
-    poker: {
-        title: string;
-        desc: string;
-        link: string;
-        points: number;
-    };
+    poker?: ISprintPokerColData[];
+}
+
+export interface ISprintPokerColData {
+    title: string;
+    desc: string;
+    link: string;
+    points: number;
 }

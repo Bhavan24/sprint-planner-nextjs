@@ -24,12 +24,17 @@ import {
     Tr,
     useColorModeValue,
     useDisclosure,
+    useToast
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { RefObject, useRef, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdLibraryAdd } from 'react-icons/md';
+import { auth as authCofig } from '../../../firebase/config';
 import { ISaveSprintBoxProps } from '../../interfaces';
+import { addNewSprint } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
 import { details } from '../../utils/sample-data';
 import styles from './sprints.module.css';
@@ -108,19 +113,58 @@ const SprintBox = (props: SprintBoxProps) => {
 };
 
 const SaveSprint = (props: ISaveSprintBoxProps) => {
+    // router
+    const router = useRouter();
+    // user
+    const [user] = useAuthState(authCofig);
+    // toast
+    const toast = useToast();
+    // form
     const [form, setForm] = useState({
         name: '',
-        open: '',
-        reopen: '',
-        inprogress: '',
-        prcreated: '',
-        prmerged: '',
-        inverification: '',
-        resolved: '',
+        open: 0,
+        reopen: 0,
+        inprogress: 0,
+        prcreated: 0,
+        prmerged: 0,
+        inverification: 0,
+        resolved: 0,
     });
 
-    const handleSubmit = () => {
-        console.log(form);
+    const handleSubmit = async () => {
+        if (form && form.name && user) {
+            const progess = {
+                open: form.open,
+                reopen: form.reopen,
+                inprogress: form.inprogress,
+                prcreated: form.prcreated,
+                prmerged: form.prmerged,
+                inverification: form.inverification,
+                resolved: form.resolved,
+            };
+            const retro = {
+                wentwell: [''],
+                toimprove: [''],
+                action: [''],
+            };
+            const poker = [{ title: '', desc: '', link: '', points: 0 }];
+            const sprint = {
+                name: form.name,
+                createdById: user.uid,
+                progess: progess,
+                retro: retro,
+                poker: poker,
+            };
+            const newSprintId = await addNewSprint(sprint);
+            console.log('newSprintId: ', newSprintId);
+            router.push(`/sprints/${newSprintId}`);
+        } else {
+            toast({
+                title: 'Please fill all fields !!!',
+                status: 'error',
+                isClosable: true,
+            });
+        }
     };
 
     return (

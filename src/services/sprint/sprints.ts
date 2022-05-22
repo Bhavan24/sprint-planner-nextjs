@@ -4,36 +4,17 @@ import {
     addSprintToStore,
     getSprintFromStore,
     getSprintsFromStore,
-    updateSprintDataInStore,
+    updateSprintDataInStore
 } from './firebase';
 
 export const addNewSprint = async (data: ISprintColData): Promise<string> => {
-    const progess = {
-        open: data.progess.open,
-        reopen: data.progess.reopen,
-        inprogress: data.progess.inprogress,
-        prcreated: data.progess.prcreated,
-        prmerged: data.progess.prmerged,
-        inverification: data.progess.inverification,
-        resolved: data.progess.resolved,
-    };
-    const retro = {
-        wentwell: data.retro.wentwell,
-        toimprove: data.retro.toimprove,
-        action: data.retro.action,
-    };
-    const poker = {
-        title: data.poker.title,
-        desc: data.poker.desc,
-        link: data.poker.link,
-        points: data.poker.points,
-    };
     const sprintData = {
         id: ulid(),
         name: data.name,
-        progess: progess,
-        retro: retro,
-        poker: poker,
+        createdById: data.createdById,
+        progess: data.progess,
+        retro: data.retro,
+        poker: data.poker,
     };
     await addSprintToStore(sprintData.id, sprintData);
     return sprintData.id;
