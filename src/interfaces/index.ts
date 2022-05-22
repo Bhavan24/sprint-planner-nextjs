@@ -205,3 +205,7 @@ export interface ISprintDetailsBoxProps {
         resolved: number;
     };
 }
+
+export interface ISprintDetailsItemProps {
+    data: ISprintColData;
+}

@@ -9,14 +9,9 @@ import {
     Thead,
     Tr,
 } from '@chakra-ui/react';
+import { ISprintDetailsItemProps } from '../../interfaces';
 
-const style1 = {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-};
-
-export const ProgressDetails = () => {
+export const ProgressDetails = (props: ISprintDetailsItemProps) => {
     return (
         <Flex justifyContent="center">
             <Box maxW="25em">
@@ -31,31 +26,31 @@ export const ProgressDetails = () => {
                         <Tbody>
                             <Tr>
                                 <Td>OPEN</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.open} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>REOPENED</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.reopen} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>IN PROGRESS</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.inprogress} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>PR CREATED</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.prcreated} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>PR MERGED</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.prmerged} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>IN VERIFICATION</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.inverification} Tickets</Td>
                             </Tr>
                             <Tr>
                                 <Td>RESOLVED</Td>
-                                <Td>2 Tickets</Td>
+                                <Td>{props.data.progess.resolved} Tickets</Td>
                             </Tr>
                         </Tbody>
                     </Table>
@@ -65,7 +60,7 @@ export const ProgressDetails = () => {
     );
 };
 
-export const RetrospectiveDetails = () => {
+export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
     return (
         <Flex justifyContent="center">
             <TableContainer>
@@ -79,14 +74,9 @@ export const RetrospectiveDetails = () => {
                     </Thead>
                     <Tbody>
                         <Tr>
-                            <Td>This item went well</Td>
-                            <Td>This item To improve</Td>
-                            <Td>This is action item</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>This item went well</Td>
-                            <Td>This item To improve</Td>
-                            <Td>This is action item</Td>
+                            <Td>{props.data.retro.wentwell}</Td>
+                            <Td>{props.data.retro.toimprove}</Td>
+                            <Td>{props.data.retro.action}</Td>
                         </Tr>
                     </Tbody>
                 </Table>
@@ -95,7 +85,7 @@ export const RetrospectiveDetails = () => {
     );
 };
 
-export const StoryPointsDetails = () => {
+export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
     return (
         <Flex justifyContent="center">
             <TableContainer>
@@ -108,16 +98,13 @@ export const StoryPointsDetails = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>Fix the sprint planner 1</Td>
-                            <Td>https://techlabsglobal.atlassian.net/browse/W3G-2786</Td>
-                            <Td>5</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>Fix the sprint planner 2</Td>
-                            <Td>https://techlabsglobal.atlassian.net/browse/W3G-2786</Td>
-                            <Td>5</Td>
-                        </Tr>
+                        {props.data.poker?.map(poker => (
+                            <Tr key={poker.title}>
+                                <Td>{poker.title}</Td>
+                                <Td>{poker.link}</Td>
+                                <Td>{poker.points} Tickets</Td>
+                            </Tr>
+                        ))}
                     </Tbody>
                 </Table>
             </TableContainer>
