@@ -164,6 +164,17 @@ export interface ISaveSprintBoxProps {
     body?: string;
 }
 
+export interface IEditSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    initialRef: RefObject<FocusableElement>;
+    finalRef: RefObject<FocusableElement>;
+    title: string;
+    body?: string;
+    sprint: ISprintColData;
+}
+
 export interface ISprintColData {
     id?: string;
     name: string;

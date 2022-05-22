@@ -31,7 +31,7 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
                         <Tbody>
                             {issues &&
                                 issues.map(issue => (
-                                    <Tr>
+                                    <Tr key={issue.type}>
                                         <Td>{issue.name}</Td>
                                         <Td>{issue.tickets}</Td>
                                     </Tr>
