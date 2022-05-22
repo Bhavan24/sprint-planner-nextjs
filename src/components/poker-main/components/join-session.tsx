@@ -30,36 +30,47 @@ const JoinSession = () => {
         join && setSessionCode(join.toString());
     }, [router.isReady]);
 
-    useEffect(() => {
-        async function fetchData() {
-            if (sessionCode) {
-                if (await getGame(sessionCode)) {
-                    if (isCurrentPlayerInGame(sessionCode)) {
-                        router.push(`/sprint-poker/${sessionCode}`);
-                    }
+    async function fetchData() {
+        if (sessionCode) {
+            if (await getGame(sessionCode)) {
+                if (isCurrentPlayerInGame(sessionCode)) {
+                    router.push(`/sprint-poker/${sessionCode}`);
+                    return true;
                 }
             }
         }
-        fetchData();
-    }, [sessionCode, router]);
+        return false;
+    }
+
+    // TODO: fix
+    // useEffect(() => {
+    //     fetchData();
+    // }, [sessionCode, router]);
 
     const handleSessionCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSessionCode(e.target.value);
     };
 
     const joinSession = async () => {
-        if (sessionCode) {
-            const res = user
-                ? await addPlayerToGame(sessionCode, user.displayName || user.email || '')
-                : null;
-            res && router.push(`/sprint-poker/${sessionCode}`);
-        } else {
-            toast({
-                title: 'Please fill all fields !!!',
-                status: 'error',
-                isClosable: true,
-            });
-        }
+        fetchData().then(async isPlayer => {
+            if (!isPlayer) {
+                if (sessionCode) {
+                    const res = user
+                        ? await addPlayerToGame(
+                              sessionCode,
+                              user.displayName || user.email || ''
+                          )
+                        : null;
+                    res && router.push(`/sprint-poker/${sessionCode}`);
+                } else {
+                    toast({
+                        title: 'Please fill all fields !!!',
+                        status: 'error',
+                        isClosable: true,
+                    });
+                }
+            }
+        });
     };
 
     return (

@@ -66,8 +66,8 @@ const SelectSession = () => {
                         </Thead>
                         <Tbody>
                             {recentGames &&
-                                recentGames.map(recentGame => (
-                                    <Tr key={recentGame.id}>
+                                recentGames.map((recentGame, i: number) => (
+                                    <Tr key={i}>
                                         <Td>{recentGame.name}</Td>
                                         <Td>{recentGame.id}</Td>
                                         <Td>

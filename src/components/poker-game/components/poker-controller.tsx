@@ -217,7 +217,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
 
     const handleCopyInviteLink = () => {
         const url = `${window.location.origin}/sprint-poker?join=${gameId}`;
-        navigator.clipboard.writeText(url);
+        navigator.clipboard.writeText(gameId); //TODO: fix this!!!
         toast({
             position: 'top-right',
             title: 'Invite Link copied to clipboard!',
