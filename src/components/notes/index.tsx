@@ -1,3 +1,4 @@
+import { DeleteIcon } from '@chakra-ui/icons';
 import {
     Box,
     Button,
@@ -41,6 +42,11 @@ const NotesComponent = () => {
         setNote('');
     };
 
+    const deleteNotes = () => {
+        localStorage.removeItem(NOTES);
+        setNotes([]);
+    };
+
     const removeNote = (index: number) => {
         const new_array = [...notes];
         new_array.splice(index, 1);
@@ -57,13 +63,33 @@ const NotesComponent = () => {
                 </Box>
                 <Flex flexDir="column" alignItems="center" justifyContent="center">
                     <Tooltip title="Add Note">
-                        <Button rightIcon={<AiOutlinePlus />} onClick={addNote} m={1}>
+                        <Button
+                            rightIcon={<AiOutlinePlus />}
+                            onClick={addNote}
+                            m={1}
+                            w="15em"
+                        >
                             Add Note
                         </Button>
                     </Tooltip>
                     <Tooltip title="Clear Note">
-                        <Button rightIcon={<AiOutlineMinus />} onClick={clearNote} m={1}>
+                        <Button
+                            rightIcon={<AiOutlineMinus />}
+                            onClick={clearNote}
+                            m={1}
+                            w="15em"
+                        >
                             Clear Note
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Delete All Notes">
+                        <Button
+                            rightIcon={<DeleteIcon />}
+                            onClick={deleteNotes}
+                            m={1}
+                            w="15em"
+                        >
+                            Delete All Notes
                         </Button>
                     </Tooltip>
                 </Flex>
