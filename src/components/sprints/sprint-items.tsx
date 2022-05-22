@@ -98,8 +98,8 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {props.data.poker?.map(poker => (
-                            <Tr key={poker.title}>
+                        {props.data.poker?.map((poker, i: number) => (
+                            <Tr key={i}>
                                 <Td>{poker.title}</Td>
                                 <Td>{poker.link}</Td>
                                 <Td>{poker.points} Tickets</Td>

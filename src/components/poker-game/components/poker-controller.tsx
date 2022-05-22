@@ -48,6 +48,9 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
         points: 0,
     });
 
+    // toast
+    const toast = useToast();
+
     useEffect(() => {
         getSprints()
             .then(sprints => {
@@ -65,7 +68,8 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
     };
 
     const handleSubmit = () => {
-        sprintId &&
+        const done =
+            sprintId &&
             inputs &&
             updateSprintData(sprintId, {
                 poker: arrayUnion({
@@ -75,6 +79,18 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                     points: inputs.points,
                 }),
             });
+        props.onClose();
+        done
+            ? toast({
+                  title: 'Issue Details Added!!!',
+                  status: 'success',
+                  isClosable: true,
+              })
+            : toast({
+                  title: 'Cannot Add!!!',
+                  status: 'error',
+                  isClosable: true,
+              });
     };
 
     return (

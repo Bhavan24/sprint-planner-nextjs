@@ -127,13 +127,11 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                 to_improve: [''],
                 action_items: [''],
             };
-            const poker = [{ title: '', desc: '', link: '', points: 0 }];
             const sprint = {
                 name: form.name,
                 createdById: user.uid,
                 progess: progess,
                 retro: retro,
-                poker: poker,
             };
             const newSprintId = await addNewSprint(sprint);
             console.log('newSprintId: ', newSprintId);

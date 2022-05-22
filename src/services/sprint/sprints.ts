@@ -14,7 +14,6 @@ export const addNewSprint = async (data: ISprintColData): Promise<string> => {
         createdById: data.createdById,
         progess: data.progess,
         retro: data.retro,
-        poker: data.poker,
     };
     await addSprintToStore(sprintData.id, sprintData);
     return sprintData.id;
