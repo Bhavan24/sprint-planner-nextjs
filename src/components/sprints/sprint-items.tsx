@@ -5,13 +5,18 @@ import {
     TableContainer,
     Tbody,
     Td,
+    Tfoot,
     Th,
     Thead,
     Tr,
 } from '@chakra-ui/react';
 import { ISprintDetailsItemProps } from '../../interfaces';
+import { getIssues, getTotal } from '../../utils/sprint-util';
 
 export const ProgressDetails = (props: ISprintDetailsItemProps) => {
+    const issues = getIssues(props.data.progess);
+    const total = getTotal(props.data.progess);
+
     return (
         <Flex justifyContent="center">
             <Box maxW="25em">
@@ -24,35 +29,20 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            <Tr>
-                                <Td>OPEN</Td>
-                                <Td>{props.data.progess.open} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>REOPENED</Td>
-                                <Td>{props.data.progess.reopen} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>IN PROGRESS</Td>
-                                <Td>{props.data.progess.inprogress} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>PR CREATED</Td>
-                                <Td>{props.data.progess.prcreated} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>PR MERGED</Td>
-                                <Td>{props.data.progess.prmerged} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>IN VERIFICATION</Td>
-                                <Td>{props.data.progess.inverification} Tickets</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>RESOLVED</Td>
-                                <Td>{props.data.progess.resolved} Tickets</Td>
-                            </Tr>
+                            {issues &&
+                                issues.map(issue => (
+                                    <Tr>
+                                        <Td>{issue.name}</Td>
+                                        <Td>{issue.tickets}</Td>
+                                    </Tr>
+                                ))}
                         </Tbody>
+                        <Tfoot>
+                            <Tr color="teal">
+                                <Td>TOTAL</Td>
+                                <Td>{total} Tickets</Td>
+                            </Tr>
+                        </Tfoot>
                     </Table>
                 </TableContainer>
             </Box>

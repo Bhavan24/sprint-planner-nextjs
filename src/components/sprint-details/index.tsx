@@ -1,6 +1,9 @@
-import { Divider, Text } from '@chakra-ui/react';
+import { Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { BiEdit } from 'react-icons/bi';
+import { auth as authCofig } from '../../../firebase/config';
 import {
     ProgressDetails,
     RetrospectiveDetails,
@@ -18,6 +21,10 @@ const SprintDetailComponent = () => {
     // state
     const [sprint, setSprint] = useState<ISprintColData>();
     const [loading, setIsLoading] = useState(true);
+    const [isEditor, setEditor] = useState(false);
+
+    // user
+    const [user] = useAuthState(authCofig);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -27,6 +34,7 @@ const SprintDetailComponent = () => {
             getSprint(id)
                 .then(sprint => {
                     setSprint(sprint);
+                    sprint && user && setEditor(sprint?.createdById == user?.uid);
                 })
                 .catch(err => {
                     console.log('err: ', err);
@@ -48,7 +56,14 @@ const SprintDetailComponent = () => {
         <>
             {sprint ? (
                 <>
-                    <Text textAlign="center"> {sprint?.name}</Text>
+                    <Flex justifyContent="center" alignItems="center">
+                        <Text textAlign="center"> {sprint?.name}</Text>
+                        {isEditor && (
+                            <Button m={2} rightIcon={<BiEdit />}>
+                                Edit
+                            </Button>
+                        )}
+                    </Flex>
                     <Divider m={5} />
                     <ProgressDetails data={sprint} />
                     <Divider m={5} />

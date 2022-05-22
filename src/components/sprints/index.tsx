@@ -41,39 +41,11 @@ import {
 } from '../../interfaces';
 import { addNewSprint, getSprints } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
+import { getIssues } from '../../utils/sprint-util';
 import styles from './sprints.module.css';
 
 const SprintBox = (props: ISprintDetailsBoxProps) => {
-    const issues = [
-        {
-            name: TICKET_STATUS[0].name,
-            tickets: `${props.content?.open} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[1].name,
-            tickets: `${props.content?.reopen} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[2].name,
-            tickets: `${props.content?.inprogress} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[3].name,
-            tickets: `${props.content?.prcreated} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[4].name,
-            tickets: `${props.content?.prmerged} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[5].name,
-            tickets: `${props.content?.inverification} Tickets`,
-        },
-        {
-            name: TICKET_STATUS[6].name,
-            tickets: `${props.content?.resolved} Tickets`,
-        },
-    ];
+    const issues = getIssues(props.content);
 
     return (
         <Link href={props.link} passHref>
