@@ -2,7 +2,10 @@ import {
     Box,
     Button,
     Flex,
+    FormControl,
+    FormLabel,
     IconButton,
+    Input,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -12,34 +15,66 @@ import {
     ModalOverlay,
     Select,
     Stack,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
     Text,
-    Th,
-    Thead,
     Tooltip,
-    Tr,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
+import { arrayUnion } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
-import { IPokerControllerProps, ISaveSprintBoxProps } from '../../../interfaces';
+import {
+    IPokerControllerProps,
+    ISaveSprintBoxProps,
+    ISprintColData,
+    ISprintPokerColData,
+} from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
+import { getSprints, updateSprintData } from '../../../services/sprint/sprints';
 import AlertBox from '../../alertbox';
 import TimerComponent from '../../timer';
 
 const SaveSprint = (props: ISaveSprintBoxProps) => {
-    const [name, setName] = useState('');
+    const [sprintId, setSprintId] = useState('');
+    const [sprints, setSprints] = useState<ISprintColData[]>();
+    const [inputs, setInputs] = useState<ISprintPokerColData>({
+        title: '',
+        desc: '',
+        link: '',
+        points: 0,
+    });
+
+    useEffect(() => {
+        getSprints()
+            .then(sprints => {
+                setSprints(sprints);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    const handleChange = (event: any) => {
+        const name = event.target.id;
+        const value = event.target.value;
+        setInputs(values => ({ ...values, [name]: value }));
+    };
 
     const handleSubmit = () => {
-        console.log(name);
+        sprintId &&
+            inputs &&
+            updateSprintData(sprintId, {
+                poker: arrayUnion({
+                    title: inputs.title,
+                    desc: inputs.desc,
+                    link: inputs.link,
+                    points: inputs.points,
+                }),
+            });
     };
 
     return (
@@ -58,42 +93,54 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                         <Select
                             placeholder="Sprint name"
                             onChange={(e: any) => {
-                                setName(e.target.value);
+                                setSprintId(e.target.value);
                             }}
                         >
-                            <option value="sprint1">Sprint 1</option>
-                            <option value="sprint2">Sprint 2</option>
-                            <option value="sprint3">Sprint 3</option>
+                            {sprints &&
+                                sprints.map(sprint => (
+                                    <option key={sprint.id} value={sprint.id}>
+                                        {sprint.name}
+                                    </option>
+                                ))}
                         </Select>
-
-                        <Flex justifyContent="center">
-                            <TableContainer>
-                                <Table variant="striped">
-                                    <Thead>
-                                        <Tr>
-                                            <Th>Ticket Title</Th>
-                                            <Th>Link</Th>
-                                            <Th>Story Points</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>
-                                        <Tr>
-                                            <Td>Fix the sprint planner 1</Td>
-                                            <Td>
-                                                https://techlabsglobal.atlassian.net/browse/W3G-2786
-                                            </Td>
-                                            <Td>5</Td>
-                                        </Tr>
-                                        <Tr>
-                                            <Td>Fix the sprint planner 2</Td>
-                                            <Td>
-                                                https://techlabsglobal.atlassian.net/browse/W3G-2786
-                                            </Td>
-                                            <Td>5</Td>
-                                        </Tr>
-                                    </Tbody>
-                                </Table>
-                            </TableContainer>
+                        <Flex justifyContent="center" flexDir="column" p={4}>
+                            <FormControl isRequired>
+                                <FormLabel htmlFor="poker-title">Title</FormLabel>
+                                <Input
+                                    id="title"
+                                    placeholder="Title"
+                                    value={inputs.title}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel htmlFor="poker-desc">Description</FormLabel>
+                                <Input
+                                    id="desc"
+                                    placeholder="Description"
+                                    value={inputs.desc}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel htmlFor="poker-link">Link</FormLabel>
+                                <Input
+                                    id="link"
+                                    placeholder="Link"
+                                    value={inputs.link}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel htmlFor="poker-points">Points</FormLabel>
+                                <Input
+                                    id="points"
+                                    type="number"
+                                    placeholder="Points"
+                                    value={inputs.points}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
@@ -227,7 +274,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         onClose={model.onClose}
                                         initialRef={initialRef}
                                         finalRef={finalRef}
-                                        title={'Select Sprint'}
+                                        title={'Save Issue'}
                                     />
                                     <Tooltip label="Restart Session">
                                         <IconButton

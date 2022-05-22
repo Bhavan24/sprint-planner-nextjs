@@ -19,6 +19,7 @@ import {
     TableContainer,
     Tbody,
     Td,
+    Text,
     Th,
     Thead,
     Tr,
@@ -58,9 +59,9 @@ const SprintBox = (props: ISprintDetailsBoxProps) => {
                 cursor="pointer"
             >
                 <Box p="6">
-                    <Box mt="1" fontWeight="semibold" as="h3">
+                    <Text mt="1" fontWeight="semibold" fontSize="3xl">
                         {props.title}
-                    </Box>
+                    </Text>
                     {props.content && (
                         <Box
                             display="flex"
@@ -122,9 +123,9 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                 resolved: inputs.resolved,
             };
             const retro = {
-                wentwell: [''],
-                toimprove: [''],
-                action: [''],
+                went_well: [''],
+                to_improve: [''],
+                action_items: [''],
             };
             const poker = [{ title: '', desc: '', link: '', points: 0 }];
             const sprint = {

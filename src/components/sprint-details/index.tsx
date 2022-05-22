@@ -58,7 +58,7 @@ const EditSprint = (props: IEditSprintBoxProps) => {
         resolved: issues[6].value,
     });
 
-    const handleChange = async (event: any) => {
+    const handleChange = (event: any) => {
         const name = event.target.name;
         const value = Number(event.target.value);
         setInputs(values => ({ ...values, [name]: value }));
