@@ -78,3 +78,37 @@ export const details = [
         },
     },
 ];
+
+/*
+{
+	"sprints" : {
+		"id" : "number",
+		"name" : "string",
+        // new col
+		"progress" : {
+			"open": "number",
+			"reopen": "number",
+			"inprogress": "number",
+			"prcreated": "number",
+			"prmerged": "number",
+			"inverification": "number",
+			"resolved"	: "number",
+		},
+        // new col
+		"retro" : {
+			"wentwell" : ["string"],
+			"toimprove" : ["string"],
+			"action" : ["string"],
+		},
+         // new col
+		"poker" : [
+			{
+				"title" : "string",
+				"desc" : "string",
+				"link" : "string",
+				"points" : "number"
+			}
+		]
+	}
+}
+*/

@@ -4,13 +4,16 @@ import {
     IGame,
     IPlayer,
     IPlayerCardProps,
-    IPokerPlayersProps
+    IPokerPlayersProps,
 } from '../../../interfaces';
 import { colors } from '../../../theme/colors';
 import { getCards } from '../../../utils/poker-util';
 
-const getCardColor = (game: IGame): string => {
+const getCardColor = (player: IPlayer, game: IGame): string => {
     if (game.gameStatus !== GAME_STATUS.FINISHED) {
+        if (player.status === GAME_STATUS.FINISHED) {
+            return useColorModeValue(colors.poker_card_2.light, colors.poker_card_2.dark);
+        }
         return useColorModeValue(colors.poker_card_3.light, colors.poker_card_3.dark);
     }
     return useColorModeValue(colors.poker_card_2.light, colors.poker_card_2.dark);
@@ -49,7 +52,7 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
             height="8em"
             width="6em"
             m="1"
-            bg={getCardColor(props.game)}
+            bg={getCardColor(props.player, props.game)}
         >
             <Flex
                 p="3"
