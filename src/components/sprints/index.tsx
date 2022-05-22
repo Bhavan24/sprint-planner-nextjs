@@ -33,6 +33,7 @@ import { RefObject, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdLibraryAdd } from 'react-icons/md';
 import { auth as authCofig } from '../../../firebase/config';
+import { TICKET_STATUS } from '../../constants';
 import { ISaveSprintBoxProps } from '../../interfaces';
 import { addNewSprint } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
@@ -122,6 +123,8 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
     // form
     const [form, setForm] = useState({
         name: '',
+    });
+    const [inputs, setInputs] = useState({
         open: 0,
         reopen: 0,
         inprogress: 0,
@@ -131,16 +134,22 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
         resolved: 0,
     });
 
+    const handleChange = async (event: any) => {
+        const name = event.target.name;
+        const value = Number(event.target.value);
+        setInputs(values => ({ ...values, [name]: value }));
+    };
+
     const handleSubmit = async () => {
         if (form && form.name && user) {
             const progess = {
-                open: form.open,
-                reopen: form.reopen,
-                inprogress: form.inprogress,
-                prcreated: form.prcreated,
-                prmerged: form.prmerged,
-                inverification: form.inverification,
-                resolved: form.resolved,
+                open: inputs.open,
+                reopen: inputs.reopen,
+                inprogress: inputs.inprogress,
+                prcreated: inputs.prcreated,
+                prmerged: inputs.prmerged,
+                inverification: inputs.inverification,
+                resolved: inputs.resolved,
             };
             const retro = {
                 wentwell: [''],
@@ -201,124 +210,20 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                             </Tr>
                                         </Thead>
                                         <Tbody>
-                                            <Tr>
-                                                <Td>OPEN</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="OPEN"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    open: e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>REOPENED</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="REOPENED"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    reopen: e.target
-                                                                        .value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>IN PROGRESS</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="IN-PROGRESS"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    inprogress:
-                                                                        e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>PR CREATED</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="PR-CREATED"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    prcreated:
-                                                                        e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>PR MERGED</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="PR-MERGED"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    prmerged:
-                                                                        e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>IN VERIFICATION</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="IN-VERIFICATION"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    inverification:
-                                                                        e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
-                                            <Tr>
-                                                <Td>RESOLVED</Td>
-                                                <Td>
-                                                    <NumberInput>
-                                                        <NumberInputField
-                                                            id="RESOLVED"
-                                                            onChange={(e: any) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    resolved:
-                                                                        e.target.value,
-                                                                });
-                                                            }}
-                                                        />
-                                                    </NumberInput>
-                                                </Td>
-                                            </Tr>
+                                            {TICKET_STATUS.map(status => (
+                                                <Tr>
+                                                    <Td>{status.name}</Td>
+                                                    <Td>
+                                                        <NumberInput>
+                                                            <NumberInputField
+                                                                id={status.type}
+                                                                name={status.type}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </NumberInput>
+                                                    </Td>
+                                                </Tr>
+                                            ))}
                                         </Tbody>
                                     </Table>
                                 </TableContainer>

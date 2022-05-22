@@ -87,3 +87,13 @@ export enum GAME_STATUS {
     IN_PROGRESS = 'IN_PROGRESS',
     FINISHED = 'FINISHED',
 }
+
+export const TICKET_STATUS = [
+    { name: 'OPEN', type: 'open' },
+    { name: 'REOPENED', type: 'reopen' },
+    { name: 'IN PROGRESS', type: 'inprogress' },
+    { name: 'PR CREATED', type: 'prcreated' },
+    { name: 'PR MERGED', type: 'prmerged' },
+    { name: 'IN VERIFICATION', type: 'inverification' },
+    { name: 'RESOLVED', type: 'resolved' },
+];
