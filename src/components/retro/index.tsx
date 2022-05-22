@@ -26,6 +26,7 @@ import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import {
+    IRetroDetails,
     IRetrospectiveData,
     ISaveSprintBoxProps,
     ISprintColData,
@@ -33,6 +34,7 @@ import {
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
 import { getSprints } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
+import { getRetro } from '../../utils/retro-util';
 import AlertBox from '../alertbox';
 import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
@@ -41,11 +43,7 @@ import styles from './retro.module.css';
 const SaveSprint = (props: ISaveSprintBoxProps) => {
     const [name, setName] = useState('');
     const [sprints, setSprints] = useState<ISprintColData[]>();
-    const [retro, setRetro] = useState<{
-        wentwell: string[];
-        toimprove: string[];
-        action: string[];
-    }>();
+    const [retro, setRetro] = useState<IRetroDetails[]>();
 
     useEffect(() => {
         getSprints()
@@ -58,11 +56,12 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
     }, []);
 
     useEffect(() => {
-        setRetro({
-            wentwell: getRetroList(WENT_WELL_ITEMS),
-            toimprove: getRetroList(TO_IMRPOVE_ITEMS),
-            action: getRetroList(ACTION_ITEMS),
+        const retroDetails = getRetro({
+            went_well: getRetroList(WENT_WELL_ITEMS),
+            to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+            action_items: getRetroList(ACTION_ITEMS),
         });
+        setRetro(retroDetails);
     }, [props]);
 
     const handleSubmit = () => {
@@ -107,11 +106,11 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                     </Thead>
                                     <Tbody>
                                         {retro &&
-                                            retro.wentwell.map((item, i: number) => (
+                                            retro.map((item, i: number) => (
                                                 <Tr key={i}>
-                                                    <Td>{item}</Td>
-                                                    <Td>{item}</Td>
-                                                    <Td>{item}</Td>
+                                                    <Td>{item.went_well}</Td>
+                                                    <Td>{item.to_improve}</Td>
+                                                    <Td>{item.action_items}</Td>
                                                 </Tr>
                                             ))}
                                     </Tbody>

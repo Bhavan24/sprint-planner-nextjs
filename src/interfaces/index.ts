@@ -130,6 +130,12 @@ export interface IRetrospectiveData {
     action_items: string[];
 }
 
+export interface IRetroDetails {
+    went_well: string;
+    to_improve: string;
+    action_items: string;
+}
+
 export interface INewRetroItemProps {
     name: string;
     title: string;
