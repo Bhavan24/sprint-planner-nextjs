@@ -191,3 +191,17 @@ export interface ISprintPokerColData {
     link: string;
     points: number;
 }
+
+export interface ISprintDetailsBoxProps {
+    link: string;
+    title: string;
+    content?: {
+        open: number;
+        reopen: number;
+        inprogress: number;
+        prcreated: number;
+        prmerged: number;
+        inverification: number;
+        resolved: number;
+    };
+}

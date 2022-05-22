@@ -29,32 +29,52 @@ import {
 import { FocusableElement } from '@chakra-ui/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdLibraryAdd } from 'react-icons/md';
 import { auth as authCofig } from '../../../firebase/config';
 import { TICKET_STATUS } from '../../constants';
-import { ISaveSprintBoxProps } from '../../interfaces';
-import { addNewSprint } from '../../services/sprint/sprints';
+import {
+    ISaveSprintBoxProps,
+    ISprintColData,
+    ISprintDetailsBoxProps,
+} from '../../interfaces';
+import { addNewSprint, getSprints } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
-import { details } from '../../utils/sample-data';
 import styles from './sprints.module.css';
 
-interface SprintBoxProps {
-    link: string;
-    title: string;
-    content?: {
-        open: string;
-        reopen: string;
-        inprogress: string;
-        prcreated: string;
-        prmerged: string;
-        inverification: string;
-        resolved: string;
-    };
-}
+const SprintBox = (props: ISprintDetailsBoxProps) => {
+    const issues = [
+        {
+            name: TICKET_STATUS[0].name,
+            tickets: `${props.content?.open} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[1].name,
+            tickets: `${props.content?.reopen} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[2].name,
+            tickets: `${props.content?.inprogress} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[3].name,
+            tickets: `${props.content?.prcreated} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[4].name,
+            tickets: `${props.content?.prmerged} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[5].name,
+            tickets: `${props.content?.inverification} Tickets`,
+        },
+        {
+            name: TICKET_STATUS[6].name,
+            tickets: `${props.content?.resolved} Tickets`,
+        },
+    ];
 
-const SprintBox = (props: SprintBoxProps) => {
     return (
         <Link href={props.link} passHref>
             <Box
@@ -77,34 +97,12 @@ const SprintBox = (props: SprintBoxProps) => {
                             alignItems="flex-start"
                             flexDir="column"
                         >
-                            <div className={styles.text}>
-                                <b>OPEN</b>
-                                <i>{props.content.open}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>REOPENED</b>
-                                <i>{props.content.reopen}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>IN PROGRESS</b>
-                                <i>{props.content.inprogress}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>PR CREATED</b>
-                                <i>{props.content.prcreated}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>PR MERGED</b>
-                                <i>{props.content.prmerged}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>IN VERIFICATION</b>
-                                <i>{props.content.inverification}</i>
-                            </div>
-                            <div className={styles.text}>
-                                <b>RESOLVED</b>
-                                <i>{props.content.resolved}</i>
-                            </div>
+                            {issues.map(issue => (
+                                <div className={styles.text} key={issue.name}>
+                                    <b>{issue.name}</b>
+                                    <i>{issue.tickets}</i>
+                                </div>
+                            ))}
                         </Box>
                     )}
                 </Box>
@@ -211,7 +209,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                         </Thead>
                                         <Tbody>
                                             {TICKET_STATUS.map(status => (
-                                                <Tr>
+                                                <Tr key={status.type}>
                                                     <Td>{status.name}</Td>
                                                     <Td>
                                                         <NumberInput>
@@ -247,6 +245,19 @@ const SprintsMainComponent = () => {
     const initialRef = useRef() as RefObject<FocusableElement>;
     const finalRef = useRef() as RefObject<FocusableElement>;
 
+    // sprints
+    const [sprints, setSprints] = useState<ISprintColData[]>();
+
+    useEffect(() => {
+        getSprints()
+            .then(sprint => {
+                sprint && setSprints(sprint);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
     return (
         <>
             <Flex w="100%" my={5} justifyContent="center" gap={2}>
@@ -278,19 +289,16 @@ const SprintsMainComponent = () => {
             </Flex>
             <Box textAlign="center" fontSize="xl" p={3}>
                 <Box p={3} className={styles.itemsContainer}>
-                    {details.map(box => (
-                        <GridItem w="100%" key={box.link}>
-                            {box.content ? (
+                    {sprints &&
+                        sprints.map(sprint => (
+                            <GridItem w="100%" key={sprint.id}>
                                 <SprintBox
-                                    title={box.title}
-                                    link={box.link}
-                                    content={box.content}
+                                    title={sprint.name}
+                                    link={`/sprints/${sprint.id}`}
+                                    content={sprint.progess}
                                 />
-                            ) : (
-                                <SprintBox title={box.title} link={box.link} />
-                            )}
-                        </GridItem>
-                    ))}
+                            </GridItem>
+                        ))}
                 </Box>
             </Box>
         </>
