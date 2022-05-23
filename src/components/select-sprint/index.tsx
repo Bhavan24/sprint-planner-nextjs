@@ -22,7 +22,7 @@ const SelectSprint = ({
 
     return (
         <>
-            <Select onChange={onChange}>
+            <Select placeholder="--Select Sprint--" onChange={onChange}>
                 {sprints &&
                     sprints.map(sprint => (
                         <option key={sprint.id} value={sprint.id}>
