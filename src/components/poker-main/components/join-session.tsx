@@ -34,7 +34,6 @@ const JoinSession = () => {
         if (sessionCode) {
             if (await getGame(sessionCode)) {
                 if (isCurrentPlayerInGame(sessionCode)) {
-                    router.push(`/sprint-poker/${sessionCode}`);
                     return true;
                 }
             }
@@ -53,7 +52,9 @@ const JoinSession = () => {
 
     const joinSession = async () => {
         fetchData().then(async isPlayer => {
-            if (!isPlayer) {
+            if (isPlayer) {
+                router.push(`/sprint-poker/${sessionCode}`);
+            } else {
                 if (sessionCode) {
                     const res = user
                         ? await addPlayerToGame(
