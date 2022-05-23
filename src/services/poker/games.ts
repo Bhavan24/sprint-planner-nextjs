@@ -84,7 +84,7 @@ export const getAverage = (players: IPlayer[]): number => {
             numberOfPlayersPlayed++;
         }
     });
-    return Math.round(values / numberOfPlayersPlayed);
+    return values / numberOfPlayersPlayed;
 };
 
 export const getGameStatus = (players: IPlayer[]): GAME_STATUS => {
