@@ -11,7 +11,6 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Select,
     Table,
     TableContainer,
     Tbody,
@@ -25,35 +24,20 @@ import {
 import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
-import {
-    IRetroDetails,
-    IRetrospectiveData,
-    ISaveSprintBoxProps,
-    ISprintColData,
-} from '../../interfaces';
+import { IRetroDetails, IRetrospectiveData, ISaveSprintBoxProps } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
-import { getSprints, updateSprintData } from '../../services/sprint/sprints';
+import { updateSprintData } from '../../services/sprint/sprints';
 import { colors } from '../../theme/colors';
 import { getRetro } from '../../utils/retro-util';
 import AlertBox from '../alertbox';
+import SelectSprint from '../select-sprint';
 import TimerComponent from '../timer';
 import NewRetroItem from './new-item';
 import styles from './retro.module.css';
 
 const SaveSprint = (props: ISaveSprintBoxProps) => {
     const [sprintId, setSprintId] = useState('');
-    const [sprints, setSprints] = useState<ISprintColData[]>();
     const [retro, setRetro] = useState<IRetroDetails[]>();
-
-    useEffect(() => {
-        getSprints()
-            .then(sprints => {
-                setSprints(sprints);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }, []);
 
     useEffect(() => {
         const retroDetails = getRetro({
@@ -95,19 +79,11 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                     <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <Select
-                            placeholder="Sprint name"
+                        <SelectSprint
                             onChange={(e: any) => {
                                 setSprintId(e.target.value);
                             }}
-                        >
-                            {sprints &&
-                                sprints.map(sprint => (
-                                    <option key={sprint.id} value={sprint.id}>
-                                        {sprint.name}
-                                    </option>
-                                ))}
-                        </Select>
+                        />
                         <Flex justifyContent="center">
                             <TableContainer>
                                 <Table variant="striped">

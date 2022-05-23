@@ -1,4 +1,4 @@
-import { IGame } from './../interfaces/index';
+import { IGame, ISprintPokerColData } from './../interfaces/index';
 import { GAME_TYPES } from '../constants';
 import { ICardConfig } from '../interfaces';
 
@@ -30,6 +30,10 @@ export const getCards = (game: IGame | undefined) => {
 };
 
 // TEMP
+export const getAssigneeDetails = (sprint: ISprintPokerColData) => {
+    console.log(sprint);
+};
+
 export const assigneeDetails = [
     { name: 'bhavan', points: 10 },
     { name: 'sahas', points: 8 },
