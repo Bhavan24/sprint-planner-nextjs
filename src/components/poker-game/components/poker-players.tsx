@@ -78,7 +78,12 @@ const PokerPlayers: React.FC<IPokerPlayersProps> = props => {
             <Text fontSize="md" m={2}>
                 👍 - Voting Done 🤔 - Yet to Vote
             </Text>
-            <Flex alignContent="center" alignItems="center" justifyContent="center">
+            <Flex
+                alignContent="center"
+                alignItems="center"
+                justifyContent="center"
+                flexWrap="wrap"
+            >
                 {props.players.map((player, index: number) => (
                     <PlayerCard key={index} game={props.game} player={player} />
                 ))}
