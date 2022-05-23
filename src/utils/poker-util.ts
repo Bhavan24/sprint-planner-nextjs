@@ -1,6 +1,6 @@
-import { IGame, ISprintPokerColData } from './../interfaces/index';
 import { GAME_TYPES } from '../constants';
-import { ICardConfig } from '../interfaces';
+import { IAssigneeDetails, ICardConfig } from '../interfaces';
+import { IGame, ISprintPokerColData } from './../interfaces/index';
 
 export const getCards = (game: IGame | undefined) => {
     let id = 0;
@@ -29,17 +29,30 @@ export const getCards = (game: IGame | undefined) => {
     return cards;
 };
 
-// TEMP
-export const getAssigneeDetails = (sprint: ISprintPokerColData) => {
-    console.log(sprint);
-};
+function mapToProp(data: any, prop: any) {
+    return data.reduce(
+        (res: any, item: any) =>
+            Object.assign(res, {
+                [item[prop]]: 1 + (res[item[prop]] || 0),
+            }),
+        Object.create(null)
+    );
+}
 
-export const assigneeDetails = [
-    { name: 'bhavan', points: 10 },
-    { name: 'sahas', points: 8 },
-    { name: 'venura', points: 9 },
-    { name: 'senesh', points: 5 },
-    { name: 'eranga', points: 6 },
-    { name: 'methmal', points: 4 },
-    { name: 'achila', points: 3 },
-];
+export const getAssigneeDetails = (tickets: ISprintPokerColData[]) => {
+    const tempList: IAssigneeDetails[] = [];
+    const mainList: IAssigneeDetails[] = [];
+    tickets.forEach((ticket: ISprintPokerColData) => {
+        tempList.push({ name: ticket.assignee, points: ticket.points });
+    });
+    if (tempList) {
+        const details = mapToProp(tempList, 'name');
+        for (var key of Object.keys(details)) {
+            mainList.push({
+                name: key,
+                points: details[key],
+            });
+        }
+    }
+    return mainList;
+};

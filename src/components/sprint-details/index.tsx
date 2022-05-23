@@ -33,6 +33,7 @@ import {
     ProgressDetails,
     RetrospectiveDetails,
     StoryPointsDetails,
+    StoryPointsEngineerDetails,
 } from '../../components/sprints/sprint-items';
 import { IEditSprintBoxProps, ISprintColData } from '../../interfaces';
 import { getSprint, updateSprintData } from '../../services/sprint/sprints';
@@ -243,6 +244,8 @@ const SprintDetailComponent = () => {
                     <RetrospectiveDetails data={sprint} />
                     <Divider m={5} />
                     <StoryPointsDetails data={sprint} />
+                    <Divider m={5} />
+                    {sprint.id && <StoryPointsEngineerDetails sprintId={sprint.id} />}
                 </>
             ) : (
                 <Text textAlign="center">No Details Found</Text>

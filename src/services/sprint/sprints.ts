@@ -1,5 +1,5 @@
 import { ulid } from 'ulid';
-import { ISprintColData } from './../../interfaces/index';
+import { ISprintColData, ISprintPokerColData } from './../../interfaces/index';
 import {
     addSprintToStore,
     getSprintFromStore,
@@ -27,6 +27,11 @@ export const getSprints = async () => {
 export const getSprint = async (sprintId: string) => {
     const result = await getSprintFromStore(sprintId);
     return result;
+};
+
+export const getSprintPokerDetails = async (sprintId: string) => {
+    const result = await getSprint(sprintId);
+    return result?.poker as ISprintPokerColData[];
 };
 
 export const updateSprintData = async (sprintId: string, data: any): Promise<boolean> => {

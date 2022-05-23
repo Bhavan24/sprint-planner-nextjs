@@ -240,3 +240,12 @@ export interface ISprintDetailsBoxProps {
 export interface ISprintDetailsItemProps {
     data: ISprintColData;
 }
+
+export interface ISprintEngineerPointsProps {
+    sprintId: string;
+}
+
+export interface IAssigneeDetails {
+    name: string;
+    points: number;
+}

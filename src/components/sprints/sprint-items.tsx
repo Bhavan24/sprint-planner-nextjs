@@ -10,7 +10,14 @@ import {
     Thead,
     Tr,
 } from '@chakra-ui/react';
-import { ISprintDetailsItemProps } from '../../interfaces';
+import { useEffect, useState } from 'react';
+import {
+    ISprintDetailsItemProps,
+    ISprintEngineerPointsProps,
+    ISprintPokerColData,
+} from '../../interfaces';
+import { getSprintPokerDetails } from '../../services/sprint/sprints';
+import { getAssigneeDetails } from '../../utils/poker-util';
 import { getRetro } from '../../utils/retro-util';
 import { getIssues, getTotal } from '../../utils/sprint-util';
 
@@ -107,6 +114,44 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                                 <Td>{poker.points} Points</Td>
                             </Tr>
                         ))}
+                    </Tbody>
+                </Table>
+            </TableContainer>
+        </Flex>
+    );
+};
+
+export const StoryPointsEngineerDetails = ({ sprintId }: ISprintEngineerPointsProps) => {
+    const [details, setDetails] = useState<ISprintPokerColData[]>();
+
+    useEffect(() => {
+        getSprintPokerDetails(sprintId)
+            .then((tickets: ISprintPokerColData[]) => {
+                setDetails(tickets);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    return (
+        <Flex justifyContent="center">
+            <TableContainer>
+                <Table variant="simple" size="md">
+                    <Thead>
+                        <Tr>
+                            <Th>Assignee</Th>
+                            <Th isNumeric>Story Points</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {details &&
+                            getAssigneeDetails(details).map((data, i: number) => (
+                                <Tr key={i}>
+                                    <Td>{data.name}</Td>
+                                    <Td isNumeric>{data.points}</Td>
+                                </Tr>
+                            ))}
                     </Tbody>
                 </Table>
             </TableContainer>

@@ -20,16 +20,9 @@ import {
     ModalHeader,
     ModalOverlay,
     Stack,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
     Text,
     Textarea,
-    Th,
-    Thead,
     Tooltip,
-    Tr,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
@@ -47,8 +40,8 @@ import {
 } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import { updateSprintData } from '../../../services/sprint/sprints';
-import { assigneeDetails } from '../../../utils/poker-util';
 import AlertBox from '../../alertbox';
+import { StoryPointsEngineerDetails } from '../../sprints/sprint-items';
 import TimerComponent from '../../timer';
 
 const SaveSprint = (props: ISavePokerSprintBoxProps) => {
@@ -360,28 +353,9 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     <DrawerCloseButton />
                                     <DrawerHeader>Assignee Details</DrawerHeader>
                                     <DrawerBody>
-                                        <TableContainer>
-                                            <Table variant="simple" size="md">
-                                                <Thead>
-                                                    <Tr>
-                                                        <Th>Assignee</Th>
-                                                        <Th isNumeric>Story Points</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    {assigneeDetails.map(
-                                                        (data, i: number) => (
-                                                            <Tr key={i}>
-                                                                <Td>{data.name}</Td>
-                                                                <Td isNumeric>
-                                                                    {data.points}
-                                                                </Td>
-                                                            </Tr>
-                                                        )
-                                                    )}
-                                                </Tbody>
-                                            </Table>
-                                        </TableContainer>
+                                        <StoryPointsEngineerDetails
+                                            sprintId={props.game.sprintId}
+                                        />
                                     </DrawerBody>
                                 </DrawerContent>
                             </Drawer>
