@@ -1,6 +1,13 @@
 import {
     Box,
     Button,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
     Flex,
     FormControl,
     FormLabel,
@@ -15,9 +22,18 @@ import {
     ModalOverlay,
     Select,
     Stack,
+    Table,
+    TableCaption,
+    TableContainer,
+    Tbody,
+    Td,
     Text,
     Textarea,
+    Tfoot,
+    Th,
+    Thead,
     Tooltip,
+    Tr,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
@@ -36,6 +52,7 @@ import {
 } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import { getSprints, updateSprintData } from '../../../services/sprint/sprints';
+import { assigneeDetails } from '../../../utils/poker-util';
 import AlertBox from '../../alertbox';
 import TimerComponent from '../../timer';
 
@@ -196,6 +213,10 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef() as RefObject<FocusableElement>;
 
+    // drawer
+    const drawer = useDisclosure();
+    const drawerBtnRef = useRef() as RefObject<FocusableElement>;
+
     // model
     const model = useDisclosure();
     const initialRef = useRef() as RefObject<FocusableElement>;
@@ -239,6 +260,10 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
 
     const isModerator = (moderatorId: string, currentPlayerId: string) => {
         return moderatorId === currentPlayerId;
+    };
+
+    const handleViewButtons = () => {
+        alert('View Details!!!');
     };
 
     return (
@@ -358,6 +383,43 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                         </Box>
                         <Flex alignItems="center" justifyContent="center">
                             <TimerComponent />
+                        </Flex>
+                        <Flex alignItems="center" justifyContent="center" mt={2}>
+                            <Button onClick={drawer.onOpen}>View Assignee Details</Button>
+                            <Drawer
+                                isOpen={drawer.isOpen}
+                                placement="right"
+                                onClose={drawer.onClose}
+                                finalFocusRef={drawerBtnRef}
+                            >
+                                <DrawerOverlay />
+                                <DrawerContent>
+                                    <DrawerCloseButton />
+                                    <DrawerHeader>Assignee Details</DrawerHeader>
+                                    <DrawerBody>
+                                        <TableContainer>
+                                            <Table variant="simple" size="md">
+                                                <Thead>
+                                                    <Tr>
+                                                        <Th>Assignee</Th>
+                                                        <Th isNumeric>Story Points</Th>
+                                                    </Tr>
+                                                </Thead>
+                                                <Tbody>
+                                                    {assigneeDetails.map(data => (
+                                                        <Tr>
+                                                            <Td>{data.name}</Td>
+                                                            <Td isNumeric>
+                                                                {data.points}
+                                                            </Td>
+                                                        </Tr>
+                                                    ))}
+                                                </Tbody>
+                                            </Table>
+                                        </TableContainer>
+                                    </DrawerBody>
+                                </DrawerContent>
+                            </Drawer>
                         </Flex>
                     </Box>
                 </Box>

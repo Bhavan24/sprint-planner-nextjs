@@ -28,3 +28,14 @@ export const getCards = (game: IGame | undefined) => {
 
     return cards;
 };
+
+// TEMP
+export const assigneeDetails = [
+    { name: 'bhavan', points: 10 },
+    { name: 'sahas', points: 8 },
+    { name: 'venura', points: 9 },
+    { name: 'senesh', points: 5 },
+    { name: 'eranga', points: 6 },
+    { name: 'methmal', points: 4 },
+    { name: 'achila', points: 3 },
+];
