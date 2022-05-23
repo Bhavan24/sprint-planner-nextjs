@@ -1,16 +1,16 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyD7qVgCUIBGO3oCNCgWEeLIq0hqk11tKRU',
-    authDomain: 'sprint-planner-ab5df.firebaseapp.com',
-    databaseURL: 'https://sprint-planner-ab5df-default-rtdb.firebaseio.com',
-    projectId: 'sprint-planner-ab5df',
-    storageBucket: 'sprint-planner-ab5df.appspot.com',
-    messagingSenderId: '476682090893',
-    appId: '1:476682090893:web:85eb313f3cda369f3425c4',
+    apiKey: 'AIzaSyDaRwpDlgi5DpULKLCYSeSnSIvmga2_1KA',
+    authDomain: 'sahas-test.firebaseapp.com',
+    databaseURL: 'https://sahas-test-default-rtdb.firebaseio.com',
+    projectId: 'sahas-test',
+    storageBucket: 'sahas-test.appspot.com',
+    messagingSenderId: '514191522591',
+    appId: '1:514191522591:web:82bc1f409e0e7698140e2a',
 };
 
 // Initialize Firebase

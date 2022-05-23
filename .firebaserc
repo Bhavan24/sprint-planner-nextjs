@@ -1,5 +1,14 @@
 {
-  "projects": {
-    "default": "sprint-planner-ab5df"
-  }
+    "projects": {
+        "default": "sahas-test"
+    },
+    "targets": {
+        "sahas-test": {
+            "hosting": {
+                "kaya-sprint-planner": [
+                    "kaya-sprint-planner"
+                ]
+            }
+        }
+    }
 }
