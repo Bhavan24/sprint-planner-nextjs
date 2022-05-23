@@ -46,6 +46,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
         title: '',
         desc: '',
         link: '',
+        assignee: '',
         points: 0,
     });
 
@@ -77,6 +78,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                     title: inputs.title,
                     desc: inputs.desc,
                     link: inputs.link,
+                    assignee: inputs.assignee,
                     points: inputs.points,
                 }),
             });
@@ -127,7 +129,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                 </Select>
                             </FormControl>
                             <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="poker-title">Title</FormLabel>
+                                <FormLabel htmlFor="title">Title</FormLabel>
                                 <Input
                                     id="title"
                                     placeholder="Title"
@@ -136,7 +138,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                 />
                             </FormControl>
                             <FormControl m={1}>
-                                <FormLabel htmlFor="poker-desc">Description</FormLabel>
+                                <FormLabel htmlFor="desc">Description</FormLabel>
                                 <Textarea
                                     id="desc"
                                     placeholder="Description"
@@ -145,7 +147,7 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                 />
                             </FormControl>
                             <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="poker-link">Link</FormLabel>
+                                <FormLabel htmlFor="link">Link</FormLabel>
                                 <Input
                                     id="link"
                                     placeholder="Link"
@@ -154,7 +156,16 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                                 />
                             </FormControl>
                             <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="poker-points">Points</FormLabel>
+                                <FormLabel htmlFor="assignee">Assignee</FormLabel>
+                                <Input
+                                    id="assignee"
+                                    placeholder="Assignee"
+                                    value={inputs.assignee}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl isRequired m={1}>
+                                <FormLabel htmlFor="points">Points</FormLabel>
                                 <Input
                                     id="points"
                                     type="number"

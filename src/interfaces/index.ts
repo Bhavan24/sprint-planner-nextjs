@@ -206,6 +206,7 @@ export interface ISprintPokerColData {
     title: string;
     desc: string;
     link: string;
+    assignee: string;
     points: number;
 }
 
