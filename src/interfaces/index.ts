@@ -71,6 +71,7 @@ export interface INewSession {
     userName: string;
     userId: string;
     createdAt: Date;
+    sprintId: string;
 }
 
 export interface IPlayer {
@@ -96,6 +97,7 @@ export interface IGame {
     createdById: string;
     createdAt: Date;
     updatedAt?: Date;
+    sprintId: string;
 }
 
 export interface ICardPickerProps {
@@ -168,6 +170,17 @@ export interface ISaveSprintBoxProps {
     finalRef: RefObject<FocusableElement>;
     title: string;
     body?: string;
+}
+
+export interface ISavePokerSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    initialRef: RefObject<FocusableElement>;
+    finalRef: RefObject<FocusableElement>;
+    title: string;
+    body?: string;
+    sprintId: string;
 }
 
 export interface IEditSprintBoxProps {

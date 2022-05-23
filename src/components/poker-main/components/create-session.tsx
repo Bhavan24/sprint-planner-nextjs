@@ -15,6 +15,7 @@ import { auth } from '../../../../firebase/config';
 import { GAME_TYPES } from '../../../constants';
 import { INewSession } from '../../../interfaces';
 import { addNewGame } from '../../../services/poker/games';
+import SelectSprint from '../../select-sprint';
 
 const CreateSession = () => {
     // router
@@ -24,6 +25,7 @@ const CreateSession = () => {
     // states
     const [sessionName, setSessionName] = useState('');
     const [cardsMode, setCardsMode] = useState(GAME_TYPES[0].type);
+    const [sprintId, setSprintId] = useState('');
 
     // toast
     const toast = useToast();
@@ -44,6 +46,7 @@ const CreateSession = () => {
                 userId: user.uid,
                 gameType: cardsMode,
                 createdAt: new Date(),
+                sprintId: sprintId,
             };
             const newGameId = await addNewGame(game);
             console.log('newGameId:', newGameId);
@@ -61,6 +64,14 @@ const CreateSession = () => {
         <>
             <Stack spacing="6">
                 <FormControl isRequired>
+                    <FormLabel htmlFor="poker-sprint">Sprint</FormLabel>
+                    <SelectSprint
+                        onChange={(e: any) => {
+                            setSprintId(e.target.value);
+                        }}
+                    />
+                </FormControl>
+                <FormControl isRequired>
                     <FormLabel htmlFor="poker-session-name">Session Name</FormLabel>
                     <Input
                         value={sessionName}
@@ -69,6 +80,7 @@ const CreateSession = () => {
                         onChange={handleSessionNameChange}
                     />
                 </FormControl>
+
                 <FormControl isRequired>
                     <FormLabel htmlFor="cards-mode">Cards Mode</FormLabel>
                     <Select

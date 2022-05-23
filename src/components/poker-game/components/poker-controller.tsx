@@ -5,7 +5,6 @@ import {
     DrawerBody,
     DrawerCloseButton,
     DrawerContent,
-    DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     Flex,
@@ -20,16 +19,13 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Select,
     Stack,
     Table,
-    TableCaption,
     TableContainer,
     Tbody,
     Td,
     Text,
     Textarea,
-    Tfoot,
     Th,
     Thead,
     Tooltip,
@@ -46,19 +42,16 @@ import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
 import {
     IPokerControllerProps,
-    ISaveSprintBoxProps,
-    ISprintColData,
+    ISavePokerSprintBoxProps,
     ISprintPokerColData,
 } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
-import { getSprints, updateSprintData } from '../../../services/sprint/sprints';
+import { updateSprintData } from '../../../services/sprint/sprints';
 import { assigneeDetails } from '../../../utils/poker-util';
 import AlertBox from '../../alertbox';
 import TimerComponent from '../../timer';
 
-const SaveSprint = (props: ISaveSprintBoxProps) => {
-    const [sprintId, setSprintId] = useState('');
-    const [sprints, setSprints] = useState<ISprintColData[]>();
+const SaveSprint = (props: ISavePokerSprintBoxProps) => {
     const [inputs, setInputs] = useState<ISprintPokerColData>({
         title: '',
         desc: '',
@@ -70,16 +63,6 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
     // toast
     const toast = useToast();
 
-    useEffect(() => {
-        getSprints()
-            .then(sprints => {
-                setSprints(sprints);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }, []);
-
     const handleChange = (event: any) => {
         const name = event.target.id;
         const value = event.target.value;
@@ -88,9 +71,9 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
 
     const handleSubmit = () => {
         const done =
-            sprintId &&
+            props.sprintId &&
             inputs &&
-            updateSprintData(sprintId, {
+            updateSprintData(props.sprintId, {
                 poker: arrayUnion({
                     title: inputs.title,
                     desc: inputs.desc,
@@ -128,23 +111,6 @@ const SaveSprint = (props: ISaveSprintBoxProps) => {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Flex justifyContent="center" flexDir="column" p={4}>
-                            <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="sprint-name">Sprint name</FormLabel>
-                                <Select
-                                    id="sprint-name"
-                                    placeholder="Sprint name"
-                                    onChange={(e: any) => {
-                                        setSprintId(e.target.value);
-                                    }}
-                                >
-                                    {sprints &&
-                                        sprints.map(sprint => (
-                                            <option key={sprint.id} value={sprint.id}>
-                                                {sprint.name}
-                                            </option>
-                                        ))}
-                                </Select>
-                            </FormControl>
                             <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="title">Title</FormLabel>
                                 <Input
@@ -262,10 +228,6 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
         return moderatorId === currentPlayerId;
     };
 
-    const handleViewButtons = () => {
-        alert('View Details!!!');
-    };
-
     return (
         <>
             <Stack spacing="6" alignItems="center">
@@ -333,6 +295,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         initialRef={initialRef}
                                         finalRef={finalRef}
                                         title={'Save Issue'}
+                                        sprintId={props.game.sprintId}
                                     />
                                     <Tooltip label="Restart Session">
                                         <IconButton
@@ -406,14 +369,16 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                                     </Tr>
                                                 </Thead>
                                                 <Tbody>
-                                                    {assigneeDetails.map(data => (
-                                                        <Tr>
-                                                            <Td>{data.name}</Td>
-                                                            <Td isNumeric>
-                                                                {data.points}
-                                                            </Td>
-                                                        </Tr>
-                                                    ))}
+                                                    {assigneeDetails.map(
+                                                        (data, i: number) => (
+                                                            <Tr key={i}>
+                                                                <Td>{data.name}</Td>
+                                                                <Td isNumeric>
+                                                                    {data.points}
+                                                                </Td>
+                                                            </Tr>
+                                                        )
+                                                    )}
                                                 </Tbody>
                                             </Table>
                                         </TableContainer>

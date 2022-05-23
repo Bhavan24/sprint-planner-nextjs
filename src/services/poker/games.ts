@@ -26,6 +26,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
         createdById: player.id,
         gameStatus: GAME_STATUS.STARTED,
         average: 0,
+        sprintId: newSession.sprintId,
     };
     await addGameToStore(gameData.id, gameData);
     await addPlayerToGameInStore(gameData.id, player);
