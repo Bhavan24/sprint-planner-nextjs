@@ -29,28 +29,28 @@ export const getCards = (game: IGame | undefined) => {
     return cards;
 };
 
-function mapToProp(data: any, prop: any) {
-    return data.reduce(
-        (res: any, item: any) =>
-            Object.assign(res, {
-                [item[prop]]: 1 + (res[item[prop]] || 0),
-            }),
-        Object.create(null)
-    );
+function mapToProp(data: any) {
+    var holder: any = {};
+    data.forEach((e: any) => {
+        holder[e.name] = holder.hasOwnProperty(e.name)
+            ? Number(holder[e.name]) + Number(e.point)
+            : Number(e.point);
+    });
+    return holder;
 }
 
 export const getAssigneeDetails = (tickets: ISprintPokerColData[]) => {
     const tempList: IAssigneeDetails[] = [];
     const mainList: IAssigneeDetails[] = [];
     tickets.forEach((ticket: ISprintPokerColData) => {
-        tempList.push({ name: ticket.assignee, points: ticket.points });
+        tempList.push({ name: ticket.assignee, point: ticket.points });
     });
     if (tempList) {
-        const details = mapToProp(tempList, 'name');
+        const details = mapToProp(tempList);
         for (var key of Object.keys(details)) {
             mainList.push({
                 name: key,
-                points: details[key],
+                point: details[key],
             });
         }
     }

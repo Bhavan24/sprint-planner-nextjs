@@ -247,7 +247,7 @@ export interface ISprintEngineerPointsProps {
 
 export interface IAssigneeDetails {
     name: string;
-    points: number;
+    point: number;
 }
 
 export interface ICommonUser {

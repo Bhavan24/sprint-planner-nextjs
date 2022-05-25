@@ -149,7 +149,7 @@ export const StoryPointsEngineerDetails = ({ sprintId }: ISprintEngineerPointsPr
                             getAssigneeDetails(details).map((data, i: number) => (
                                 <Tr key={i}>
                                     <Td>{data.name}</Td>
-                                    <Td isNumeric>{data.points}</Td>
+                                    <Td isNumeric>{data.point}</Td>
                                 </Tr>
                             ))}
                     </Tbody>
