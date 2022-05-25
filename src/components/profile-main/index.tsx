@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Link, Text } from '@chakra-ui/react';
+import { Avatar, Box, Divider, Flex, Link, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
@@ -55,7 +55,8 @@ const ProfileMainComponent = () => {
                     <Text color="gray.400">{`${userInfo.timezone}`}</Text>
                 </Box>
             </Flex>
-            <Box m={2}>
+            <Divider m={3} />
+            <Box m={4}>
                 <UsersList />
             </Box>
         </>

@@ -33,7 +33,8 @@ export const UsersList = () => {
                 <Table variant="simple" size="md">
                     <Thead>
                         <Tr>
-                            <Th>Users</Th>
+                            <Th>User</Th>
+                            <Th>Email</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -43,13 +44,12 @@ export const UsersList = () => {
                                     <Td>
                                         <Flex alignItems="center">
                                             <Avatar src={user.photoURL} />
-                                            {/* <Text
-                                                ml={2}
-                                                sx={{ textTransform: 'capitalize' }}
-                                            >
-                                                {user.fname}
-                                            </Text> */}
-                                            <Text ml={2}>{user.email}</Text>
+                                            <Text ml={2}>{user.displayName}</Text>
+                                        </Flex>
+                                    </Td>
+                                    <Td>
+                                        <Flex alignItems="center">
+                                            <Text>{user.email}</Text>
                                         </Flex>
                                     </Td>
                                 </Tr>

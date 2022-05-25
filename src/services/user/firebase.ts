@@ -18,8 +18,9 @@ export const getUsersFromFirebase = async (): Promise<ICommonUser[]> => {
     snap.forEach((result: any) => {
         const data = result.data();
         users.push({
-            fname: data.email.split('@')[0].slice(0, -1),
+            uid: data.uid,
             email: data.email,
+            displayName: data.displayName,
             photoURL: data.photoURL,
         });
     });
@@ -37,7 +38,6 @@ export const updateCurrentUserDetails = async (user: any) => {
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
-            lastSeen: serverTimestamp(),
         },
         { merge: true } // update fields if exists
     );
