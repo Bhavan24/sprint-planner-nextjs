@@ -38,8 +38,8 @@ const NotesComponent = () => {
             setNotes(JSON.parse(localStorage.getItem(NOTES) || ''));
     }, []);
 
-    const onChange = useCallback((value: string) => {
-        setNote(value);
+    const onChange = useCallback((newValue: any, editor: any) => {
+        setNote(newValue);
     }, []);
 
     const addNote = () => {
@@ -77,7 +77,6 @@ const NotesComponent = () => {
                     flexDir={isPhone ? 'column' : 'row'}
                     alignItems="center"
                     justifyContent="center"
-                    mt={isPhone ? '5em' : '3em'}
                 >
                     <Tooltip title="Add Note">
                         <Button
@@ -122,7 +121,7 @@ const NotesComponent = () => {
                     />
                 </Flex>
             </Flex>
-            <Box p={2} m="5em 0">
+            <Box p={2}>
                 <Box m={1}>
                     <Box>
                         <TableContainer>

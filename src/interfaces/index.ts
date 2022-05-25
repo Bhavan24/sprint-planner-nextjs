@@ -147,7 +147,7 @@ export interface INewRetroItemProps {
 
 export interface INotesEditorProps {
     value: string;
-    onChange: (value: string) => void;
+    onChange: any;
 }
 
 export interface IAlertBoxProps {
