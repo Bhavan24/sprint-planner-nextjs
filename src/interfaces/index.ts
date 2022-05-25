@@ -249,3 +249,9 @@ export interface IAssigneeDetails {
     name: string;
     points: number;
 }
+
+export interface ICommonUser {
+    fname: string;
+    email: string;
+    photoURL: string;
+}

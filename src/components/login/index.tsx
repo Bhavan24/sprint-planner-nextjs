@@ -17,73 +17,52 @@ import {
     useDisclosure,
     useMergeRefs,
 } from '@chakra-ui/react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import * as React from 'react';
+
+import { forwardRef, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
-import { auth, provider } from '../../../firebase/config';
+import { signInWithGoogle } from '../../services/user/users';
 
-export const PasswordField = React.forwardRef<HTMLInputElement, InputProps>(
-    (props, ref) => {
-        const { isOpen, onToggle } = useDisclosure();
-        const inputRef = React.useRef<HTMLInputElement>(null);
+export const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+    const { isOpen, onToggle } = useDisclosure();
 
-        const mergeRef = useMergeRefs(inputRef, ref);
-        const onClickReveal = () => {
-            onToggle();
-            if (inputRef.current) {
-                inputRef.current.focus({ preventScroll: true });
-            }
-        };
+    const inputRef = useRef<HTMLInputElement>(null);
+    const mergeRef = useMergeRefs(inputRef, ref);
 
-        return (
-            <FormControl>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <InputGroup>
-                    <InputRightElement>
-                        <IconButton
-                            variant="link"
-                            aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                            icon={isOpen ? <HiEyeOff /> : <HiEye />}
-                            onClick={onClickReveal}
-                        />
-                    </InputRightElement>
-                    <Input
-                        id="password"
-                        ref={mergeRef}
-                        name="password"
-                        type={isOpen ? 'text' : 'password'}
-                        autoComplete="current-password"
-                        required
-                        {...props}
-                    />
-                </InputGroup>
-            </FormControl>
-        );
-    }
-);
-
-export const Login = () => {
-    const signInWithGoogle = () => {
-        signInWithPopup(auth, provider)
-            .then(result => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential ? credential.accessToken : '';
-                // The signed-in user info.
-                const user = result.user;
-            })
-            .catch(error => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
+    const onClickReveal = () => {
+        onToggle();
+        if (inputRef.current) {
+            inputRef.current.focus({ preventScroll: true });
+        }
     };
 
+    return (
+        <FormControl>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputGroup>
+                <InputRightElement>
+                    <IconButton
+                        variant="link"
+                        aria-label={isOpen ? 'Mask password' : 'Reveal password'}
+                        icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                        onClick={onClickReveal}
+                    />
+                </InputRightElement>
+                <Input
+                    id="password"
+                    ref={mergeRef}
+                    name="password"
+                    type={isOpen ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    required
+                    {...props}
+                />
+            </InputGroup>
+        </FormControl>
+    );
+});
+
+export const Login = () => {
     return (
         <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <Stack spacing="8">
