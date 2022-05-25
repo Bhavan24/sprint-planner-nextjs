@@ -137,7 +137,7 @@ export const StoryPointsEngineerDetails = ({ sprintId }: ISprintEngineerPointsPr
     return (
         <Flex justifyContent="center">
             <TableContainer>
-                <Table variant="simple" size="md">
+                <Table variant="simple" size="sm">
                     <Thead>
                         <Tr>
                             <Th>Assignee</Th>
