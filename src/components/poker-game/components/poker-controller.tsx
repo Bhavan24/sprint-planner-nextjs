@@ -41,6 +41,7 @@ import {
 import { finishGame, resetGame } from '../../../services/poker/games';
 import { updateSprintData } from '../../../services/sprint/sprints';
 import AlertBox from '../../alertbox';
+import SelectUsers from '../../select-users';
 import { StoryPointsEngineerDetails } from '../../sprints/sprint-items';
 import TimerComponent from '../../timer';
 
@@ -133,12 +134,7 @@ const SaveSprint = (props: ISavePokerSprintBoxProps) => {
                             </FormControl>
                             <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="assignee">Assignee</FormLabel>
-                                <Input
-                                    id="assignee"
-                                    placeholder="Assignee"
-                                    value={inputs.assignee}
-                                    onChange={handleChange}
-                                />
+                                <SelectUsers id="assignee" onChange={handleChange} />
                             </FormControl>
                             <FormControl isRequired m={1}>
                                 <FormLabel htmlFor="points">Points</FormLabel>

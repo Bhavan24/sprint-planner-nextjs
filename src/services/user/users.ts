@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../../firebase/config';
-import { updateCurrentUserDetails } from './firebase';
+import { getUsersFromFirebase, updateCurrentUserDetails } from './firebase';
 
 export const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
@@ -27,4 +27,8 @@ export const signInWithGoogle = () => {
 
 export const loginToFirebase = (user: any) => {
     updateCurrentUserDetails(user);
+};
+
+export const get_user_list = async () => {
+    return getUsersFromFirebase();
 };

@@ -12,13 +12,13 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ICommonUser } from '../../interfaces';
-import { getUsersFromFirebase } from '../../services/user/firebase';
+import { get_user_list } from '../../services/user/users';
 
 export const UsersList = () => {
-    const [users, setUsers] = useState<any[]>();
+    const [users, setUsers] = useState<ICommonUser[]>();
 
     useEffect(() => {
-        getUsersFromFirebase()
+        get_user_list()
             .then((user: ICommonUser[]) => {
                 setUsers(user);
             })
