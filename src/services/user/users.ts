@@ -1,5 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../../firebase/config';
+import { updateCurrentUserDetails } from './firebase';
 
 export const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
@@ -22,4 +23,8 @@ export const signInWithGoogle = () => {
             const credential = GoogleAuthProvider.credentialFromError(error);
             console.log(errorCode, errorMessage, email, credential);
         });
+};
+
+export const loginToFirebase = (user: any) => {
+    updateCurrentUserDetails(user);
 };
