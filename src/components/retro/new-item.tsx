@@ -1,4 +1,4 @@
-import { AddIcon, DeleteIcon, MinusIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon, EditIcon, MinusIcon } from '@chakra-ui/icons';
 import {
     Box,
     Button,
@@ -19,24 +19,26 @@ import AlertBox from '../alertbox';
 const DetailedCard: React.FC<{
     content: string;
     onDelete: MouseEventHandler;
-}> = ({ content, onDelete }) => {
+    onEdit: MouseEventHandler;
+}> = ({ content, onDelete, onEdit }) => {
     // popup
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef() as RefObject<FocusableElement>;
 
     return (
         <Box
-            p={4}
             maxWidth="inherit"
+            borderRadius="lg"
             borderWidth={1}
             my={2}
-            borderRadius="lg"
+            p={4}
             bg={useColorModeValue(colors.detailed_card.light, colors.detailed_card.dark)}
         >
             <Text
-                fontSize="md"
                 letterSpacing="inherit"
+                fontSize="md"
                 maxWidth="inherit"
+                align="left"
                 style={{
                     wordBreak: 'break-all',
                     whiteSpace: 'normal',
@@ -45,20 +47,27 @@ const DetailedCard: React.FC<{
                 {content}
             </Text>
             <Flex justifyContent="flex-end" mt={2}>
-                <IconButton aria-label="delete" onClick={onOpen}>
-                    <DeleteIcon />
-                </IconButton>
-                <AlertBox
-                    isOpen={isOpen}
-                    onOpen={onOpen}
-                    onClose={onClose}
-                    cancelRef={cancelRef}
-                    onAction={onDelete}
-                    btnText={'Delete'}
-                    btnColor={'red'}
-                    title={'Delete Item'}
-                    body={`Are you sure? You can't undo this action afterwards.`}
-                />
+                <>
+                    <IconButton aria-label="delete" m={2} onClick={onEdit}>
+                        <EditIcon />
+                    </IconButton>
+                </>
+                <>
+                    <IconButton aria-label="delete" m={2} onClick={onOpen}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <AlertBox
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        cancelRef={cancelRef}
+                        onAction={onDelete}
+                        btnText={'Delete'}
+                        btnColor={'red'}
+                        title={'Delete Item'}
+                        body={`Are you sure? You can't undo this action afterwards.`}
+                    />
+                </>
             </Flex>
         </Box>
     );
@@ -99,35 +108,39 @@ const FormActionButtons: React.FC<{
     );
 };
 
-const NewRetroItem = (props: INewRetroItemProps) => {
+const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
     const [formValue, setFormValue] = useState('');
     const [data, setData] = useState<string[]>([]);
 
-    const handleChange = (event: any) => {
-        setFormValue(event.target.value);
-    };
+    useEffect(() => {
+        setData(getRetroList(name));
+    }, [setData, refresh]);
 
     const addValue = () => {
-        const newArray = [...data, formValue];
-        saveRetroList(props.name, newArray);
-        setData(getRetroList(props.name));
-        setFormValue('');
+        const new_array = formValue ? [...data, formValue] : [...data];
+        saveRetroList(name, new_array);
+        setData(new_array);
     };
 
     const clearValue = () => {
         setFormValue('');
     };
 
-    const deleteValue = (index: number) => {
-        var newArray = [...data];
-        newArray.splice(index, 1);
-        saveRetroList(props.name, newArray);
-        setData(getRetroList(props.name));
+    const editValue = (index: number) => {
+        setFormValue(data[index]);
+        deleteValue(index);
     };
 
-    useEffect(() => {
-        setData(getRetroList(props.name));
-    }, [setData, props.refresh]);
+    const deleteValue = (index: number) => {
+        const new_array = [...data];
+        new_array.splice(index, 1);
+        saveRetroList(name, new_array);
+        setData(new_array);
+    };
+
+    const handleChange = (event: any) => {
+        setFormValue(event.target.value);
+    };
 
     return (
         <>
@@ -141,7 +154,7 @@ const NewRetroItem = (props: INewRetroItemProps) => {
             >
                 <Flex alignItems="center" justifyContent="space-between" my={2}>
                     <Text fontSize="lg" my={2}>
-                        {props.title}
+                        {title}
                     </Text>
                     {formValue && (
                         <FormActionButtons onAdd={addValue} onClear={clearValue} />
@@ -149,7 +162,7 @@ const NewRetroItem = (props: INewRetroItemProps) => {
                 </Flex>
                 <Textarea
                     width={'100%'}
-                    placeholder={props.desc}
+                    placeholder={desc}
                     margin="normal"
                     variant="filled"
                     rows={5}
@@ -163,6 +176,9 @@ const NewRetroItem = (props: INewRetroItemProps) => {
                         content={value}
                         onDelete={() => {
                             deleteValue(index);
+                        }}
+                        onEdit={() => {
+                            editValue(index);
                         }}
                     />
                 ))}
