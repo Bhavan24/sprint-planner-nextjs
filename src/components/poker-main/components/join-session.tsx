@@ -12,8 +12,10 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../../firebase/config';
-import { getGame } from '../../../services/poker/games';
-import { addPlayerToGame, isCurrentPlayerInGame } from '../../../services/poker/players';
+import {
+    addPlayerToGame,
+    isCurrentPlayerIdInGame,
+} from '../../../services/poker/players';
 
 const JoinSession = () => {
     // router
@@ -33,11 +35,9 @@ const JoinSession = () => {
     }, [router.isReady]);
 
     async function fetchData() {
-        if (sessionCode) {
-            if (await getGame(sessionCode)) {
-                if (isCurrentPlayerInGame(sessionCode)) {
-                    return true;
-                }
+        if (sessionCode && user) {
+            if (await isCurrentPlayerIdInGame(sessionCode, user.uid)) {
+                return true;
             }
         }
         return false;
@@ -61,6 +61,7 @@ const JoinSession = () => {
                     const res = user
                         ? await addPlayerToGame(
                               sessionCode,
+                              user.uid,
                               user.displayName || user.email || '',
                               isSpectator
                           )

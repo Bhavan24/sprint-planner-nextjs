@@ -2,6 +2,8 @@ import { Box, Text } from '@chakra-ui/react';
 import { onSnapshot } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase/config';
 import { Loading } from '../../components/loading';
 import { IGame, IPlayer } from '../../interfaces';
 import { streamGame, streamPlayers } from '../../services/poker/games';
@@ -20,6 +22,8 @@ const SprintPokerGameComponent = () => {
     const [loading, setIsLoading] = useState(true);
     const [currentPlayerId, setCurrentPlayerId] = useState<string | undefined>(undefined);
     const [isSpectator, setSpectator] = useState(false);
+    // user
+    const [user] = useAuthState(auth);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -50,7 +54,7 @@ const SprintPokerGameComponent = () => {
 
             const currentPlayerId = getCurrentPlayerId(id);
             if (!currentPlayerId) {
-                router.push(`/?join=${id}`);
+                router.push(`/sprint-poker/${id}`);
             }
             setCurrentPlayerId(currentPlayerId);
         }
