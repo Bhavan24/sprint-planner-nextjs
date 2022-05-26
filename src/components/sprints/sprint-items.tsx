@@ -26,7 +26,7 @@ export const ProgressDetails = (props: ISprintDetailsItemProps) => {
     const total = getTotal(props.data.progess);
 
     return (
-        <Flex justifyContent="center">
+        <Flex justifyContent="flex-start">
             <Box maxW="25em">
                 <TableContainer>
                     <Table variant="striped" size="sm">
@@ -66,23 +66,29 @@ export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
     });
 
     return (
-        <Flex justifyContent="center">
+        <Flex justifyContent="flex-start">
             <TableContainer>
                 <Table variant="striped" size="sm">
                     <Thead>
                         <Tr>
-                            <Th>👌 Went well</Th>
-                            <Th>📈 To improve</Th>
-                            <Th>📍 Action items</Th>
+                            <Th w="33.3%">👌 Went well</Th>
+                            <Th w="33.3%">📈 To improve</Th>
+                            <Th w="33.3%">📍 Action items</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {retro &&
                             retro.map((item, i: number) => (
                                 <Tr key={i}>
-                                    <Td>{item.went_well}</Td>
-                                    <Td>{item.to_improve}</Td>
-                                    <Td>{item.action_items}</Td>
+                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                        {item.went_well}
+                                    </Td>
+                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                        {item.to_improve}
+                                    </Td>
+                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                        {item.action_items}
+                                    </Td>
                                 </Tr>
                             ))}
                     </Tbody>
@@ -94,7 +100,7 @@ export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
 
 export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
     return (
-        <Flex justifyContent="center">
+        <Flex justifyContent="flex-start">
             <TableContainer>
                 <Table variant="striped" size="sm">
                     <Thead>
@@ -137,7 +143,7 @@ export const StoryPointsEngineerDetails = ({ sprintId }: ISprintEngineerPointsPr
     }, []);
 
     return (
-        <Flex justifyContent="center">
+        <Flex justifyContent="flex-start">
             <TableContainer>
                 <Table variant="simple" size="sm">
                     <Thead>

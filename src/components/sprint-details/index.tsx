@@ -1,7 +1,11 @@
 import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
     Box,
     Button,
-    Divider,
     Flex,
     Modal,
     ModalBody,
@@ -219,8 +223,15 @@ const SprintDetailComponent = () => {
         <>
             {sprint ? (
                 <>
-                    <Flex justifyContent="center" alignItems="center">
-                        <Text textAlign="center"> {sprint?.name}</Text>
+                    <Flex
+                        justifyContent="center"
+                        alignItems="center"
+                        flexDirection="column"
+                        m={5}
+                    >
+                        <Text fontSize="5xl" textAlign="center">
+                            {sprint?.name}
+                        </Text>
                         {isEditor && (
                             <>
                                 <Button m={2} rightIcon={<BiEdit />} onClick={onOpen}>
@@ -238,14 +249,62 @@ const SprintDetailComponent = () => {
                             </>
                         )}
                     </Flex>
-                    <Divider m={5} />
-                    <ProgressDetails data={sprint} />
-                    <Divider m={5} />
-                    <RetrospectiveDetails data={sprint} />
-                    <Divider m={5} />
-                    <StoryPointsDetails data={sprint} />
-                    <Divider m={5} />
-                    {sprint.id && <StoryPointsEngineerDetails sprintId={sprint.id} />}
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="left">
+                                        <Text fontSize="3xl">Sprnt Progress</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <ProgressDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="left">
+                                        <Text fontSize="3xl">Retrospective Outcomes</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <RetrospectiveDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="left">
+                                        <Text fontSize="3xl">Story Details</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <StoryPointsDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="left">
+                                        <Text fontSize="3xl">Assignee Details</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                {sprint.id && (
+                                    <StoryPointsEngineerDetails sprintId={sprint.id} />
+                                )}
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
                 </>
             ) : (
                 <Text textAlign="center">No Details Found</Text>
