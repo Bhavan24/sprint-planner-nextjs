@@ -254,7 +254,7 @@ const SprintDetailComponent = () => {
                             <h1>
                                 <AccordionButton>
                                     <Box flex="1" textAlign="left">
-                                        <Text fontSize="3xl">Sprnt Progress</Text>
+                                        <Text fontSize="3xl">Sprint Progress</Text>
                                     </Box>
                                     <AccordionIcon />
                                 </AccordionButton>

@@ -10,7 +10,15 @@ import {
     useDisclosure,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
-import { MouseEventHandler, RefObject, useEffect, useRef, useState } from 'react';
+import { createRef } from 'react';
+import {
+    LegacyRef,
+    MouseEventHandler,
+    RefObject,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { INewRetroItemProps } from '../../interfaces';
 import { getRetroList, saveRetroList } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
@@ -114,6 +122,7 @@ const FormActionButtons: React.FC<{
 const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
     const [formValue, setFormValue] = useState('');
     const [data, setData] = useState<string[]>([]);
+    const txtField = createRef<HTMLTextAreaElement>();
 
     useEffect(() => {
         setData(getRetroList(name));
@@ -132,6 +141,7 @@ const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
     const editValue = (index: number) => {
         setFormValue(data[index]);
         deleteValue(index);
+        txtField.current?.focus();
     };
 
     const deleteValue = (index: number) => {
@@ -164,6 +174,7 @@ const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
                     )}
                 </Flex>
                 <Textarea
+                    ref={txtField}
                     width={'100%'}
                     placeholder={desc}
                     margin="normal"

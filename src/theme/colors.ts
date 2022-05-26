@@ -8,7 +8,7 @@ export const colors = {
         light: 'teal.500',
     },
     detailed_card: {
-        dark: 'cyan.500',
+        dark: '#1A2123',
         light: 'cyan.100',
     },
     btn_add: {
