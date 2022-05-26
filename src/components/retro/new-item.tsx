@@ -61,7 +61,10 @@ const DetailedCard: React.FC<{
                         onOpen={onOpen}
                         onClose={onClose}
                         cancelRef={cancelRef}
-                        onAction={onDelete}
+                        onAction={e => {
+                            onDelete(e);
+                            onClose();
+                        }}
                         btnText={'Delete'}
                         btnColor={'red'}
                         title={'Delete Item'}
