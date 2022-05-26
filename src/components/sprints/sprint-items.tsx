@@ -80,13 +80,13 @@ export const RetrospectiveDetails = (props: ISprintDetailsItemProps) => {
                         {retro &&
                             retro.map((item, i: number) => (
                                 <Tr key={i}>
-                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                    <Td wordBreak="break-word" whiteSpace="normal">
                                         {item.went_well}
                                     </Td>
-                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                    <Td wordBreak="break-word" whiteSpace="normal">
                                         {item.to_improve}
                                     </Td>
-                                    <Td wordBreak="break-all" whiteSpace="normal">
+                                    <Td wordBreak="break-word" whiteSpace="normal">
                                         {item.action_items}
                                     </Td>
                                 </Tr>
