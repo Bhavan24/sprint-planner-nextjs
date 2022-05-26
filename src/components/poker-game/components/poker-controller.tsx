@@ -343,11 +343,14 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                 placement="right"
                                 onClose={drawer.onClose}
                                 finalFocusRef={drawerBtnRef}
+                                size="sm"
                             >
                                 <DrawerOverlay />
                                 <DrawerContent>
                                     <DrawerCloseButton />
-                                    <DrawerHeader>Assignee Details</DrawerHeader>
+                                    <DrawerHeader alignContent="center">
+                                        Assignee Details
+                                    </DrawerHeader>
                                     <DrawerBody>
                                         <StoryPointsEngineerDetails
                                             sprintId={props.game.sprintId}
