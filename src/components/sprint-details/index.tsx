@@ -33,17 +33,15 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BiEdit } from 'react-icons/bi';
 import { auth as authCofig } from '../../../firebase/config';
-import {
-    ProgressDetails,
-    RetrospectiveDetails,
-    StoryPointsDetails,
-    StoryPointsEngineerDetails,
-} from '../../components/sprints/sprint-items';
 import { IEditSprintBoxProps, ISprintColData } from '../../interfaces';
 import { getSprint, updateSprintData } from '../../services/sprint/sprints';
 import { Chakra } from '../../theme/chakra-theme';
 import { getIssues } from '../../utils/sprint-util';
 import { Loading } from '../loading';
+import { StoryPointsEngineerDetails } from './assignee-details';
+import { ProgressDetails } from './progress-details';
+import { RetrospectiveDetails } from './retrospective-details';
+import { StoryPointsDetails } from './stroy-points-details';
 
 const EditSprint = (props: IEditSprintBoxProps) => {
     // user
@@ -103,6 +101,7 @@ const EditSprint = (props: IEditSprintBoxProps) => {
                     title: 'Updated Successfully!!!',
                     status: 'success',
                     isClosable: true,
+                    position: 'bottom-left',
                 });
             done &&
                 // TODO: temporary sollution
@@ -114,6 +113,7 @@ const EditSprint = (props: IEditSprintBoxProps) => {
                 title: 'Please fill all fields !!!',
                 status: 'error',
                 isClosable: true,
+                position: 'bottom-left',
             });
         }
     };

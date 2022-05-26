@@ -8,157 +8,26 @@ import {
     DrawerHeader,
     DrawerOverlay,
     Flex,
-    FormControl,
-    FormLabel,
     IconButton,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Stack,
     Text,
-    Textarea,
     Tooltip,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
-import { arrayUnion } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
-import {
-    IPokerControllerProps,
-    ISavePokerSprintBoxProps,
-    ISprintPokerColData,
-} from '../../../interfaces';
+import { IPokerControllerProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
-import { updateSprintData } from '../../../services/sprint/sprints';
 import AlertBox from '../../alertbox';
-import SelectUsers from '../../select-users';
-import { StoryPointsEngineerDetails } from '../../sprints/sprint-items';
+import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
+
 import TimerComponent from '../../timer';
-
-const SaveSprint = (props: ISavePokerSprintBoxProps) => {
-    const [inputs, setInputs] = useState<ISprintPokerColData>({
-        title: '',
-        desc: '',
-        link: '',
-        assignee: '',
-        points: 0,
-    });
-
-    // toast
-    const toast = useToast();
-
-    const handleChange = (event: any) => {
-        const name = event.target.id;
-        const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value }));
-    };
-
-    const handleSubmit = () => {
-        const done =
-            props.sprintId &&
-            inputs &&
-            updateSprintData(props.sprintId, {
-                poker: arrayUnion({
-                    title: inputs.title,
-                    desc: inputs.desc,
-                    link: inputs.link,
-                    assignee: inputs.assignee,
-                    points: inputs.points,
-                }),
-            });
-        props.onClose();
-        done
-            ? toast({
-                  title: 'Issue Details Added!!!',
-                  status: 'success',
-                  isClosable: true,
-              })
-            : toast({
-                  title: 'Cannot Add!!!',
-                  status: 'error',
-                  isClosable: true,
-              });
-    };
-
-    return (
-        <>
-            <Modal
-                initialFocusRef={props.initialRef}
-                finalFocusRef={props.finalRef}
-                isOpen={props.isOpen}
-                onClose={props.onClose}
-                size="lg"
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>{props.title}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <Flex justifyContent="center" flexDir="column" p={4}>
-                            <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="title">Title</FormLabel>
-                                <Input
-                                    id="title"
-                                    placeholder="Title"
-                                    value={inputs.title}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                            <FormControl m={1}>
-                                <FormLabel htmlFor="desc">Description</FormLabel>
-                                <Textarea
-                                    id="desc"
-                                    placeholder="Description"
-                                    value={inputs.desc}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                            <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="link">Link</FormLabel>
-                                <Input
-                                    id="link"
-                                    placeholder="Link"
-                                    value={inputs.link}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                            <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="assignee">Assignee</FormLabel>
-                                <SelectUsers id="assignee" onChange={handleChange} />
-                            </FormControl>
-                            <FormControl isRequired m={1}>
-                                <FormLabel htmlFor="points">Points</FormLabel>
-                                <Input
-                                    id="points"
-                                    type="number"
-                                    placeholder="Points"
-                                    value={inputs.points}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Flex>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-                            Save
-                        </Button>
-                        <Button onClick={props.onClose}>Cancel</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </>
-    );
-};
+import { SaveSprintPoker } from './save-poker-details';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
@@ -206,10 +75,10 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
         const url = `${window.location.origin}/sprint-poker?join=${gameId}`;
         navigator.clipboard.writeText(gameId); //TODO: fix this!!!
         toast({
-            position: 'top-right',
             title: 'Invite Link copied to clipboard!',
             status: 'success',
             isClosable: true,
+            position: 'bottom-left',
         });
     };
 
@@ -266,26 +135,6 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                             onClick={handleRevealCards}
                                         />
                                     </Tooltip>
-                                    <Tooltip label="Save Issue">
-                                        <IconButton
-                                            colorScheme="teal"
-                                            aria-label="Save Issue"
-                                            icon={<FaSave />}
-                                            isRound
-                                            size="lg"
-                                            m={2}
-                                            onClick={handleSaveIssueCards}
-                                        />
-                                    </Tooltip>
-                                    <SaveSprint
-                                        isOpen={model.isOpen}
-                                        onOpen={model.onOpen}
-                                        onClose={model.onClose}
-                                        initialRef={initialRef}
-                                        finalRef={finalRef}
-                                        title={'Save Issue'}
-                                        sprintId={props.game.sprintId}
-                                    />
                                     <Tooltip label="Restart Session">
                                         <IconButton
                                             colorScheme="orange"
@@ -297,6 +146,26 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                             onClick={handleRestartSession}
                                         />
                                     </Tooltip>
+                                    <Tooltip label="Save Issue">
+                                        <IconButton
+                                            colorScheme="teal"
+                                            aria-label="Save Issue"
+                                            icon={<FaSave />}
+                                            isRound
+                                            size="lg"
+                                            m={2}
+                                            onClick={handleSaveIssueCards}
+                                        />
+                                    </Tooltip>
+                                    <SaveSprintPoker
+                                        isOpen={model.isOpen}
+                                        onOpen={model.onOpen}
+                                        onClose={model.onClose}
+                                        initialRef={initialRef}
+                                        finalRef={finalRef}
+                                        title={'Save Issue'}
+                                        sprintId={props.game.sprintId}
+                                    />
                                 </>
                             )}
                             <Tooltip label="Exit Session">

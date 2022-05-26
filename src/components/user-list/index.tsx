@@ -5,10 +5,10 @@ import {
     TableContainer,
     Tbody,
     Td,
+    Text,
     Th,
     Thead,
     Tr,
-    Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { ICommonUser } from '../../interfaces';

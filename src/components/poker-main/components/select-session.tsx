@@ -49,6 +49,7 @@ const SelectSession = () => {
                 title: 'An error occured !!!',
                 status: 'error',
                 isClosable: true,
+                position: 'bottom-left',
             });
         }
     };

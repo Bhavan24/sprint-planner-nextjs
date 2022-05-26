@@ -68,6 +68,7 @@ const JoinSession = () => {
                         title: 'Please fill all fields !!!',
                         status: 'error',
                         isClosable: true,
+                        position: 'bottom-left',
                     });
                 }
             }
