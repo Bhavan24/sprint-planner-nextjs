@@ -4,6 +4,7 @@ import {
     FormLabel,
     Input,
     Stack,
+    Switch,
     useColorModeValue,
     useToast,
 } from '@chakra-ui/react';
@@ -21,6 +22,7 @@ const JoinSession = () => {
     const [user] = useAuthState(auth);
     // states
     const [sessionCode, setSessionCode] = useState('');
+    const [isSpectator, setSpectator] = useState(false);
     // toast
     const toast = useToast();
 
@@ -86,6 +88,18 @@ const JoinSession = () => {
                         placeholder="Room Code"
                         onChange={handleSessionCodeChange}
                     />
+                </FormControl>
+                <FormControl display="flex" alignItems="center">
+                    <Switch
+                        id="switch-spectator"
+                        mr={5}
+                        onChange={() => {
+                            setSpectator(!isSpectator);
+                        }}
+                    />
+                    <FormLabel htmlFor="switch-spectator" mb="0">
+                        Join as spectator
+                    </FormLabel>
                 </FormControl>
             </Stack>
             <Button

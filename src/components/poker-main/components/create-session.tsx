@@ -5,6 +5,7 @@ import {
     Input,
     Select,
     Stack,
+    Switch,
     useColorModeValue,
     useToast,
 } from '@chakra-ui/react';
@@ -25,6 +26,7 @@ const CreateSession = () => {
     // states
     const [sessionName, setSessionName] = useState('');
     const [cardsMode, setCardsMode] = useState(GAME_TYPES[0].type);
+    const [isSpectator, setSpectator] = useState(false);
     const [sprintId, setSprintId] = useState('');
 
     // toast
@@ -95,6 +97,20 @@ const CreateSession = () => {
                             </option>
                         ))}
                     </Select>
+                </FormControl>
+
+                <FormControl display="flex" alignItems="center">
+                    <Switch
+                        id="spectator"
+                        mr={5}
+                        checked={isSpectator}
+                        onChange={() => {
+                            setSpectator(!isSpectator);
+                        }}
+                    />
+                    <FormLabel htmlFor="spectator" mb="0">
+                        Join as spectator
+                    </FormLabel>
                 </FormControl>
             </Stack>
             <Button
