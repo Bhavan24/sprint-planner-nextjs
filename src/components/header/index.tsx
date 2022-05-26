@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
-import { BUTTON_TEXT, LOGO_IMG_PATH } from '../../constants';
+import { ELEMENT_TEXT, LOGO_IMG_PATH } from '../../constants';
 import { HeaderProps } from '../../interfaces';
 import { routes } from '../../routes';
 import { colors } from '../../theme/colors';
@@ -32,7 +32,7 @@ const Logo = () => (
         <NextLink href="/" passHref>
             <Button variant="ghost">
                 <LogoImage />
-                <Heading size="lg"> {BUTTON_TEXT.APP_LOGO_NAME}</Heading>
+                <Heading size="lg"> {ELEMENT_TEXT.APP_LOGO_NAME}</Heading>
             </Button>
         </NextLink>
     </Flex>
@@ -114,11 +114,11 @@ export const Header = ({ avatar, logOut }: HeaderProps) => {
                             <MenuList>
                                 <NextLink href="/profile">
                                     <MenuItem icon={<AiFillProfile />}>
-                                        {BUTTON_TEXT.HEADER_PROFILE_BUTTON}
+                                        {ELEMENT_TEXT.HEADER_PROFILE_BUTTON}
                                     </MenuItem>
                                 </NextLink>
                                 <MenuItem icon={<AiOutlineLogin />} onClick={logOut}>
-                                    {BUTTON_TEXT.HEADER_LOGOUT_BUTTON}
+                                    {ELEMENT_TEXT.HEADER_LOGOUT_BUTTON}
                                 </MenuItem>
                             </MenuList>
                         </Portal>

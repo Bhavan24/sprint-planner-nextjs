@@ -21,11 +21,14 @@ import {
 import { forwardRef, useRef } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
+import { ELEMENT_TEXT } from '../../constants';
 import { signInWithGoogle } from '../../services/user/users';
 
-export const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-    const { isOpen, onToggle } = useDisclosure();
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
+const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+    const { isOpen, onToggle } = useDisclosure();
     const inputRef = useRef<HTMLInputElement>(null);
     const mergeRef = useMergeRefs(inputRef, ref);
 
@@ -38,12 +41,13 @@ export const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, re
 
     return (
         <FormControl>
-            <FormLabel htmlFor="password">Password</FormLabel>
+            <FormLabel htmlFor="password">{ELEMENT_TEXT.LOGIN_PAGE_PASSWORD}</FormLabel>
             <InputGroup>
                 <InputRightElement>
                     <IconButton
                         variant="link"
                         aria-label={isOpen ? 'Mask password' : 'Reveal password'}
+                        title={isOpen ? 'Mask password' : 'Reveal password'}
                         icon={isOpen ? <HiEyeOff /> : <HiEye />}
                         onClick={onClickReveal}
                     />
@@ -63,12 +67,27 @@ export const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, re
 });
 
 export const Login = () => {
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email('Must be a valid email')
+                .max(255)
+                .required('Email is required'),
+            password: Yup.string().max(255).required('Password is required'),
+        }),
+        onSubmit: () => {},
+    });
+
     return (
         <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <Stack spacing="8">
                 <Stack spacing="6">
                     <Heading size={useBreakpointValue({ base: 'lg', md: 'lg' })}>
-                        Log in to your account
+                        {ELEMENT_TEXT.LOGIN_PAGE_LOGIN_BOX_TITLE}
                     </Heading>
                 </Stack>
                 <Box
@@ -78,23 +97,49 @@ export const Login = () => {
                     boxShadow={{ base: 'none', sm: useColorModeValue('md', 'md-dark') }}
                     borderRadius={{ base: 'none', sm: 'xl' }}
                 >
-                    <Stack spacing="6">
-                        <Button variant="outline" onClick={signInWithGoogle}>
-                            <FcGoogle />
-                            <span style={{ margin: '0 10px' }}>Continue with Google</span>
-                        </Button>
-                        <Divider />
-                        <Stack spacing="5">
-                            <FormControl>
-                                <FormLabel htmlFor="email">Email</FormLabel>
-                                <Input id="email" type="email" />
-                            </FormControl>
-                            <PasswordField />
-                        </Stack>
+                    <form onSubmit={formik.handleSubmit}>
                         <Stack spacing="6">
-                            <Button variant="outline">Sign in</Button>
+                            <Button variant="outline" onClick={signInWithGoogle}>
+                                <FcGoogle />
+                                <span style={{ margin: '0 10px' }}>
+                                    {ELEMENT_TEXT.LOGIN_PAGE_GOOGLE_LOG_IN}
+                                </span>
+                            </Button>
+                            <Divider />
+                            <Stack spacing="5">
+                                <FormControl>
+                                    <FormLabel htmlFor="email">
+                                        {ELEMENT_TEXT.LOGIN_PAGE_EMAIL}
+                                    </FormLabel>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange}
+                                        errorBorderColor={
+                                            formik.touched.email && formik.errors.email
+                                                ? 'red.500'
+                                                : ''
+                                        }
+                                    />
+                                </FormControl>
+                                <PasswordField
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    errorBorderColor={
+                                        formik.touched.password && formik.errors.password
+                                            ? 'red.500'
+                                            : ''
+                                    }
+                                />
+                            </Stack>
+                            <Stack spacing="6">
+                                <Button variant="outline" type="submit">
+                                    {ELEMENT_TEXT.LOGIN_BUTTON}
+                                </Button>
+                            </Stack>
                         </Stack>
-                    </Stack>
+                    </form>
                 </Box>
             </Stack>
         </Container>

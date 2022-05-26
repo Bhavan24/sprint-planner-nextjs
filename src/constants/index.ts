@@ -29,10 +29,15 @@ export const FB_DB_SPRINTS = 'sprints';
 export const FB_DB_USERS = 'sprint_users';
 
 // Button Texts
-export enum BUTTON_TEXT {
+export enum ELEMENT_TEXT {
     APP_LOGO_NAME = 'Sprint Planner',
     HEADER_PROFILE_BUTTON = 'Profile',
     HEADER_LOGOUT_BUTTON = 'Logout',
+    LOGIN_PAGE_LOGIN_BOX_TITLE = 'Log in to your account',
+    LOGIN_PAGE_GOOGLE_LOG_IN = 'Continue with Google',
+    LOGIN_PAGE_EMAIL = 'Email',
+    LOGIN_PAGE_PASSWORD = 'Password',
+    LOGIN_BUTTON = 'Log In',
 }
 
 // Main page constants
