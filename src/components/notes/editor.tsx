@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { Editor } from '@tinymce/tinymce-react';
 import { EDITOR_API_KEY } from '../../constants';
-import { INotesEditorProps } from '../../interfaces';
+import { INotesEditorProps } from './types';
 
 export const TextEditorComponent = (editor: INotesEditorProps) => {
     return (

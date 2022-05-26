@@ -26,24 +26,8 @@ export interface AuthenticationLayoutProps {
     title?: string;
 }
 
-interface AvatarProps {
-    name: string;
-    src: string;
-}
-
-export interface HeaderProps {
-    avatar: AvatarProps;
-    logOut: MouseEventHandler<HTMLButtonElement>;
-}
-
 export interface IndexProps {
     cookies?: string;
-}
-
-export interface BasePageProps {
-    cookies?: string;
-    children?: ReactNode;
-    title: string;
 }
 
 export interface SprintDetailsProps {
@@ -140,22 +124,6 @@ export interface INewRetroItemProps {
     refresh: boolean;
 }
 
-export interface INotesEditorProps {
-    value: string;
-    onChange: any;
-}
-
-export interface IAlertBoxProps {
-    isOpen: boolean;
-    onOpen: () => void;
-    onClose: () => void;
-    cancelRef: RefObject<FocusableElement>;
-    onAction: MouseEventHandler<HTMLButtonElement>;
-    btnText: string;
-    btnColor: string;
-    title: string;
-    body?: string;
-}
 
 export interface ISaveSprintBoxProps {
     isOpen: boolean;

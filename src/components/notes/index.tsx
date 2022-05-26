@@ -15,12 +15,18 @@ import {
     useDisclosure,
     useMediaQuery,
 } from '@chakra-ui/react';
+import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { NOTES } from '../../constants';
+import { ELEMENT_TEXT } from '../../constants';
+import {
+    addNoteToStorage,
+    deleteNotesFromStorage,
+    getNotesFromStorage,
+    removeNoteFromStorage,
+} from '../../services/notes/storage';
 import AlertBox from '../alertbox';
 import { TextEditorComponent } from './editor';
-import { FocusableElement } from '@chakra-ui/utils';
 
 const NotesComponent = () => {
     const [note, setNote] = useState('');
@@ -34,8 +40,7 @@ const NotesComponent = () => {
     const cancelRef = useRef() as RefObject<FocusableElement>;
 
     useEffect(() => {
-        localStorage.getItem(NOTES) &&
-            setNotes(JSON.parse(localStorage.getItem(NOTES) || ''));
+        setNotes(getNotesFromStorage());
     }, []);
 
     const onChange = useCallback((newValue: any, editor: any) => {
@@ -44,8 +49,7 @@ const NotesComponent = () => {
 
     const addNote = () => {
         const new_array = note ? [...notes, note] : [...notes];
-        localStorage.setItem(NOTES, '');
-        localStorage.setItem(NOTES, JSON.stringify(new_array));
+        addNoteToStorage(new_array);
         setNotes(new_array);
     };
 
@@ -54,7 +58,7 @@ const NotesComponent = () => {
     };
 
     const deleteNotes = () => {
-        localStorage.removeItem(NOTES);
+        deleteNotesFromStorage();
         setNotes([]);
         onClose();
     };
@@ -62,8 +66,7 @@ const NotesComponent = () => {
     const removeNote = (index: number) => {
         const new_array = [...notes];
         new_array.splice(index, 1);
-        localStorage.setItem(NOTES, '');
-        localStorage.setItem(NOTES, JSON.stringify(new_array));
+        removeNoteFromStorage(new_array);
         setNotes(new_array);
     };
 
@@ -85,7 +88,7 @@ const NotesComponent = () => {
                             m={1}
                             w="15em"
                         >
-                            Add Note
+                            {ELEMENT_TEXT.NOTES_ADD_BUTTON}
                         </Button>
                     </Tooltip>
                     <Tooltip title="Clear Note">
@@ -95,7 +98,7 @@ const NotesComponent = () => {
                             m={1}
                             w="15em"
                         >
-                            Clear Note
+                            {ELEMENT_TEXT.NOTES_CLEAR_BUTTON}
                         </Button>
                     </Tooltip>
                     <Tooltip title="Delete All Notes">
@@ -105,7 +108,7 @@ const NotesComponent = () => {
                             m={1}
                             w="15em"
                         >
-                            Delete All Notes
+                            {ELEMENT_TEXT.NOTES_DELETE_ALL_BUTTON}
                         </Button>
                     </Tooltip>
                     <AlertBox

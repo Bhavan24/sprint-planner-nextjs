@@ -38,6 +38,9 @@ export enum ELEMENT_TEXT {
     LOGIN_PAGE_EMAIL = 'Email',
     LOGIN_PAGE_PASSWORD = 'Password',
     LOGIN_BUTTON = 'Log In',
+    NOTES_ADD_BUTTON = 'Add Note',
+    NOTES_CLEAR_BUTTON = 'Clear Note',
+    NOTES_DELETE_ALL_BUTTON = 'Delete All Notes',
 }
 
 // Main page constants

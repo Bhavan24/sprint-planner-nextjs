@@ -1,52 +1,27 @@
-import {
-    Box,
-    GridItem,
-    Table,
-    TableCaption,
-    TableContainer,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from '@chakra-ui/react';
+import { Box, GridItem } from '@chakra-ui/react';
 import Link from 'next/link';
 import { BOX_DETAILS } from '../../constants';
 import styles from './main.module.css';
+import { SprintBoxProps } from './types';
 
-interface SprintBoxProps {
-    box: {
-        link: string;
-        imageUrl: string;
-        imageAlt: string;
-        title: string;
-        content: string;
-    };
-}
-
-const SprintBox = (props: SprintBoxProps) => {
+const SprintBox = ({ box }: SprintBoxProps) => {
     return (
-        <Link href={props.box.link} passHref>
+        <Link href={box.link} passHref>
             <Box
                 borderWidth="1px"
                 borderRadius="lg"
                 overflow="hidden"
-                m={2}
                 minHeight="30em"
                 cursor="pointer"
+                m={2}
             >
-                <img
-                    src={props.box.imageUrl}
-                    alt={props.box.imageAlt}
-                    width={500}
-                    height={200}
-                />
+                <img src={box.imageUrl} alt={box.imageAlt} width={500} height={200} />
                 <Box p="6">
-                    <Box mt="1" fontWeight="semibold" as="h3">
-                        {props.box.title}
+                    <Box as="h3" fontWeight="semibold" mt="1">
+                        {box.title}
                     </Box>
-                    <Box display="flex" mt="2" fontWeight="light" alignItems="flex-start">
-                        {props.box.content}
+                    <Box display="flex" alignItems="flex-start" fontWeight="light" mt="2">
+                        {box.content}
                     </Box>
                 </Box>
             </Box>

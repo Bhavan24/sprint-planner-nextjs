@@ -7,7 +7,7 @@ import {
     AlertDialogOverlay,
     Button,
 } from '@chakra-ui/react';
-import { IAlertBoxProps } from '../../interfaces';
+import { IAlertBoxProps } from './types';
 
 const AlertBox: React.FC<IAlertBoxProps> = ({
     isOpen,

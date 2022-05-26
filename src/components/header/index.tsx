@@ -17,11 +17,11 @@ import {
 import NextLink from 'next/link';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
 import { ELEMENT_TEXT, LOGO_IMG_PATH } from '../../constants';
-import { HeaderProps } from '../../interfaces';
 import { routes } from '../../routes';
 import { colors } from '../../theme/colors';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 import styles from './header.module.css';
+import { HeaderProps } from './types';
 
 const LogoImage = () => (
     <img src={LOGO_IMG_PATH} alt="logo" className={styles.headerLogo} />
