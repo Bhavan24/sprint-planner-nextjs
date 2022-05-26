@@ -1,45 +1,6 @@
-import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
-import { GAME_STATUS } from '../../../constants';
-import {
-    IGame,
-    IPlayer,
-    IPlayerCardProps,
-    IPokerPlayersProps,
-} from '../../../interfaces';
-import { colors } from '../../../theme/colors';
-import { getCards } from '../../../utils/poker-util';
-
-const getCardColor = (player: IPlayer, game: IGame): string => {
-    if (game.gameStatus !== GAME_STATUS.FINISHED) {
-        if (player.status === GAME_STATUS.FINISHED) {
-            return useColorModeValue(colors.poker_card_2.light, colors.poker_card_2.dark);
-        }
-        return useColorModeValue(colors.poker_card_3.light, colors.poker_card_3.dark);
-    }
-    return useColorModeValue(colors.poker_card_2.light, colors.poker_card_2.dark);
-};
-
-const getCardValue = (player: IPlayer, game: IGame) => {
-    if (game.gameStatus !== GAME_STATUS.FINISHED) {
-        return player.status === GAME_STATUS.FINISHED ? '👍' : '🤔';
-    }
-
-    if (game.gameStatus === GAME_STATUS.FINISHED) {
-        if (player.status === GAME_STATUS.FINISHED) {
-            return getCardDisplayValue(game, player.value);
-        }
-        return '🤔';
-    }
-};
-
-const getCardDisplayValue = (
-    game: IGame,
-    cardValue: number | undefined
-): string | number | undefined => {
-    return (
-        getCards(game).find(card => card.value === cardValue)?.displayValue || cardValue
-    );
-};
+import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
+import { getCardColor, getCardValue } from '../../../controller/poker-players';
+import { IPlayerCardProps, IPokerPlayersProps } from '../../../interfaces';
 
 const PlayerCard: React.FC<IPlayerCardProps> = props => {
     return (
