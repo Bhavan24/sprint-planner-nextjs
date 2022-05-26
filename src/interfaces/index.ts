@@ -26,11 +26,6 @@ export interface AuthenticationLayoutProps {
     title?: string;
 }
 
-export interface IconPropsExtended extends IconProps {
-    size: number;
-    style: {};
-}
-
 interface AvatarProps {
     name: string;
     src: string;

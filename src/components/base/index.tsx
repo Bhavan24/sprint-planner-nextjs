@@ -17,27 +17,17 @@ const BasePage = ({ cookies, children, title }: BasePageProps) => {
         }
     }, [user]);
 
-    if (loading) {
-        return (
-            <Chakra cookies={cookies}>
-                <Loading />
-            </Chakra>
-        );
-    }
-
-    if (!user) {
-        return (
-            <Chakra cookies={cookies}>
-                <LoginPage />
-            </Chakra>
-        );
-    } else {
-        return (
-            <Chakra cookies={cookies}>
-                <DashboardLayout title={title}>{children}</DashboardLayout>
-            </Chakra>
-        );
-    }
+    return (
+        <Chakra cookies={cookies}>
+            {loading && <Loading />}
+            {!loading &&
+                (user ? (
+                    <DashboardLayout title={title}>{children}</DashboardLayout>
+                ) : (
+                    <LoginPage />
+                ))}
+        </Chakra>
+    );
 };
 
 export default BasePage;

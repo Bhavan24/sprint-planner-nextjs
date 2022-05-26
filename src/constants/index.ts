@@ -28,7 +28,15 @@ export const FB_DB_PLAYERS = 'sprint_players';
 export const FB_DB_SPRINTS = 'sprints';
 export const FB_DB_USERS = 'sprint_users';
 
+// Button Texts
+export enum BUTTON_TEXT {
+    APP_LOGO_NAME = 'Sprint Planner',
+    HEADER_PROFILE_BUTTON = 'Profile',
+    HEADER_LOGOUT_BUTTON = 'Logout',
+}
+
 // Main page constants
+export const LOGO_IMG_PATH = '/static/agile.png';
 export const BOX_DETAILS = [
     {
         imageUrl: '/static/sprint2.png',

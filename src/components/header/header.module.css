@@ -1,10 +1,40 @@
-.navStack {
-    display: flex !important;
-    flex-direction: row !important;
+.navItems {
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.header {
+    padding: 1.25rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.headerLogo {
+    margin: 0 1em;
+    height: 1.5rem;
+    width: 50px;
+    height: 50px;
+}
+
+.navButton {
+    margin: 0 1em !important;
+    width: 10em;
+}
+
+.justifySpaceBetween {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.justifyCenter {
+    justify-content: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 580px) {
-    .navStack {
+    .navItems {
         display: flex;
         flex-direction: column !important;
     }

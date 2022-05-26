@@ -9,28 +9,33 @@ import {
 } from '@chakra-ui/react';
 import { IAlertBoxProps } from '../../interfaces';
 
-const AlertBox = (props: IAlertBoxProps) => {
+const AlertBox: React.FC<IAlertBoxProps> = ({
+    isOpen,
+    onClose,
+    cancelRef,
+    title,
+    body,
+    btnText,
+    btnColor,
+    onAction,
+}) => {
     return (
         <>
             <AlertDialog
-                isOpen={props.isOpen}
-                onClose={props.onClose}
-                leastDestructiveRef={props.cancelRef}
+                isOpen={isOpen}
+                onClose={onClose}
+                leastDestructiveRef={cancelRef}
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            {props.title}
+                            {title}
                         </AlertDialogHeader>
-                        <AlertDialogBody>{props.body}</AlertDialogBody>
+                        <AlertDialogBody>{body}</AlertDialogBody>
                         <AlertDialogFooter>
-                            <Button onClick={props.onClose}>Cancel</Button>
-                            <Button
-                                colorScheme={props.btnColor}
-                                onClick={props.onAction}
-                                ml={3}
-                            >
-                                {props.btnText}
+                            <Button onClick={onClose}>Cancel</Button>
+                            <Button colorScheme={btnColor} onClick={onAction} ml={3}>
+                                {btnText}
                             </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>

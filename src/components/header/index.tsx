@@ -16,25 +16,69 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
-import { HeaderProps, IconPropsExtended } from '../../interfaces';
+import { BUTTON_TEXT, LOGO_IMG_PATH } from '../../constants';
+import { HeaderProps } from '../../interfaces';
 import { routes } from '../../routes';
 import { colors } from '../../theme/colors';
 import { ColorModeSwitcher } from '../color-mode-switcher';
 import styles from './header.module.css';
 
-export const Logo = (props: IconPropsExtended) => {
-    return (
-        <img
-            src="/static/agile.png"
-            alt="agile"
-            style={props.style}
-            width={props.size}
-            height={props.size}
+const LogoImage = () => (
+    <img src={LOGO_IMG_PATH} alt="logo" className={styles.headerLogo} />
+);
+
+const Logo = () => (
+    <Flex className={styles.justifyCenter}>
+        <NextLink href="/" passHref>
+            <Button variant="ghost">
+                <LogoImage />
+                <Heading size="lg"> {BUTTON_TEXT.APP_LOGO_NAME}</Heading>
+            </Button>
+        </NextLink>
+    </Flex>
+);
+
+const HamburgerMenu = () => (
+    <Menu>
+        <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<HamburgerIcon />}
+            variant="outline"
         />
+        <MenuList>
+            {routes.map(route => (
+                <NextLink key={route.key} href={route.path}>
+                    <MenuItem icon={route.icon}>{route.name}</MenuItem>
+                </NextLink>
+            ))}
+        </MenuList>
+    </Menu>
+);
+
+const HeaderLogoMenu = () => {
+    return (
+        <>
+            {routes.map(route => (
+                <NextLink key={route.key} href={route.path}>
+                    <Button
+                        rightIcon={route.icon}
+                        color={useColorModeValue(
+                            colors.nav_button.light,
+                            colors.nav_button.dark
+                        )}
+                        className={styles.navButton}
+                        variant="outline"
+                    >
+                        {route.name}
+                    </Button>
+                </NextLink>
+            ))}
+        </>
     );
 };
 
-export const Header = (props: HeaderProps) => {
+export const Header = ({ avatar, logOut }: HeaderProps) => {
     const [isPhoneScreen] = useMediaQuery('(max-width: 580px)');
 
     return (
@@ -46,86 +90,35 @@ export const Header = (props: HeaderProps) => {
                 ),
             }}
         >
-            <Flex px={5} py={5} justifyContent="space-between" alignItems="center" mb={4}>
-                <Flex justifyContent="space-between" alignItems="center">
+            <Flex className={styles.header}>
+                <Flex className={styles.justifySpaceBetween}>
                     <nav>
-                        <HStack className={styles.navStack} spacing={12} gap={5}>
-                            {isPhoneScreen || (
-                                <Flex justifyContent="center" alignItems="center">
-                                    <NextLink href="/" passHref>
-                                        <Button variant="ghost">
-                                            <Logo
-                                                style={{ margin: '0 10px' }}
-                                                size={50}
-                                                h="1.5rem"
-                                                pointerEvents="none"
-                                                mr={8}
-                                            />
-                                            <Heading size="lg">Sprint Planner</Heading>
-                                        </Button>
-                                    </NextLink>
-                                </Flex>
-                            )}
+                        <HStack className={styles.navItems} spacing={12}>
                             {isPhoneScreen ? (
-                                <Menu>
-                                    <MenuButton
-                                        as={IconButton}
-                                        aria-label="Options"
-                                        icon={<HamburgerIcon />}
-                                        variant="outline"
-                                    />
-                                    <MenuList>
-                                        {routes.map(route => (
-                                            <NextLink key={route.key} href={route.path}>
-                                                <MenuItem icon={route.icon}>
-                                                    {route.name}
-                                                </MenuItem>
-                                            </NextLink>
-                                        ))}
-                                    </MenuList>
-                                </Menu>
+                                <HamburgerMenu />
                             ) : (
-                                routes.map(route => (
-                                    <NextLink key={route.key} href={route.path}>
-                                        <Button
-                                            rightIcon={route.icon}
-                                            color={useColorModeValue(
-                                                colors.nav_button.light,
-                                                colors.nav_button.dark
-                                            )}
-                                            variant="outline"
-                                            width={'10em'}
-                                            sx={{
-                                                margin: '0 1em !important',
-                                            }}
-                                        >
-                                            {route.name}
-                                        </Button>
-                                    </NextLink>
-                                ))
+                                <>
+                                    <Logo />
+                                    <HeaderLogoMenu />
+                                </>
                             )}
                         </HStack>
                     </nav>
                 </Flex>
-                <Flex justifyContent="space-between" alignItems="center">
+                <Flex className={styles.justifySpaceBetween}>
                     <Menu>
                         <MenuButton>
-                            <Avatar
-                                size="sm"
-                                name={props.avatar.name}
-                                src={props.avatar.src}
-                            />
+                            <Avatar size="sm" name={avatar.name} src={avatar.src} />
                         </MenuButton>
                         <Portal>
                             <MenuList>
                                 <NextLink href="/profile">
-                                    <MenuItem icon={<AiFillProfile />}>Profile</MenuItem>
+                                    <MenuItem icon={<AiFillProfile />}>
+                                        {BUTTON_TEXT.HEADER_PROFILE_BUTTON}
+                                    </MenuItem>
                                 </NextLink>
-                                <MenuItem
-                                    icon={<AiOutlineLogin />}
-                                    onClick={props.logOut}
-                                >
-                                    Logout
+                                <MenuItem icon={<AiOutlineLogin />} onClick={logOut}>
+                                    {BUTTON_TEXT.HEADER_LOGOUT_BUTTON}
                                 </MenuItem>
                             </MenuList>
                         </Portal>

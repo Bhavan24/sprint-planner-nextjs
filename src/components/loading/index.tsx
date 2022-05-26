@@ -1,8 +1,9 @@
 import { Flex, Spinner } from '@chakra-ui/react';
+import styles from './loading.module.css';
 
 export const Loading = () => {
     return (
-        <Flex justifyContent="center" alignContent="center" alignItems="center" mt="22%">
+        <Flex className={styles.loadingBox}>
             <Spinner
                 thickness="4px"
                 speed="0.65s"
