@@ -102,6 +102,7 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                             <Th>Title</Th>
                             <Th>Description</Th>
                             <Th>Link</Th>
+                            <Th>Assignee</Th>
                             <Th>Story Points</Th>
                         </Tr>
                     </Thead>
@@ -111,6 +112,7 @@ export const StoryPointsDetails = (props: ISprintDetailsItemProps) => {
                                 <Td>{poker.title}</Td>
                                 <Td>{poker.desc}</Td>
                                 <Td>{poker.link}</Td>
+                                <Td>{poker.assignee}</Td>
                                 <Td>{poker.points} Points</Td>
                             </Tr>
                         ))}
