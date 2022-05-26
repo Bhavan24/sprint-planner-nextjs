@@ -19,6 +19,7 @@ const SprintPokerGameComponent = () => {
     const [players, setPlayers] = useState<IPlayer[] | undefined>(undefined);
     const [loading, setIsLoading] = useState(true);
     const [currentPlayerId, setCurrentPlayerId] = useState<string | undefined>(undefined);
+    const [isSpectator, setSpectator] = useState(false);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -56,6 +57,14 @@ const SprintPokerGameComponent = () => {
         id && fetchData(id.toString());
     }, [router.isReady]);
 
+    useEffect(() => {
+        // set isSpectator
+        const player = players
+            ? players.find(player => player.id === currentPlayerId)
+            : null;
+        player && setSpectator(player.isSpectator);
+    }, [players, currentPlayerId]);
+
     if (loading) {
         return (
             <Chakra>
@@ -74,14 +83,18 @@ const SprintPokerGameComponent = () => {
                     <Box textAlign="center" m={5}>
                         <PokerController game={game} currentPlayerId={currentPlayerId} />
                     </Box>
-                    <Box textAlign="center" m={5}>
-                        <Box m={2}>{'Choose your card 👇'}</Box>
-                        <PokerCardPicker
-                            game={game}
-                            players={players}
-                            currentPlayerId={currentPlayerId}
-                        />
-                    </Box>
+                    {isSpectator ? (
+                        <>You are on spectator mode 🧐</>
+                    ) : (
+                        <Box textAlign="center" m={5}>
+                            <Box m={2}>{'Choose your card 👇'}</Box>
+                            <PokerCardPicker
+                                game={game}
+                                players={players}
+                                currentPlayerId={currentPlayerId}
+                            />
+                        </Box>
+                    )}
                 </>
             ) : (
                 <Text color="red.400"> Game not found!!! </Text>

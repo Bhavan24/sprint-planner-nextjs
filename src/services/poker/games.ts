@@ -16,6 +16,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
     const player = {
         name: newSession.userName,
         id: newSession.userId,
+        isSpectator: newSession.isSpectator,
         status: GAME_STATUS.NOT_STARTED,
     };
     const gameData = {

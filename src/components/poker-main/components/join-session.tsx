@@ -61,7 +61,8 @@ const JoinSession = () => {
                     const res = user
                         ? await addPlayerToGame(
                               sessionCode,
-                              user.displayName || user.email || ''
+                              user.displayName || user.email || '',
+                              isSpectator
                           )
                         : null;
                     res && router.push(`/sprint-poker/${sessionCode}`);

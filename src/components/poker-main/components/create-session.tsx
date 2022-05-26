@@ -49,6 +49,7 @@ const CreateSession = () => {
                 gameType: cardsMode,
                 createdAt: new Date(),
                 sprintId: sprintId,
+                isSpectator: isSpectator,
             };
             const newGameId = await addNewGame(game);
             console.log('newGameId:', newGameId);

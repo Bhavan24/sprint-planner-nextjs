@@ -51,12 +51,14 @@ export interface INewSession {
     userId: string;
     createdAt: Date;
     sprintId: string;
+    isSpectator: boolean;
 }
 
 export interface IPlayer {
     name: string;
     id: string;
     status: string;
+    isSpectator: boolean;
     value?: number;
     emoji?: string;
 }
@@ -123,7 +125,6 @@ export interface INewRetroItemProps {
     desc: string;
     refresh: boolean;
 }
-
 
 export interface ISaveSprintBoxProps {
     isOpen: boolean;

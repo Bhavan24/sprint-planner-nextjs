@@ -75,7 +75,8 @@ export const isCurrentPlayerInGame = (gameId: string): boolean => {
 
 export const addPlayerToGame = async (
     gameId: string,
-    playerName: string
+    playerName: string,
+    isSpectator: boolean
 ): Promise<boolean> => {
     const joiningGame = await getGameFromStore(gameId);
 
@@ -83,7 +84,12 @@ export const addPlayerToGame = async (
         console.log('Game not found');
         return false;
     }
-    const newPlayer = { name: playerName, id: ulid(), status: GAME_STATUS.NOT_STARTED };
+    const newPlayer = {
+        name: playerName,
+        id: ulid(),
+        isSpectator: isSpectator,
+        status: GAME_STATUS.NOT_STARTED,
+    };
 
     updatePlayerGames(gameId, newPlayer.id);
     await addPlayerToGameInStore(gameId, newPlayer);
