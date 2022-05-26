@@ -45,9 +45,12 @@ const PokerPlayers: React.FC<IPokerPlayersProps> = props => {
                 justifyContent="center"
                 flexWrap="wrap"
             >
-                {props.players.map((player, index: number) => (
-                    <PlayerCard key={index} game={props.game} player={player} />
-                ))}
+                {props.players.map(
+                    (player, index: number) =>
+                        !player.isSpectator && (
+                            <PlayerCard key={index} game={props.game} player={player} />
+                        )
+                )}
             </Flex>
         </>
     );
