@@ -3,6 +3,9 @@ import { routes } from '../routes';
 // Tinymice API key
 export const EDITOR_API_KEY = 'qw458k9ky6vktmpvr1wohuc97f8sbd7r9x73ztfca9ikzjjt';
 
+// Jira Link
+export const JIRA_BASE_LINK = 'https://techlabsglobal.atlassian.net/browse/';
+
 // app constants
 export const APP_NAME = 'Sprint Planner';
 export const SPRINTS_PAGE_NAME = `${routes[0].name} | ${APP_NAME}`;

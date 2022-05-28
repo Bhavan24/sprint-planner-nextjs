@@ -1,4 +1,5 @@
 import {
+    AspectRatio,
     Box,
     Button,
     Drawer,
@@ -9,6 +10,14 @@ import {
     DrawerOverlay,
     Flex,
     IconButton,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     Stack,
     Text,
     Tooltip,
@@ -21,6 +30,7 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
+import { JIRA_BASE_LINK } from '../../../constants';
 import { IPokerControllerProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import AlertBox from '../../alertbox';
@@ -41,10 +51,14 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     const drawer = useDisclosure();
     const drawerBtnRef = useRef() as RefObject<FocusableElement>;
 
-    // model
-    const model = useDisclosure();
+    // modal
+    const modal = useDisclosure();
     const initialRef = useRef() as RefObject<FocusableElement>;
     const finalRef = useRef() as RefObject<FocusableElement>;
+
+    // view issue
+    const [issueId, setIssueId] = useState('');
+    const viewModal = useDisclosure();
 
     // toast
     const toast = useToast();
@@ -60,7 +74,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     };
 
     const handleSaveIssueCards = () => {
-        model.onOpen();
+        modal.onOpen();
     };
 
     const handleRestartSession = () => {
@@ -158,9 +172,9 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         />
                                     </Tooltip>
                                     <SaveSprintPoker
-                                        isOpen={model.isOpen}
-                                        onOpen={model.onOpen}
-                                        onClose={model.onClose}
+                                        isOpen={modal.isOpen}
+                                        onOpen={modal.onOpen}
+                                        onClose={modal.onClose}
                                         initialRef={initialRef}
                                         finalRef={finalRef}
                                         title={'Save Issue'}
@@ -227,6 +241,42 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     </DrawerBody>
                                 </DrawerContent>
                             </Drawer>
+                        </Flex>
+                        <Flex alignItems="center" justifyContent="center" mt={2}>
+                            <Input
+                                value={issueId}
+                                placeholder="Jira Issue Id"
+                                m={2}
+                                onChange={(e: any) => {
+                                    setIssueId(e.target.value);
+                                }}
+                            />
+                            <Button
+                                onClick={() => {
+                                    viewModal.onOpen();
+                                }}
+                            >
+                                View Issue
+                            </Button>
+                            <Modal
+                                onClose={viewModal.onClose}
+                                size="full"
+                                isOpen={viewModal.isOpen}
+                            >
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalCloseButton />
+                                    <ModalBody m={10}>
+                                        <AspectRatio maxW="85vw" ratio={1} ml={5}>
+                                            <iframe
+                                                title="issue"
+                                                src={JIRA_BASE_LINK + issueId}
+                                                allowFullScreen
+                                            />
+                                        </AspectRatio>
+                                    </ModalBody>
+                                </ModalContent>
+                            </Modal>
                         </Flex>
                     </Box>
                 </Box>
