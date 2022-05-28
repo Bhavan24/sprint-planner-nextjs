@@ -1,5 +1,5 @@
+import { SettingsIcon } from '@chakra-ui/icons';
 import {
-    AspectRatio,
     Box,
     Button,
     Drawer,
@@ -10,14 +10,6 @@ import {
     DrawerOverlay,
     Flex,
     IconButton,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
     Stack,
     Text,
     Tooltip,
@@ -37,6 +29,7 @@ import AlertBox from '../../alertbox';
 import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
 
 import TimerComponent from '../../timer';
+import { SettingsSprintPoker } from './poker-controller-settings';
 import { SaveSprintPoker } from './save-poker-details';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
@@ -51,13 +44,12 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     const drawer = useDisclosure();
     const drawerBtnRef = useRef() as RefObject<FocusableElement>;
 
-    // modal
+    // save issue modal
     const modal = useDisclosure();
     const initialRef = useRef() as RefObject<FocusableElement>;
     const finalRef = useRef() as RefObject<FocusableElement>;
 
-    // view issue
-    const [issueId, setIssueId] = useState('');
+    // view issue modal
     const viewModal = useDisclosure();
 
     // toast
@@ -75,6 +67,10 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
 
     const handleSaveIssueCards = () => {
         modal.onOpen();
+    };
+
+    const handleControllerSettings = () => {
+        viewModal.onOpen();
     };
 
     const handleRestartSession = () => {
@@ -180,6 +176,24 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         title={'Save Issue'}
                                         sprintId={props.game.sprintId}
                                     />
+                                    <Tooltip label="Settings">
+                                        <IconButton
+                                            colorScheme="purple"
+                                            aria-label="Settings"
+                                            icon={<SettingsIcon />}
+                                            isRound
+                                            size="lg"
+                                            m={2}
+                                            onClick={handleControllerSettings}
+                                        />
+                                    </Tooltip>
+                                    <SettingsSprintPoker
+                                        isOpen={viewModal.isOpen}
+                                        onOpen={viewModal.onOpen}
+                                        onClose={viewModal.onClose}
+                                        title={'Settings'}
+                                        gameId={props.game.id}
+                                    />
                                 </>
                             )}
                             <Tooltip label="Exit Session">
@@ -216,11 +230,34 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                 />
                             </Tooltip>
                         </Box>
-                        <Flex alignItems="center" justifyContent="center">
+                        <Flex alignItems="center" justifyContent="center" display="none">
                             <TimerComponent />
                         </Flex>
+                        <Flex
+                            alignItems="center"
+                            justifyContent="center"
+                            flexDir="column"
+                            mt={2}
+                        >
+                            {props.game.issueId && (
+                                <Text m={2}>
+                                    Current Issue: <b>{props.game.issueId}</b>
+                                </Text>
+                            )}
+                            <Button
+                                onClick={() => {
+                                    window.open(JIRA_BASE_LINK + props.game.issueId);
+                                }}
+                                m={2}
+                                w="12em"
+                            >
+                                View Issue
+                            </Button>
+                        </Flex>
                         <Flex alignItems="center" justifyContent="center" mt={2}>
-                            <Button onClick={drawer.onOpen}>View Assignee Details</Button>
+                            <Button onClick={drawer.onOpen} w="12em">
+                                View Assignee Details
+                            </Button>
                             <Drawer
                                 isOpen={drawer.isOpen}
                                 placement="right"
@@ -241,42 +278,6 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     </DrawerBody>
                                 </DrawerContent>
                             </Drawer>
-                        </Flex>
-                        <Flex alignItems="center" justifyContent="center" mt={2}>
-                            <Input
-                                value={issueId}
-                                placeholder="Jira Issue Id"
-                                m={2}
-                                onChange={(e: any) => {
-                                    setIssueId(e.target.value);
-                                }}
-                            />
-                            <Button
-                                onClick={() => {
-                                    viewModal.onOpen();
-                                }}
-                            >
-                                View Issue
-                            </Button>
-                            <Modal
-                                onClose={viewModal.onClose}
-                                size="full"
-                                isOpen={viewModal.isOpen}
-                            >
-                                <ModalOverlay />
-                                <ModalContent>
-                                    <ModalCloseButton />
-                                    <ModalBody m={10}>
-                                        <AspectRatio maxW="85vw" ratio={1} ml={5}>
-                                            <iframe
-                                                title="issue"
-                                                src={JIRA_BASE_LINK + issueId}
-                                                allowFullScreen
-                                            />
-                                        </AspectRatio>
-                                    </ModalBody>
-                                </ModalContent>
-                            </Modal>
                         </Flex>
                     </Box>
                 </Box>

@@ -28,6 +28,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
         gameStatus: GAME_STATUS.STARTED,
         average: 0,
         sprintId: newSession.sprintId,
+        issueId: '',
     };
     await addGameToStore(gameData.id, gameData);
     await addPlayerToGameInStore(gameData.id, player);
@@ -72,6 +73,17 @@ export const finishGame = async (gameId: string) => {
         const updatedGame = {
             average: getAverage(players),
             gameStatus: GAME_STATUS.FINISHED,
+        };
+        updateGame(gameId, updatedGame);
+    }
+};
+
+export const updateIssueId = async (gameId: string, issueId: string) => {
+    const game = await getGameFromStore(gameId);
+
+    if (game) {
+        const updatedGame = {
+            issueId: issueId,
         };
         updateGame(gameId, updatedGame);
     }

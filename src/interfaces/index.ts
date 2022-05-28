@@ -1,8 +1,7 @@
-import { IconProps } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import type { NextComponentType, NextPageContext } from 'next';
 import type { NextRouter } from 'next/router';
-import { MouseEventHandler, ReactNode, RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 
 export interface AppRenderProps {
     pageProps: object;
@@ -79,6 +78,7 @@ export interface IGame {
     createdAt: Date;
     updatedAt?: Date;
     sprintId: string;
+    issueId?: string;
 }
 
 export interface ICardPickerProps {
@@ -145,6 +145,15 @@ export interface ISavePokerSprintBoxProps {
     title: string;
     body?: string;
     sprintId: string;
+}
+
+export interface ISettingsProkerControllerSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    title: string;
+    body?: string;
+    gameId: string;
 }
 
 export interface IEditSprintBoxProps {
