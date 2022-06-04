@@ -1212,6 +1212,11 @@
     protobufjs "^6.10.0"
     yargs "^16.2.0"
 
+"@jitsi/react-sdk@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@jitsi/react-sdk/-/react-sdk-1.0.1.tgz#c0ede135ed2d61abacd8b1a407a9aaf7d907f402"
+  integrity sha512-p+CDBXlvUa0Q3icGEhejwGY796s8w88gJpzQsTA8m/uvyduaaYdhy0W4aVFddbwx3rjA46KWQLiyRMKojXRlAA==
+
 "@jsdevtools/ono@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.3.tgz#9df03bbd7c696a5c58885c34aa06da41c8543796"

@@ -11,7 +11,8 @@ export const APP_NAME = 'Sprint Planner';
 export const SPRINTS_PAGE_NAME = `${routes[0].name} | ${APP_NAME}`;
 export const RETROSPECTIVE_PAGE_NAME = `${routes[1].name} | ${APP_NAME}`;
 export const SPRINT_POKER_PAGE_NAME = `${routes[2].name} | ${APP_NAME}`;
-export const NOTES_PAGE_NAME = `${routes[3].name} | ${APP_NAME}`;
+export const MEET_PAGE_NAME = `${routes[3].name} | ${APP_NAME}`;
+export const NOTES_PAGE_NAME = `${routes[4].name} | ${APP_NAME}`;
 export const LOGIN_PAGE_NAME = `Login | ${APP_NAME}`;
 export const PROFILE_PAGE_NAME = `Profile | ${APP_NAME}`;
 

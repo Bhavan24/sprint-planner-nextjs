@@ -3,6 +3,7 @@ import {
     AiOutlineAppstoreAdd,
     AiOutlineBarChart,
     AiOutlineFileText,
+    AiOutlineVideoCameraAdd,
 } from 'react-icons/ai';
 
 export const routes = [
@@ -26,6 +27,13 @@ export const routes = [
         key: 'sprint-poker',
         path: '/sprint-poker',
         icon: <AiFillSwitcher />,
+    },
+    {
+        id: 2,
+        name: 'Meet',
+        key: 'meet',
+        path: '/meet',
+        icon: <AiOutlineVideoCameraAdd />,
     },
     {
         id: 2,
