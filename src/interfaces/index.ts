@@ -229,3 +229,10 @@ export interface ICommonUser {
     displayName: string;
     photoURL: string;
 }
+
+export interface IJiraIssues {
+    issueKey: string;
+    priority: string;
+    summary: string;
+    description: string;
+}

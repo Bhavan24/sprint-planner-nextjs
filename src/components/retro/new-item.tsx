@@ -18,6 +18,7 @@ const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
         const new_array = formValue ? [...data, formValue] : [...data];
         saveRetroList(name, new_array);
         setData(new_array);
+        clearValue();
     };
 
     const clearValue = () => {
