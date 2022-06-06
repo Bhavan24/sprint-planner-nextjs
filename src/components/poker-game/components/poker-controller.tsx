@@ -1,4 +1,8 @@
-import { SettingsIcon } from '@chakra-ui/icons';
+// React imports
+import React, { RefObject, useEffect, useRef, useState } from 'react';
+// Next imports
+import { useRouter } from 'next/router';
+// Chakra-UI imports
 import {
     Box,
     Button,
@@ -17,20 +21,23 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
-import { useRouter } from 'next/router';
-import { RefObject, useEffect, useRef, useState } from 'react';
+// Component imports
+import AlertBox from '../../alertbox';
+import TimerComponent from '../../timer';
+import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
+import { finishGame, resetGame } from '../../../services/poker/games';
+import { SettingsSprintPoker } from './poker-controller-settings';
+import { SaveSprintPoker } from './save-poker-details';
+// Icon imports
+import { SettingsIcon } from '@chakra-ui/icons';
 import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
-import { JIRA_BASE_LINK } from '../../../constants';
+// Type imports
 import { IPokerControllerProps } from '../../../interfaces';
-import { finishGame, resetGame } from '../../../services/poker/games';
-import AlertBox from '../../alertbox';
-import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
+// Constant imports
+import { JIRA_BASE_LINK } from '../../../constants';
 
-import TimerComponent from '../../timer';
-import { SettingsSprintPoker } from './poker-controller-settings';
-import { SaveSprintPoker } from './save-poker-details';
 
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
@@ -62,7 +69,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     }, [router.isReady]);
 
     const handleRevealCards = () => {
-        finishGame(gameId);
+        finishGame(gameId).then(r => console.log(r));
     };
 
     const handleSaveIssueCards = () => {
@@ -74,16 +81,16 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
     };
 
     const handleRestartSession = () => {
-        resetGame(gameId);
+        resetGame(gameId).then(r => console.log(r));
     };
 
     const handleExitSession = () => {
-        router.push('/');
+        router.push('/').then(r => console.log(r));
     };
 
     const handleCopyInviteLink = () => {
-        const url = `${window.location.origin}/sprint-poker?join=${gameId}`;
-        navigator.clipboard.writeText(gameId); //TODO: fix this!!!
+        //TODO: fix this!!! const url = `${window.location.origin}/sprint-poker?join=${gameId}`;
+        navigator.clipboard.writeText(gameId).then(r => console.log(r));
         toast({
             title: 'Invite Link copied to clipboard!',
             status: 'success',

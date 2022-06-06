@@ -1,31 +1,38 @@
+// React imports
+import React from 'react';
+// Chakra-UI imports
 import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
+// Component imports
 import { getCardColor, getCardValue } from '../../../controller/poker-players';
+// Type imports
 import { IPlayerCardProps, IPokerPlayersProps } from '../../../interfaces';
+
 
 const PlayerCard: React.FC<IPlayerCardProps> = props => {
     return (
         <Box
-            maxW="sm"
-            maxH="lg"
-            borderWidth="2px"
-            borderRadius="lg"
-            onClick={() => {}}
-            height="8em"
-            width="6em"
-            m="1"
+            maxW='sm'
+            maxH='lg'
+            borderWidth='2px'
+            borderRadius='lg'
+            onClick={() => {
+            }}
+            height='8em'
+            width='6em'
+            m='1'
             bg={getCardColor(props.player, props.game)}
         >
             <Flex
-                p="3"
-                alignItems="center"
-                justifyContent="center"
-                alignContent="center"
-                w="100%"
+                p='3'
+                alignItems='center'
+                justifyContent='center'
+                alignContent='center'
+                w='100%'
             >
-                <Text fontSize="5xl">{getCardValue(props.player, props.game)}</Text>
+                <Text fontSize='5xl'>{getCardValue(props.player, props.game)}</Text>
             </Flex>
             <Tooltip label={props.player.name}>
-                <Text fontSize="md" overflow="hidden">
+                <Text fontSize='md' overflow='hidden'>
                     {props.player.name}
                 </Text>
             </Tooltip>
@@ -36,14 +43,14 @@ const PlayerCard: React.FC<IPlayerCardProps> = props => {
 const PokerPlayers: React.FC<IPokerPlayersProps> = props => {
     return (
         <>
-            <Text fontSize="md" m={2}>
+            <Text fontSize='md' m={2}>
                 👍 - Voting Done 🤔 - Yet to Vote
             </Text>
             <Flex
-                alignContent="center"
-                alignItems="center"
-                justifyContent="center"
-                flexWrap="wrap"
+                alignContent='center'
+                alignItems='center'
+                justifyContent='center'
+                flexWrap='wrap'
             >
                 {props.players.map(
                     (player, index: number) =>

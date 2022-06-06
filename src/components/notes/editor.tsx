@@ -1,7 +1,9 @@
-import { Flex } from '@chakra-ui/react';
+// Component imports
 import { Editor } from '@tinymce/tinymce-react';
-import { EDITOR_API_KEY } from '../../constants';
+// Type imports
 import { INotesEditorProps } from './types';
+// Constant imports
+import { EDITOR_API_KEY } from '../../constants';
 
 export const TextEditorComponent = (editor: INotesEditorProps) => {
     return (
@@ -30,7 +32,7 @@ export const TextEditorComponent = (editor: INotesEditorProps) => {
                     'table',
                     'code',
                     'help',
-                    'wordcount',
+                    'wordcount'
                 ],
                 toolbar: `
                 | undo redo
@@ -46,7 +48,7 @@ export const TextEditorComponent = (editor: INotesEditorProps) => {
                 content_style: `body {
                     font-family:Helvetica,Arial,sans-serif;
                     font-size:14px;
-                }`,
+                }`
             }}
         />
     );

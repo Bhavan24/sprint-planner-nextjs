@@ -1,3 +1,6 @@
+// React imports
+import { useState } from 'react';
+// Chakra-UI imports
 import {
     Accordion,
     AccordionButton,
@@ -24,12 +27,14 @@ import {
     Tr,
     useToast
 } from '@chakra-ui/react';
+// Component imports
 import Papa from 'papaparse';
-import { useState } from 'react';
-import { IJiraIssue, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
-import { updateIssueId } from '../../../services/poker/games';
 import SelectCurrentIssue from '../../select-current-issue';
+import { updateIssueId } from '../../../services/poker/games';
 import { setCurrentJiraIssue } from '../../../services/poker/storage';
+// Type imports
+import { IJiraIssue, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
+
 
 export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxProps) => {
     // toast

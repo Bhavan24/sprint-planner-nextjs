@@ -1,3 +1,8 @@
+// React imports
+import { useEffect, useState } from 'react';
+// Firebase imports
+import { arrayUnion } from 'firebase/firestore';
+// Chakra-UI imports
 import {
     Button,
     Flex,
@@ -14,13 +19,15 @@ import {
     Textarea,
     useToast
 } from '@chakra-ui/react';
-import { arrayUnion } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { ISavePokerSprintBoxProps, ISprintPokerColData } from '../../../interfaces';
-import { updateSprintData } from '../../../services/sprint/sprints';
+// Component imports
 import SelectUsers from '../../select-users';
-import { JIRA_BASE_LINK } from '../../../constants';
+import { updateSprintData } from '../../../services/sprint/sprints';
 import { getCurrentJiraIssue } from '../../../services/poker/storage';
+// Type imports
+import { ISavePokerSprintBoxProps, ISprintPokerColData } from '../../../interfaces';
+// Constant imports
+import { JIRA_BASE_LINK } from '../../../constants';
+
 
 export const SaveSprintPoker = (props: ISavePokerSprintBoxProps) => {
     const sprintId = props.game.sprintId;

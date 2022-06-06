@@ -1,17 +1,25 @@
-import { Box, Text } from '@chakra-ui/react';
-import { onSnapshot } from 'firebase/firestore';
-import { useRouter } from 'next/router';
+// React imports
 import { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+// Next imports
+import { useRouter } from 'next/router';
+// Firebase imports
 import { auth } from '../../../firebase/config';
-import { Loading } from '../../components/loading';
-import { IGame, IPlayer } from '../../interfaces';
-import { streamGame, streamPlayers } from '../../services/poker/games';
-import { getCurrentPlayerId } from '../../services/poker/players';
-import { Chakra } from '../../theme/chakra-theme';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { onSnapshot } from 'firebase/firestore';
+// Chakra-UI imports
+import { Box, Text } from '@chakra-ui/react';
+// Component imports
 import PokerCardPicker from './components/poker-card-picker';
 import PokerController from './components/poker-controller';
 import PokerPlayers from './components/poker-players';
+import { Loading } from '../loading';
+import { streamGame, streamPlayers } from '../../services/poker/games';
+import { getCurrentPlayerId } from '../../services/poker/players';
+import { Chakra } from '../../theme/chakra-theme';
+// Type imports
+import { IGame, IPlayer } from '../../interfaces';
+// Constant imports
+
 
 const SprintPokerGameComponent = () => {
     const router = useRouter();
@@ -24,10 +32,12 @@ const SprintPokerGameComponent = () => {
     const [isSpectator, setSpectator] = useState(false);
     // user
     const [user] = useAuthState(auth);
+    console.log({ user });
 
     useEffect(() => {
         if (!router.isReady) return;
         const { id } = router.query;
+
         async function fetchData(id: string) {
             setIsLoading(true);
 
@@ -54,10 +64,11 @@ const SprintPokerGameComponent = () => {
 
             const currentPlayerId = getCurrentPlayerId(id);
             if (!currentPlayerId) {
-                router.push(`/sprint-poker/${id}`);
+                await router.push(`/sprint-poker/${id}`);
             }
             setCurrentPlayerId(currentPlayerId);
         }
+
         id && fetchData(id.toString());
     }, [router.isReady]);
 
@@ -81,16 +92,16 @@ const SprintPokerGameComponent = () => {
         <>
             {game && players && currentPlayerId ? (
                 <>
-                    <Box textAlign="center" m={5}>
+                    <Box textAlign='center' m={5}>
                         <PokerPlayers game={game} players={players} />
                     </Box>
-                    <Box textAlign="center" m={5}>
+                    <Box textAlign='center' m={5}>
                         <PokerController game={game} currentPlayerId={currentPlayerId} />
                     </Box>
                     {isSpectator ? (
                         <>You are on spectator mode 🧐</>
                     ) : (
-                        <Box textAlign="center" m={5}>
+                        <Box textAlign='center' m={5}>
                             <Box m={2}>{'Choose your card 👇'}</Box>
                             <PokerCardPicker
                                 game={game}
@@ -101,7 +112,7 @@ const SprintPokerGameComponent = () => {
                     )}
                 </>
             ) : (
-                <Text color="red.400"> Game not found!!! </Text>
+                <Text color='red.400'> Game not found!!! </Text>
             )}
         </>
     );
