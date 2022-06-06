@@ -144,7 +144,8 @@ export interface ISavePokerSprintBoxProps {
     finalRef: RefObject<FocusableElement>;
     title: string;
     body?: string;
-    sprintId: string;
+    game: IGame;
+    jiraIssue: IJiraIssue;
 }
 
 export interface ISettingsProkerControllerSprintBoxProps {
@@ -230,7 +231,7 @@ export interface ICommonUser {
     photoURL: string;
 }
 
-export interface IJiraIssues {
+export interface IJiraIssue {
     issueKey: string;
     priority: string;
     summary: string;

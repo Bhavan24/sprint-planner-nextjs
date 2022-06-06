@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react';
 import Papa from 'papaparse';
 import { useState } from 'react';
-import { IJiraIssues, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
+import { IJiraIssue, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
 import { updateIssueId } from '../../../services/poker/games';
 import SelectCurrentIssue from '../../select-current-issue';
 
@@ -37,7 +37,7 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
     // states
     const [issueId, setIssueId] = useState('');
     const [csvFile, setCsvFile] = useState('');
-    const [jiraIssues, setJiraIssues] = useState<IJiraIssues[]>([]);
+    const [jiraIssues, setJiraIssues] = useState<IJiraIssue[]>([]);
 
     const handleSubmit = () => {
         updateIssueId(props.gameId, issueId).then(r => console.log(r));
@@ -55,7 +55,7 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
             header: true,
             skipEmptyLines: true,
             complete: function(results: any) {
-                const currentJiraIssues: IJiraIssues[] = [];
+                const currentJiraIssues: IJiraIssue[] = [];
                 results.data.forEach((result: any) => {
                     currentJiraIssues.push({
                         issueKey: result['Issue key'],
@@ -164,7 +164,7 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
                                             </Thead>
                                             <Tbody>
                                                 {
-                                                    jiraIssues.map((jiraIssue: IJiraIssues, i: number) => (
+                                                    jiraIssues.map((jiraIssue: IJiraIssue, i: number) => (
                                                         <Tr key={i}>
                                                             <Td>{jiraIssue.issueKey}</Td>
                                                             <Td>{jiraIssue.priority}</Td>

@@ -1,5 +1,4 @@
-import { WENT_WELL_ITEMS } from '../../constants';
-import { ACTION_ITEMS, TO_IMRPOVE_ITEMS } from './../../constants/index';
+import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 
 // Local Storage
 export const saveRetroList = (name: string, array: string[]) => {

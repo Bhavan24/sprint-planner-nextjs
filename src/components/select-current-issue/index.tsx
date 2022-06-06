@@ -1,10 +1,10 @@
 import { Select } from '@chakra-ui/react';
 import { ChangeEventHandler } from 'react';
-import { IJiraIssues } from '../../interfaces';
+import { IJiraIssue } from '../../interfaces';
 
 const SelectCurrentIssue = ({ onChange, issues }: {
     onChange: ChangeEventHandler<HTMLSelectElement> | undefined;
-    issues: IJiraIssues[];
+    issues: IJiraIssue[];
 }) => {
 
     return (

@@ -14,7 +14,7 @@ import {
     Text,
     Tooltip,
     useDisclosure,
-    useToast,
+    useToast
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { useRouter } from 'next/router';
@@ -23,7 +23,7 @@ import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
 import { JIRA_BASE_LINK } from '../../../constants';
-import { IPokerControllerProps } from '../../../interfaces';
+import { IJiraIssue, IPokerControllerProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import AlertBox from '../../alertbox';
 import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
@@ -35,6 +35,12 @@ import { SaveSprintPoker } from './save-poker-details';
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
     const [gameId, setGameId] = useState('');
+    const [currentJiraIssue, setCurrentJiraIssue] = useState<IJiraIssue>({
+        description: '',
+        issueKey: '',
+        priority: '',
+        summary: ''
+    });
 
     // popup
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,7 +94,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
             title: 'Invite Link copied to clipboard!',
             status: 'success',
             isClosable: true,
-            position: 'bottom-left',
+            position: 'bottom-left'
         });
     };
 
@@ -98,71 +104,71 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
 
     return (
         <>
-            <Stack spacing="6" alignItems="center">
+            <Stack spacing='6' alignItems='center'>
                 <Box
-                    maxW="max-content"
-                    maxH="lg"
-                    borderWidth="2px"
-                    borderRadius="lg"
-                    m="1"
+                    maxW='max-content'
+                    maxH='lg'
+                    borderWidth='2px'
+                    borderRadius='lg'
+                    m='1'
                 >
-                    <Box p="6">
+                    <Box p='6'>
                         <Box
-                            color="gray.500"
-                            fontWeight="semibold"
-                            letterSpacing="wide"
-                            fontSize="xs"
-                            textTransform="uppercase"
-                            alignContent="center"
-                            gap="1"
+                            color='gray.500'
+                            fontWeight='semibold'
+                            letterSpacing='wide'
+                            fontSize='xs'
+                            textTransform='uppercase'
+                            alignContent='center'
+                            gap='1'
                         >
-                            <Text fontSize="md">{props.game.name}</Text>
+                            <Text fontSize='md'>{props.game.name}</Text>
                             <Text>{props.game.gameStatus}</Text>
                         </Box>
                         <Box
-                            mt="1"
-                            fontWeight="semibold"
-                            as="h4"
-                            lineHeight="tight"
+                            mt='1'
+                            fontWeight='semibold'
+                            as='h4'
+                            lineHeight='tight'
                             noOfLines={1}
                         >
                             Average : {props.game.average || 0}
                         </Box>
-                        <Box gap="2" p="2">
+                        <Box gap='2' p='2'>
                             {isModerator(
                                 props.game.createdById,
                                 props.currentPlayerId
                             ) && (
                                 <>
-                                    <Tooltip label="Reveal Cards">
+                                    <Tooltip label='Reveal Cards'>
                                         <IconButton
-                                            colorScheme="green"
-                                            aria-label="Reveal"
+                                            colorScheme='green'
+                                            aria-label='Reveal'
                                             icon={<FaRegEye />}
                                             isRound
-                                            size="lg"
+                                            size='lg'
                                             m={2}
                                             onClick={handleRevealCards}
                                         />
                                     </Tooltip>
-                                    <Tooltip label="Restart Session">
+                                    <Tooltip label='Restart Session'>
                                         <IconButton
-                                            colorScheme="orange"
-                                            aria-label="Restart"
+                                            colorScheme='orange'
+                                            aria-label='Restart'
                                             icon={<VscDebugRestart />}
                                             isRound
-                                            size="lg"
+                                            size='lg'
                                             m={2}
                                             onClick={handleRestartSession}
                                         />
                                     </Tooltip>
-                                    <Tooltip label="Save Issue">
+                                    <Tooltip label='Save Issue'>
                                         <IconButton
-                                            colorScheme="teal"
-                                            aria-label="Save Issue"
+                                            colorScheme='teal'
+                                            aria-label='Save Issue'
                                             icon={<FaSave />}
                                             isRound
-                                            size="lg"
+                                            size='lg'
                                             m={2}
                                             onClick={handleSaveIssueCards}
                                         />
@@ -174,15 +180,16 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         initialRef={initialRef}
                                         finalRef={finalRef}
                                         title={'Save Issue'}
-                                        sprintId={props.game.sprintId}
+                                        jiraIssue={currentJiraIssue}
+                                        game={props.game}
                                     />
-                                    <Tooltip label="Settings">
+                                    <Tooltip label='Settings'>
                                         <IconButton
-                                            colorScheme="purple"
-                                            aria-label="Settings"
+                                            colorScheme='purple'
+                                            aria-label='Settings'
                                             icon={<SettingsIcon />}
                                             isRound
-                                            size="lg"
+                                            size='lg'
                                             m={2}
                                             onClick={handleControllerSettings}
                                         />
@@ -196,13 +203,13 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     />
                                 </>
                             )}
-                            <Tooltip label="Exit Session">
+                            <Tooltip label='Exit Session'>
                                 <IconButton
-                                    colorScheme="red"
-                                    aria-label="Exit"
+                                    colorScheme='red'
+                                    aria-label='Exit'
                                     icon={<MdExitToApp />}
                                     isRound
-                                    size="lg"
+                                    size='lg'
                                     m={2}
                                     onClick={onOpen}
                                 />
@@ -218,25 +225,25 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                 title={'Exit Session'}
                                 body={`Are you sure want to exit the session?`}
                             />
-                            <Tooltip label="Copy Invitation Link">
+                            <Tooltip label='Copy Invitation Link'>
                                 <IconButton
-                                    colorScheme="blue"
-                                    aria-label="Invite"
+                                    colorScheme='blue'
+                                    aria-label='Invite'
                                     icon={<FaLink />}
                                     isRound
-                                    size="lg"
+                                    size='lg'
                                     m={2}
                                     onClick={handleCopyInviteLink}
                                 />
                             </Tooltip>
                         </Box>
-                        <Flex alignItems="center" justifyContent="center" display="none">
+                        <Flex alignItems='center' justifyContent='center'>
                             <TimerComponent />
                         </Flex>
                         <Flex
-                            alignItems="center"
-                            justifyContent="center"
-                            flexDir="column"
+                            alignItems='center'
+                            justifyContent='center'
+                            flexDir='column'
                             mt={2}
                         >
                             {props.game.issueId && (
@@ -249,26 +256,26 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                     window.open(JIRA_BASE_LINK + props.game.issueId);
                                 }}
                                 m={2}
-                                w="12em"
+                                w='12em'
                             >
                                 View Issue
                             </Button>
                         </Flex>
-                        <Flex alignItems="center" justifyContent="center" mt={2}>
-                            <Button onClick={drawer.onOpen} w="12em">
+                        <Flex alignItems='center' justifyContent='center' mt={2}>
+                            <Button onClick={drawer.onOpen} w='12em'>
                                 View Assignee Details
                             </Button>
                             <Drawer
                                 isOpen={drawer.isOpen}
-                                placement="right"
+                                placement='right'
                                 onClose={drawer.onClose}
                                 finalFocusRef={drawerBtnRef}
-                                size="sm"
+                                size='sm'
                             >
                                 <DrawerOverlay />
                                 <DrawerContent>
                                     <DrawerCloseButton />
-                                    <DrawerHeader alignContent="center">
+                                    <DrawerHeader alignContent='center'>
                                         Assignee Details
                                     </DrawerHeader>
                                     <DrawerBody>

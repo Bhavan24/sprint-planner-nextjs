@@ -57,7 +57,7 @@ export const BOX_DETAILS = [
         content: `A sprint is a short, time-boxed period when a scrum team works to complete
         a set amount of work. Sprints are at the very heart of scrum and agile methodologies,
         and getting sprints right will help your agile team ship better software with fewer headaches.`,
-        link: '/sprints',
+        link: '/sprints'
     },
     {
         imageUrl: '/static/retro1.png',
@@ -67,7 +67,7 @@ export const BOX_DETAILS = [
         Between technical and non-technical teams, you can retro on just about anything!
         Right now, we're hosting a public retrospective on agile software development.
         Help define the future of agile by adding some of your ideas to our board.`,
-        link: '/retrospective',
+        link: '/retrospective'
     },
     {
         imageUrl: '/static/story.png',
@@ -76,8 +76,8 @@ export const BOX_DETAILS = [
         content: `Scrum metrics are specific data points that scrum teams track and use to improve
         efficiency and effectiveness. Scrum teams use metrics to inform decision-making and become more efficient
         in planning and execution, as well as set target goals and improvement plans.`,
-        link: '/sprint-poker',
-    },
+        link: '/sprint-poker'
+    }
 ];
 
 // Poker Constants
@@ -87,22 +87,22 @@ export const GAME_TYPES = [
         type: 'FIBONACCI',
         label: 'Fibonacci (0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)',
         values: [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89],
-        displayValues: ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89'],
+        displayValues: ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89']
     },
     {
         id: 1,
         type: 'SHORT_FIBONACCI',
         label: 'Short Fibonacci (0, ½, 1, 2, 3, 5, 8, 13, 20, 40, 100)',
         values: [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100],
-        displayValues: ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100'],
+        displayValues: ['0', '0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100']
     },
     {
         id: 2,
         type: 'TSHIRT',
         label: 'T-Shirt (XXS, XS, S, M, L, XL, XXL)',
         values: [10, 20, 30, 40, 50, 60, 70],
-        displayValues: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    },
+        displayValues: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
+    }
 ];
 
 export enum GAME_STATUS {
@@ -119,5 +119,5 @@ export const TICKET_STATUS = [
     { name: 'PR CREATED', type: 'prcreated' },
     { name: 'PR MERGED', type: 'prmerged' },
     { name: 'IN VERIFICATION', type: 'inverification' },
-    { name: 'RESOLVED', type: 'resolved' },
+    { name: 'RESOLVED', type: 'resolved' }
 ];
