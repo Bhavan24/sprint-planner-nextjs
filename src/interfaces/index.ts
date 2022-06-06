@@ -171,7 +171,7 @@ export interface ISprintColData {
     id?: string;
     name: string;
     createdById: string;
-    progess: {
+    progress: {
         open: number;
         reopen: number;
         inprogress: number;

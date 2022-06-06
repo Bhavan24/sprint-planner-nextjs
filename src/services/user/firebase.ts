@@ -1,14 +1,7 @@
-import {
-    collection,
-    doc,
-    getDocs,
-    query,
-    serverTimestamp,
-    setDoc,
-} from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { ICommonUser } from '../../interfaces';
-import { FB_DB_USERS } from './../../constants/index';
+import { FB_DB_USERS } from '../../constants';
 
 // Firebase
 export const getUsersFromFirebase = async (): Promise<ICommonUser[]> => {
@@ -21,7 +14,7 @@ export const getUsersFromFirebase = async (): Promise<ICommonUser[]> => {
             uid: data.uid,
             email: data.email,
             displayName: data.displayName,
-            photoURL: data.photoURL,
+            photoURL: data.photoURL
         });
     });
     return users;
@@ -31,13 +24,13 @@ export const updateCurrentUserDetails = async (user: any) => {
     const userId = user.uid;
     console.log(`UID: ${userId} LOGGED IN`);
     const userDoc = doc(collection(firestore, FB_DB_USERS), userId);
-    setDoc(
+    await setDoc(
         userDoc,
         {
             uid: userId,
             email: user.email,
             displayName: user.displayName,
-            photoURL: user.photoURL,
+            photoURL: user.photoURL
         },
         { merge: true } // update fields if exists
     );

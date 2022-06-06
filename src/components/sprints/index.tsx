@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    Flex,
-    GridItem,
-    useColorModeValue,
-    useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, GridItem, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { MdLibraryAdd } from 'react-icons/md';
@@ -36,17 +29,17 @@ const SprintsMainComponent = () => {
 
     return (
         <>
-            <Flex w="100%" my={5} justifyContent="center" gap={2}>
-                <Flex alignItems="center">
+            <Flex w='100%' my={5} justifyContent='center' gap={2}>
+                <Flex alignItems='center'>
                     <Button
-                        variant="outline"
+                        variant='outline'
                         sx={{
                             mx: 2,
                             color: useColorModeValue(
                                 colors.btn_save_sprint.light,
                                 colors.btn_save_sprint.dark
                             ),
-                            w: '15em',
+                            w: '15em'
                         }}
                         rightIcon={<MdLibraryAdd />}
                         onClick={onOpen}
@@ -63,15 +56,15 @@ const SprintsMainComponent = () => {
                     />
                 </Flex>
             </Flex>
-            <Box textAlign="center" fontSize="xl" p={3}>
+            <Box textAlign='center' fontSize='xl' p={3}>
                 <Box p={3} className={styles.itemsContainer}>
                     {sprints &&
                         sprints.map(sprint => (
-                            <GridItem w="100%" key={sprint.id}>
+                            <GridItem w='100%' key={sprint.id}>
                                 <SprintBox
                                     title={sprint.name}
                                     link={`/sprints/${sprint.id}`}
-                                    content={sprint.progess}
+                                    content={sprint.progress}
                                 />
                             </GridItem>
                         ))}

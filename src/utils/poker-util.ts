@@ -1,6 +1,5 @@
 import { GAME_TYPES } from '../constants';
-import { IAssigneeDetails, ICardConfig } from '../interfaces';
-import { IGame, ISprintPokerColData } from './../interfaces/index';
+import { IAssigneeDetails, ICardConfig, IGame, ISprintPokerColData } from '../interfaces';
 
 export const getCards = (game: IGame | undefined) => {
     let id = 0;
@@ -22,7 +21,7 @@ export const getCards = (game: IGame | undefined) => {
     for (let i = 0; i < array.values.length; i++) {
         cards.push({
             value: array.values[i],
-            displayValue: array.displayValues[i],
+            displayValue: array.displayValues[i]
         });
     }
 
@@ -30,7 +29,7 @@ export const getCards = (game: IGame | undefined) => {
 };
 
 function mapToProp(data: any) {
-    var holder: any = {};
+    const holder: any = {};
     data.forEach((e: any) => {
         holder[e.name] = holder.hasOwnProperty(e.name)
             ? Number(holder[e.name]) + Number(e.point)
@@ -47,10 +46,10 @@ export const getAssigneeDetails = (tickets: ISprintPokerColData[]) => {
     });
     if (tempList) {
         const details = mapToProp(tempList);
-        for (var key of Object.keys(details)) {
+        for (const key of Object.keys(details)) {
             mainList.push({
                 name: key,
-                point: details[key],
+                point: details[key]
             });
         }
     }

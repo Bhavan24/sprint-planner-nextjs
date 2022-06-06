@@ -29,18 +29,6 @@ export const USER_LIST = [
         displayName: 'Methmal Godage',
         photoURL: 'photo',
     },
-    // {
-    //     uid: '6',
-    //     email: 'nalinaw@techlabs.tech',
-    //     displayName: 'Nalina Wijesundara',
-    //     photoURL: 'photo',
-    // },
-    // {
-    //     uid: '7',
-    //     email: 'piriyangac@techprovint.com',
-    //     displayName: 'Piriyanga Christopher',
-    //     photoURL: 'photo',
-    // },
     {
         uid: '8',
         email: 'pradeeps@techprovint.com',
@@ -59,24 +47,12 @@ export const USER_LIST = [
         displayName: 'Sahas Punchihewa',
         photoURL: 'photo',
     },
-    // {
-    //     uid: '11',
-    //     email: 'sandarekhar@techprovint.com',
-    //     displayName: 'Sandarekha Ramanayake',
-    //     photoURL: 'photo',
-    // },
     {
         uid: '12',
         email: 'sandeeshr@techprovint.com',
         displayName: 'Sandeesh Rajagopal',
         photoURL: 'photo',
     },
-    // {
-    //     uid: '13',
-    //     email: 'sanjeewan@techprovint.com',
-    //     displayName: 'Sanjeewa Nayanananda',
-    //     photoURL: 'photo',
-    // },
     {
         uid: '14',
         email: 'seneshs@techlabs.tech',
@@ -95,18 +71,6 @@ export const USER_LIST = [
         displayName: 'Susantha Pathirana',
         photoURL: 'photo',
     },
-    // {
-    //     uid: '17',
-    //     email: 'tharangap@techlabs.tech',
-    //     displayName: 'Tharanga Premathilake',
-    //     photoURL: 'photo',
-    // },
-    // {
-    //     uid: '18',
-    //     email: 'thushanr@techprovint.com',
-    //     displayName: 'Thushan Ranasinghe',
-    //     photoURL: 'photo',
-    // },
     {
         uid: '19',
         email: 'venurar@techlabs.tech',

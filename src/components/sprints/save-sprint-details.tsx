@@ -21,7 +21,7 @@ import {
     Th,
     Thead,
     Tr,
-    useToast,
+    useToast
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -40,7 +40,7 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
     const toast = useToast();
     // form
     const [form, setForm] = useState({
-        name: '',
+        name: ''
     });
     const [inputs, setInputs] = useState({
         open: 0,
@@ -49,36 +49,38 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
         prcreated: 0,
         prmerged: 0,
         inverification: 0,
-        resolved: 0,
+        resolved: 0
     });
 
     const handleChange = async (event: any) => {
         const name = event.target.name;
         const value = Number(event.target.value);
-        setInputs(values => ({ ...values, [name]: value }));
+        setInputs(values => (
+            { ...values, [name]: value }
+        ));
     };
 
     const handleSubmit = async () => {
         if (form && form.name && user) {
-            const progess = {
+            const progress = {
                 open: inputs.open,
                 reopen: inputs.reopen,
                 inprogress: inputs.inprogress,
                 prcreated: inputs.prcreated,
                 prmerged: inputs.prmerged,
                 inverification: inputs.inverification,
-                resolved: inputs.resolved,
+                resolved: inputs.resolved
             };
             const retro = {
                 went_well: [''],
                 to_improve: [''],
-                action_items: [''],
+                action_items: ['']
             };
             const sprint = {
                 name: form.name,
                 createdById: user.uid,
-                progess: progess,
-                retro: retro,
+                progress: progress,
+                retro: retro
             };
             const newSprintId = await addNewSprint(sprint);
             console.log('newSprintId: ', newSprintId);
@@ -88,7 +90,7 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
                 title: 'Please fill all fields !!!',
                 status: 'error',
                 isClosable: true,
-                position: 'bottom-left',
+                position: 'bottom-left'
             });
         }
     };
@@ -109,17 +111,17 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
                         <FormControl>
                             <FormLabel>Sprint name</FormLabel>
                             <Input
-                                placeholder="Sprint name"
+                                placeholder='Sprint name'
                                 onChange={(e: any) => {
                                     setForm({ ...form, name: e.target.value });
                                 }}
                             />
                         </FormControl>
 
-                        <Flex justifyContent="center">
-                            <Box maxW="25em">
+                        <Flex justifyContent='center'>
+                            <Box maxW='25em'>
                                 <TableContainer>
-                                    <Table variant="striped">
+                                    <Table variant='striped'>
                                         <Thead>
                                             <Tr>
                                                 <Th>Status</Th>
@@ -148,7 +150,7 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                        <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
                             Save
                         </Button>
                         <Button onClick={props.onClose}>Cancel</Button>

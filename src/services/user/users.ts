@@ -27,7 +27,7 @@ export const signInWithGoogle = () => {
 };
 
 export const loginToFirebase = (user: any) => {
-    updateCurrentUserDetails(user);
+    updateCurrentUserDetails(user).then(r => console.log(r));
 };
 
 export const get_user_list = async () => {

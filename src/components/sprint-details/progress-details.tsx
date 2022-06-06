@@ -14,8 +14,8 @@ import { ISprintDetailsItemProps } from '../../interfaces';
 import { getIssues, getTotal } from '../../utils/sprint-util';
 
 export const ProgressDetails = (props: ISprintDetailsItemProps) => {
-    const issues = getIssues(props.data.progess);
-    const total = getTotal(props.data.progess);
+    const issues = getIssues(props.data.progress);
+    const total = getTotal(props.data.progress);
 
     return (
         <Flex justifyContent="flex-start">
