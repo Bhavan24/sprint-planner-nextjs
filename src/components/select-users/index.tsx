@@ -5,7 +5,7 @@ import { get_user_list } from '../../services/user/users';
 
 const SelectUsers = ({
     id,
-    onChange,
+    onChange
 }: {
     id: string;
     onChange: ChangeEventHandler<HTMLSelectElement> | undefined;
@@ -24,7 +24,7 @@ const SelectUsers = ({
 
     return (
         <>
-            <Select id={id} placeholder="--Select User--" onChange={onChange}>
+            <Select id={id} placeholder='--Select User--' onChange={onChange}>
                 {users &&
                     users.map(user => (
                         <option key={user.uid} value={user.displayName}>

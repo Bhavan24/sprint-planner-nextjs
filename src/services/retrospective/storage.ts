@@ -1,4 +1,4 @@
-import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
+import { ACTION_ITEMS, TO_IMPROVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 
 // Local Storage
 export const saveRetroList = (name: string, array: string[]) => {
@@ -14,6 +14,6 @@ export const getRetroList = (name: string) => {
 
 export const resetAllItems = () => {
     localStorage.setItem(WENT_WELL_ITEMS, JSON.stringify([]));
-    localStorage.setItem(TO_IMRPOVE_ITEMS, JSON.stringify([]));
+    localStorage.setItem(TO_IMPROVE_ITEMS, JSON.stringify([]));
     localStorage.setItem(ACTION_ITEMS, JSON.stringify([]));
 };

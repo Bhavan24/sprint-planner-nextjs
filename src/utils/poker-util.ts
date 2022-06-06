@@ -55,3 +55,15 @@ export const getAssigneeDetails = (tickets: ISprintPokerColData[]) => {
     }
     return mainList;
 };
+
+export const getPoints = (game: IGame | undefined) => {
+    switch (game?.gameType) {
+        case GAME_TYPES[0].type:
+            return GAME_TYPES[0].values;
+        case GAME_TYPES[1].type:
+            return GAME_TYPES[1].values;
+        case GAME_TYPES[2].type:
+            return GAME_TYPES[2].values;
+    }
+    return [];
+};

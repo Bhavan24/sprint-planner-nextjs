@@ -16,6 +16,7 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Select,
     Textarea,
     useToast
 } from '@chakra-ui/react';
@@ -27,10 +28,12 @@ import { getCurrentJiraIssue } from '../../../services/poker/storage';
 import { ISavePokerSprintBoxProps, ISprintPokerColData } from '../../../interfaces';
 // Constant imports
 import { JIRA_BASE_LINK } from '../../../constants';
+import { getPoints } from '../../../utils/poker-util';
 
 
 export const SaveSprintPoker = (props: ISavePokerSprintBoxProps) => {
     const sprintId = props.game.sprintId;
+    const points = getPoints(props.game);
 
     const [inputs, setInputs] = useState<ISprintPokerColData>({
         title: '',
@@ -139,13 +142,14 @@ export const SaveSprintPoker = (props: ISavePokerSprintBoxProps) => {
                             </FormControl>
                             <FormControl isRequired m={1}>
                                 <FormLabel htmlFor='points'>Points</FormLabel>
-                                <Input
-                                    id='points'
-                                    type='number'
-                                    placeholder='Points'
-                                    value={inputs.points}
-                                    onChange={handleChange}
-                                />
+                                <Select id='points' placeholder='--Select Points--' onChange={handleChange}>
+                                    {points &&
+                                        points.map((point: number, index: number) => (
+                                            <option key={index} value={point}>
+                                                {point}
+                                            </option>
+                                        ))}
+                                </Select>
                             </FormControl>
                         </Flex>
                     </ModalBody>

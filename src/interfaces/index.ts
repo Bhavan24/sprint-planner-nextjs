@@ -29,20 +29,6 @@ export interface IndexProps {
     cookies?: string;
 }
 
-export interface SprintDetailsProps {
-    id: string;
-    isNew: boolean;
-    imageUrl: string;
-    imageAlt: string;
-    beds: number;
-    baths: number;
-    title: string;
-    formattedPrice: string;
-    reviewCount: number;
-    rating: number;
-    description: string;
-}
-
 export interface INewSession {
     name: string;
     gameType: string;
@@ -147,7 +133,7 @@ export interface ISavePokerSprintBoxProps {
     game: IGame;
 }
 
-export interface ISettingsProkerControllerSprintBoxProps {
+export interface ISSettingsPokerControllerSprintBoxProps {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;

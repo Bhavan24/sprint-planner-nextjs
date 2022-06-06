@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { RefObject, useRef, useState } from 'react';
-import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
+import { ACTION_ITEMS, TO_IMPROVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import { IRetrospectiveData } from '../../interfaces';
 import { getRetroList, resetAllItems } from '../../services/retrospective/storage';
 import { colors } from '../../theme/colors';
@@ -39,7 +39,7 @@ const RetrospectiveComponent = () => {
     const exportItems = () => {
         var result: IRetrospectiveData = {
             went_well: getRetroList(WENT_WELL_ITEMS),
-            to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+            to_improve: getRetroList(TO_IMPROVE_ITEMS),
             action_items: getRetroList(ACTION_ITEMS),
         };
 
@@ -136,7 +136,7 @@ const RetrospectiveComponent = () => {
                 </GridItem>
                 <GridItem w="100%">
                     <NewRetroItem
-                        name={TO_IMRPOVE_ITEMS}
+                        name={TO_IMPROVE_ITEMS}
                         title={'📈 To improve'}
                         desc={'What do want to improve about your agile practice?'}
                         refresh={refresh}

@@ -33,10 +33,10 @@ import SelectCurrentIssue from '../../select-current-issue';
 import { updateIssueId } from '../../../services/poker/games';
 import { setCurrentJiraIssue } from '../../../services/poker/storage';
 // Type imports
-import { IJiraIssue, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
+import { IJiraIssue, ISSettingsPokerControllerSprintBoxProps } from '../../../interfaces';
 
 
-export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxProps) => {
+export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxProps) => {
     // toast
     const toast = useToast();
 

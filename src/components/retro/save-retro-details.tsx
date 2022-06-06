@@ -17,7 +17,7 @@ import {
     Tr,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { ACTION_ITEMS, TO_IMRPOVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
+import { ACTION_ITEMS, TO_IMPROVE_ITEMS, WENT_WELL_ITEMS } from '../../constants';
 import { IRetroDetails, ISaveSprintBoxProps } from '../../interfaces';
 import { getRetroList } from '../../services/retrospective/storage';
 import { updateSprintData } from '../../services/sprint/sprints';
@@ -31,7 +31,7 @@ export const SaveSprintRetro = (props: ISaveSprintBoxProps) => {
     useEffect(() => {
         const retroDetails = getRetro({
             went_well: getRetroList(WENT_WELL_ITEMS),
-            to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+            to_improve: getRetroList(TO_IMPROVE_ITEMS),
             action_items: getRetroList(ACTION_ITEMS),
         });
         setRetro(retroDetails);
@@ -40,7 +40,7 @@ export const SaveSprintRetro = (props: ISaveSprintBoxProps) => {
     const handleSubmit = () => {
         console.log(sprintId, {
             went_well: getRetroList(WENT_WELL_ITEMS),
-            to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+            to_improve: getRetroList(TO_IMPROVE_ITEMS),
             action_items: getRetroList(ACTION_ITEMS),
         });
         sprintId &&
@@ -48,7 +48,7 @@ export const SaveSprintRetro = (props: ISaveSprintBoxProps) => {
             updateSprintData(sprintId, {
                 retro: {
                     went_well: getRetroList(WENT_WELL_ITEMS),
-                    to_improve: getRetroList(TO_IMRPOVE_ITEMS),
+                    to_improve: getRetroList(TO_IMPROVE_ITEMS),
                     action_items: getRetroList(ACTION_ITEMS),
                 },
             });
