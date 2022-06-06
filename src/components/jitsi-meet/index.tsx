@@ -10,10 +10,18 @@ import {
     useBreakpointValue,
     useColorModeValue,
 } from '@chakra-ui/react';
-import { JaaSMeeting } from '@jitsi/react-sdk';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
+
+import { IJaaSMeetingProps } from '@jitsi/react-sdk/lib/types';
+import dynamic from 'next/dynamic';
+import { FC } from 'react';
+
+const JaaSMeeting = dynamic(
+    () => import('@jitsi/react-sdk').then(({ JaaSMeeting }) => JaaSMeeting) as any,
+    { ssr: false }
+) as FC<IJaaSMeetingProps>;
 
 const MeetComponent = () => {
     const [user] = useAuthState(auth);
