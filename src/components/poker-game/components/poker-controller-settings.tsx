@@ -29,6 +29,7 @@ import { useState } from 'react';
 import { IJiraIssue, ISettingsProkerControllerSprintBoxProps } from '../../../interfaces';
 import { updateIssueId } from '../../../services/poker/games';
 import SelectCurrentIssue from '../../select-current-issue';
+import { setCurrentJiraIssue } from '../../../services/poker/storage';
 
 export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxProps) => {
     // toast
@@ -48,6 +49,12 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
             isClosable: true,
             position: 'bottom-left'
         });
+        setJiraIssue();
+    };
+
+    const setJiraIssue = () => {
+        const currentIssue = jiraIssues.find(jiraIssue => jiraIssue.issueKey === issueId);
+        currentIssue && setCurrentJiraIssue(currentIssue);
     };
 
     const importCsvFile = () => {
@@ -77,7 +84,7 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
 
     return (
         <>
-            <Modal isOpen={props.isOpen} onClose={props.onClose} size='2xl'>
+            <Modal isOpen={props.isOpen} onClose={props.onClose} size='3xl'>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>{props.title}</ModalHeader>
@@ -101,7 +108,12 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
                                             }}
                                             issues={jiraIssues}
                                         />
-                                        <Button colorScheme='blue' m={2} onClick={handleSubmit}>
+                                        <Button
+                                            colorScheme='blue'
+                                            my={2}
+                                            w='inherit'
+                                            onClick={handleSubmit}
+                                        >
                                             Save
                                         </Button>
                                     </FormControl>
@@ -154,12 +166,12 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
                                 </h2>
                                 <AccordionPanel pb={4}>
                                     <TableContainer>
-                                        <Table size='sm'>
+                                        <Table>
                                             <Thead>
                                                 <Tr>
                                                     <Th>Issue key</Th>
-                                                    <Th>Priority</Th>
                                                     <Th>Summary</Th>
+                                                    <Th>Priority</Th>
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
@@ -167,8 +179,8 @@ export const SettingsSprintPoker = (props: ISettingsProkerControllerSprintBoxPro
                                                     jiraIssues.map((jiraIssue: IJiraIssue, i: number) => (
                                                         <Tr key={i}>
                                                             <Td>{jiraIssue.issueKey}</Td>
-                                                            <Td>{jiraIssue.priority}</Td>
                                                             <Td>{jiraIssue.summary}</Td>
+                                                            <Td>{jiraIssue.priority}</Td>
                                                         </Tr>
                                                     ))
                                                 }

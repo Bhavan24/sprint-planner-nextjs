@@ -23,7 +23,7 @@ import { FaLink, FaRegEye, FaSave } from 'react-icons/fa';
 import { MdExitToApp } from 'react-icons/md';
 import { VscDebugRestart } from 'react-icons/vsc';
 import { JIRA_BASE_LINK } from '../../../constants';
-import { IJiraIssue, IPokerControllerProps } from '../../../interfaces';
+import { IPokerControllerProps } from '../../../interfaces';
 import { finishGame, resetGame } from '../../../services/poker/games';
 import AlertBox from '../../alertbox';
 import { StoryPointsEngineerDetails } from '../../sprint-details/assignee-details';
@@ -35,12 +35,6 @@ import { SaveSprintPoker } from './save-poker-details';
 const PokerController: React.FC<IPokerControllerProps> = props => {
     const router = useRouter();
     const [gameId, setGameId] = useState('');
-    const [currentJiraIssue, setCurrentJiraIssue] = useState<IJiraIssue>({
-        description: '',
-        issueKey: '',
-        priority: '',
-        summary: ''
-    });
 
     // popup
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -180,7 +174,6 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                                         initialRef={initialRef}
                                         finalRef={finalRef}
                                         title={'Save Issue'}
-                                        jiraIssue={currentJiraIssue}
                                         game={props.game}
                                     />
                                     <Tooltip label='Settings'>

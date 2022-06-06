@@ -145,7 +145,6 @@ export interface ISavePokerSprintBoxProps {
     title: string;
     body?: string;
     game: IGame;
-    jiraIssue: IJiraIssue;
 }
 
 export interface ISettingsProkerControllerSprintBoxProps {

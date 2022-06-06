@@ -15,22 +15,34 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { arrayUnion } from 'firebase/firestore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ISavePokerSprintBoxProps, ISprintPokerColData } from '../../../interfaces';
 import { updateSprintData } from '../../../services/sprint/sprints';
 import SelectUsers from '../../select-users';
 import { JIRA_BASE_LINK } from '../../../constants';
+import { getCurrentJiraIssue } from '../../../services/poker/storage';
 
 export const SaveSprintPoker = (props: ISavePokerSprintBoxProps) => {
+    const sprintId = props.game.sprintId;
+
     const [inputs, setInputs] = useState<ISprintPokerColData>({
-        title: props.jiraIssue.summary,
-        desc: props.jiraIssue.description,
-        link: `${JIRA_BASE_LINK}${props.jiraIssue.issueKey}`,
+        title: '',
+        desc: '',
+        link: `${JIRA_BASE_LINK}`,
         assignee: '',
         points: 0
     });
 
-    const sprintId = props.game.sprintId;
+    useEffect(() => {
+        const jiraIssue = getCurrentJiraIssue();
+        jiraIssue && setInputs({
+            title: `${jiraIssue.summary}`,
+            desc: `${jiraIssue.description}`,
+            link: `${JIRA_BASE_LINK}${jiraIssue.issueKey}`,
+            assignee: '',
+            points: 0
+        });
+    }, [props.isOpen]);
 
     // toast
     const toast = useToast();

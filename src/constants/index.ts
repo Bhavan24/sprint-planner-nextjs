@@ -25,6 +25,7 @@ export const WENT_WELL_ITEMS = 'went_well_items';
 export const TO_IMRPOVE_ITEMS = 'to_improve_items';
 export const ACTION_ITEMS = 'action_items';
 export const POKER_PLAYER_GAMES = 'player_games';
+export const CURRENT_JIRA_ISSUE = 'jira_issue';
 
 // Firebase collections constants
 export const FB_DB_GAMES = 'sprint_poker';
