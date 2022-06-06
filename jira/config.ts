@@ -15,22 +15,20 @@ const get_req_option = {
     method: 'GET',
     headers: {
         Authorization: `Basic ${auth}`,
-        Accept: 'application/json',
-    },
+        Accept: 'application/json'
+    }
 };
 
-const get_data = () => {
+export const get_data = () => {
     nfetch(`${base_url}${api_path}${issue_key}`, get_req_option)
-        .then(response => {
+        .then((response: any) => {
             console.log(`Response: ${response.status} ${response.statusText}`);
             return response.text();
         })
-        .then(text => {
+        .then((text: any) => {
             console.log(text);
         })
-        .catch(err => {
+        .catch((err: any) => {
             console.error(err);
         });
 };
-
-get_data();

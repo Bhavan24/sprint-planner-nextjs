@@ -46,14 +46,14 @@ const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
         <>
             <Box
                 p={4}
-                maxWidth="inherit"
-                minHeight="100vh"
+                maxWidth='inherit'
+                minHeight='100vh'
                 borderWidth={1}
                 my={2}
-                borderRadius="lg"
+                borderRadius='lg'
             >
-                <Flex alignItems="center" justifyContent="space-between" my={2}>
-                    <Text fontSize="lg" my={2}>
+                <Flex alignItems='center' justifyContent='space-between' my={2}>
+                    <Text fontSize='lg' my={2}>
                         {title}
                     </Text>
                     {formValue && (
@@ -64,14 +64,14 @@ const NewRetroItem = ({ name, title, desc, refresh }: INewRetroItemProps) => {
                     ref={txtField}
                     width={'100%'}
                     placeholder={desc}
-                    margin="normal"
-                    variant="filled"
+                    margin='normal'
+                    variant='filled'
                     rows={5}
                     value={formValue}
                     onChange={handleChange}
-                    maxWidth="initial"
+                    maxWidth='initial'
                 />
-                {data.map((value: string, index: number) => (
+                {data.reverse().map((value: string, index: number) => (
                     <DetailedCard
                         key={index}
                         content={value}
