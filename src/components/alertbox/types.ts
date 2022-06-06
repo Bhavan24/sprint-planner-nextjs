@@ -1,5 +1,7 @@
-import { FocusableElement } from '@chakra-ui/utils';
+// React imports
 import { MouseEventHandler, RefObject } from 'react';
+// Chakra-UI imports
+import { FocusableElement } from '@chakra-ui/utils';
 
 export interface IAlertBoxProps {
     isOpen: boolean;

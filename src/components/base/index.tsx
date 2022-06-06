@@ -1,12 +1,18 @@
+// React imports
 import { useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebase/config';
+// Chakra-UI imports
+import { Chakra } from '../../theme/chakra-theme';
+// Component imports
 import { DashboardLayout } from '../../layouts/dashboard';
 import LoginPage from '../../pages/auth';
-import { loginToFirebase } from '../../services/user/users';
-import { Chakra } from '../../theme/chakra-theme';
 import { Loading } from '../loading';
+// Firebase imports
+import { auth } from '../../../firebase/config';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { loginToFirebase } from '../../services/user/users';
+// Type imports
 import { BasePageProps } from './types';
+
 
 const BasePage = ({ cookies, children, title }: BasePageProps) => {
     const [user, loading] = useAuthState(auth);
@@ -21,11 +27,13 @@ const BasePage = ({ cookies, children, title }: BasePageProps) => {
         <Chakra cookies={cookies}>
             {loading && <Loading />}
             {!loading &&
-                (user ? (
-                    <DashboardLayout title={title}>{children}</DashboardLayout>
-                ) : (
-                    <LoginPage />
-                ))}
+                (
+                    user ? (
+                        <DashboardLayout title={title}>{children}</DashboardLayout>
+                    ) : (
+                        <LoginPage />
+                    )
+                )}
         </Chakra>
     );
 };

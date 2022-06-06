@@ -1,3 +1,6 @@
+// React imports
+import React from 'react';
+// Chakra-UI imports
 import {
     AlertDialog,
     AlertDialogBody,
@@ -5,9 +8,11 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogOverlay,
-    Button,
+    Button
 } from '@chakra-ui/react';
+// Type imports
 import { IAlertBoxProps } from './types';
+
 
 const AlertBox: React.FC<IAlertBoxProps> = ({
     isOpen,
@@ -17,7 +22,7 @@ const AlertBox: React.FC<IAlertBoxProps> = ({
     body,
     btnText,
     btnColor,
-    onAction,
+    onAction
 }) => {
     return (
         <>
@@ -28,7 +33,7 @@ const AlertBox: React.FC<IAlertBoxProps> = ({
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
                             {title}
                         </AlertDialogHeader>
                         <AlertDialogBody>{body}</AlertDialogBody>

@@ -1,3 +1,8 @@
+// React imports
+import { FC, useState } from 'react';
+// Next imports
+import dynamic from 'next/dynamic';
+// Chakra-UI imports
 import {
     Box,
     Button,
@@ -8,27 +13,28 @@ import {
     Spinner,
     Stack,
     useBreakpointValue,
-    useColorModeValue,
+    useColorModeValue
 } from '@chakra-ui/react';
-import { useState } from 'react';
+// Firebase imports
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase/config';
-
+// Component imports
 import { IJaaSMeetingProps } from '@jitsi/react-sdk/lib/types';
-import dynamic from 'next/dynamic';
-import { FC } from 'react';
+
 
 const JaaSMeeting = dynamic(
-    () => import('@jitsi/react-sdk').then(({ JaaSMeeting }) => JaaSMeeting) as any,
+    () => import('@jitsi/react-sdk')
+        .then(({ JaaSMeeting }) => JaaSMeeting) as any,
     { ssr: false }
 ) as FC<IJaaSMeetingProps>;
+
 
 const MeetComponent = () => {
     const [user] = useAuthState(auth);
     const appId = `${process.env.NEXT_PUBLIC_JITSI_APP_ID}`;
     const email = `${user?.email}`;
 
-    const [roomName, setRoomName] = useState(`meet-${Date.now()}`);
+    const [roomName, setRoomName] = useState(`Kaya-meet-${Date.now()}`);
     const [displayName, setDisplayName] = useState(`${user?.displayName}`);
     const [meetVisible, setMeetVisible] = useState(false);
 
@@ -49,11 +55,11 @@ const MeetComponent = () => {
     const renderSpinner = () => (
         <Container py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
             <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
             />
         </Container>
     );
@@ -71,36 +77,36 @@ const MeetComponent = () => {
                     bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
                     boxShadow={{
                         base: 'none',
-                        sm: useColorModeValue('md', 'md-dark'),
+                        sm: useColorModeValue('md', 'md-dark')
                     }}
                     borderRadius={{ base: 'none', sm: 'xl' }}
                 >
-                    <Stack spacing="6">
+                    <Stack spacing='6'>
                         <FormControl isRequired>
-                            <FormLabel htmlFor="poker-session-name">Room Name</FormLabel>
+                            <FormLabel htmlFor='poker-session-name'>Room Name</FormLabel>
                             <Input
                                 value={roomName}
-                                id="poker-session-name"
-                                placeholder="Session Name"
+                                id='poker-session-name'
+                                placeholder='Session Name'
                                 onChange={handleRoomNameChange}
                             />
                         </FormControl>
                         <FormControl isRequired>
-                            <FormLabel htmlFor="poker-session-name">
+                            <FormLabel htmlFor='poker-session-name'>
                                 Display Name
                             </FormLabel>
                             <Input
                                 value={displayName}
-                                id="poker-session-name"
-                                placeholder="Session Name"
+                                id='poker-session-name'
+                                placeholder='Session Name'
                                 onChange={handleDisplayNameChange}
                             />
                         </FormControl>
                     </Stack>
                     <Button
                         mt={8}
-                        w="100%"
-                        variant="solid"
+                        w='100%'
+                        variant='solid'
                         color={useColorModeValue('green.800', 'green.300')}
                         onClick={() => {
                             setMeetVisible(true);
@@ -118,7 +124,7 @@ const MeetComponent = () => {
                     spinner={renderSpinner}
                     userInfo={{
                         displayName: displayName,
-                        email: email,
+                        email: email
                     }}
                     onReadyToClose={() => {
                         setMeetVisible(false);

@@ -1,4 +1,6 @@
-import { HamburgerIcon } from '@chakra-ui/icons';
+// Next imports
+import NextLink from 'next/link';
+// Chakra-UI imports
 import {
     Avatar,
     Button,
@@ -12,39 +14,47 @@ import {
     MenuList,
     Portal,
     useColorModeValue,
-    useMediaQuery,
+    useMediaQuery
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
+// Component imports
+import { ColorModeSwitcher } from '../color-mode-switcher';
+// Type imports
+import { HeaderProps } from './types';
+// Style imports
+import styles from './header.module.css';
+// Icon imports
+import { HamburgerIcon } from '@chakra-ui/icons';
 import { AiFillProfile, AiOutlineLogin } from 'react-icons/ai';
+// Constant imports
 import { ELEMENT_TEXT, LOGO_IMG_PATH } from '../../constants';
 import { routes } from '../../routes';
 import { colors } from '../../theme/colors';
-import { ColorModeSwitcher } from '../color-mode-switcher';
-import styles from './header.module.css';
-import { HeaderProps } from './types';
+
 
 const LogoImage = () => (
-    <img src={LOGO_IMG_PATH} alt="logo" className={styles.headerLogo} />
+    <img src={LOGO_IMG_PATH} alt='logo' className={styles.headerLogo} />
 );
+
 
 const Logo = () => (
     <Flex className={styles.justifyCenter}>
-        <NextLink href="/" passHref>
-            <Button variant="ghost">
+        <NextLink href='/' passHref>
+            <Button variant='ghost'>
                 <LogoImage />
-                <Heading size="lg"> {ELEMENT_TEXT.APP_LOGO_NAME}</Heading>
+                <Heading size='lg'> {ELEMENT_TEXT.APP_LOGO_NAME}</Heading>
             </Button>
         </NextLink>
     </Flex>
 );
 
+
 const HamburgerMenu = () => (
     <Menu>
         <MenuButton
             as={IconButton}
-            aria-label="Options"
+            aria-label='Options'
             icon={<HamburgerIcon />}
-            variant="outline"
+            variant='outline'
         />
         <MenuList>
             {routes.map(route => (
@@ -55,6 +65,7 @@ const HamburgerMenu = () => (
         </MenuList>
     </Menu>
 );
+
 
 const HeaderLogoMenu = () => {
     return (
@@ -68,7 +79,7 @@ const HeaderLogoMenu = () => {
                             colors.nav_button.dark
                         )}
                         className={styles.navButton}
-                        variant="outline"
+                        variant='outline'
                     >
                         {route.name}
                     </Button>
@@ -77,6 +88,7 @@ const HeaderLogoMenu = () => {
         </>
     );
 };
+
 
 export const Header = ({ avatar, logOut }: HeaderProps) => {
     const [isPhoneScreen] = useMediaQuery('(max-width: 580px)');
@@ -87,7 +99,7 @@ export const Header = ({ avatar, logOut }: HeaderProps) => {
                 background: useColorModeValue(
                     colors.header_bg.light,
                     colors.header_bg.dark
-                ),
+                )
             }}
         >
             <Flex className={styles.header}>
@@ -108,11 +120,11 @@ export const Header = ({ avatar, logOut }: HeaderProps) => {
                 <Flex className={styles.justifySpaceBetween}>
                     <Menu>
                         <MenuButton>
-                            <Avatar size="sm" name={avatar.name} src={avatar.src} />
+                            <Avatar size='sm' name={avatar.name} src={avatar.src} />
                         </MenuButton>
                         <Portal>
                             <MenuList>
-                                <NextLink href="/profile">
+                                <NextLink href='/profile'>
                                     <MenuItem icon={<AiFillProfile />}>
                                         {ELEMENT_TEXT.HEADER_PROFILE_BUTTON}
                                     </MenuItem>
@@ -123,7 +135,7 @@ export const Header = ({ avatar, logOut }: HeaderProps) => {
                             </MenuList>
                         </Portal>
                     </Menu>
-                    <ColorModeSwitcher justifySelf="flex-end" />
+                    <ColorModeSwitcher justifySelf='flex-end' />
                 </Flex>
             </Flex>
         </header>

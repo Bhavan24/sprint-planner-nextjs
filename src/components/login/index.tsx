@@ -1,3 +1,6 @@
+// React imports
+import { forwardRef, useRef } from 'react';
+// Chakra-UI imports
 import {
     Box,
     Button,
@@ -15,17 +18,18 @@ import {
     useBreakpointValue,
     useColorModeValue,
     useDisclosure,
-    useMergeRefs,
+    useMergeRefs
 } from '@chakra-ui/react';
-
-import { forwardRef, useRef } from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { HiEye, HiEyeOff } from 'react-icons/hi';
-import { ELEMENT_TEXT } from '../../constants';
-import { signInWithGoogle } from '../../services/user/users';
-
+// Component imports
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { signInWithGoogle } from '../../services/user/users';
+// Icon imports
+import { FcGoogle } from 'react-icons/fc';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
+// Constant imports
+import { ELEMENT_TEXT } from '../../constants';
+
 
 const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     const { isOpen, onToggle } = useDisclosure();
@@ -41,11 +45,11 @@ const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
     return (
         <FormControl>
-            <FormLabel htmlFor="password">{ELEMENT_TEXT.LOGIN_PAGE_PASSWORD}</FormLabel>
+            <FormLabel htmlFor='password'>{ELEMENT_TEXT.LOGIN_PAGE_PASSWORD}</FormLabel>
             <InputGroup>
                 <InputRightElement>
                     <IconButton
-                        variant="link"
+                        variant='link'
                         aria-label={isOpen ? 'Mask password' : 'Reveal password'}
                         title={isOpen ? 'Mask password' : 'Reveal password'}
                         icon={isOpen ? <HiEyeOff /> : <HiEye />}
@@ -53,11 +57,11 @@ const PasswordField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
                     />
                 </InputRightElement>
                 <Input
-                    id="password"
+                    id='password'
                     ref={mergeRef}
-                    name="password"
+                    name='password'
                     type={isOpen ? 'text' : 'password'}
-                    autoComplete="current-password"
+                    autoComplete='current-password'
                     required
                     {...props}
                 />
@@ -70,22 +74,27 @@ export const Login = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
-            password: '',
+            password: ''
         },
         validationSchema: Yup.object({
-            email: Yup.string()
+            email: Yup
+                .string()
                 .email('Must be a valid email')
                 .max(255)
                 .required('Email is required'),
-            password: Yup.string().max(255).required('Password is required'),
+            password: Yup
+                .string()
+                .max(255)
+                .required('Password is required')
         }),
-        onSubmit: () => {},
+        onSubmit: () => {
+        }
     });
 
     return (
-        <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
-            <Stack spacing="8">
-                <Stack spacing="6">
+        <Container maxW='lg' py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
+            <Stack spacing='8'>
+                <Stack spacing='6'>
                     <Heading size={useBreakpointValue({ base: 'lg', md: 'lg' })}>
                         {ELEMENT_TEXT.LOGIN_PAGE_LOGIN_BOX_TITLE}
                     </Heading>
@@ -98,22 +107,22 @@ export const Login = () => {
                     borderRadius={{ base: 'none', sm: 'xl' }}
                 >
                     <form onSubmit={formik.handleSubmit}>
-                        <Stack spacing="6">
-                            <Button variant="outline" onClick={signInWithGoogle}>
+                        <Stack spacing='6'>
+                            <Button variant='outline' onClick={signInWithGoogle}>
                                 <FcGoogle />
                                 <span style={{ margin: '0 10px' }}>
                                     {ELEMENT_TEXT.LOGIN_PAGE_GOOGLE_LOG_IN}
                                 </span>
                             </Button>
                             <Divider />
-                            <Stack spacing="5">
+                            <Stack spacing='5'>
                                 <FormControl>
-                                    <FormLabel htmlFor="email">
+                                    <FormLabel htmlFor='email'>
                                         {ELEMENT_TEXT.LOGIN_PAGE_EMAIL}
                                     </FormLabel>
                                     <Input
-                                        id="email"
-                                        type="email"
+                                        id='email'
+                                        type='email'
                                         value={formik.values.email}
                                         onChange={formik.handleChange}
                                         errorBorderColor={
@@ -133,8 +142,8 @@ export const Login = () => {
                                     }
                                 />
                             </Stack>
-                            <Stack spacing="6">
-                                <Button variant="outline" type="submit">
+                            <Stack spacing='6'>
+                                <Button variant='outline' type='submit'>
                                     {ELEMENT_TEXT.LOGIN_BUTTON}
                                 </Button>
                             </Stack>

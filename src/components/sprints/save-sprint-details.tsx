@@ -26,7 +26,7 @@ import {
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth as authCofig } from '../../../firebase/config';
+import { auth as authConfig } from '../../../firebase/config';
 import { TICKET_STATUS } from '../../constants';
 import { ISaveSprintBoxProps } from '../../interfaces';
 import { addNewSprint } from '../../services/sprint/sprints';
@@ -35,7 +35,7 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
     // router
     const router = useRouter();
     // user
-    const [user] = useAuthState(authCofig);
+    const [user] = useAuthState(authConfig);
     // toast
     const toast = useToast();
     // form
@@ -84,7 +84,7 @@ export const SaveSprint = (props: ISaveSprintBoxProps) => {
             };
             const newSprintId = await addNewSprint(sprint);
             console.log('newSprintId: ', newSprintId);
-            router.push(`/sprints/${newSprintId}`);
+            await router.push(`/sprints/${newSprintId}`);
         } else {
             toast({
                 title: 'Please fill all fields !!!',

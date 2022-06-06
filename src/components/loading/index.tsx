@@ -1,15 +1,18 @@
+// Chakra-UI imports
 import { Flex, Spinner } from '@chakra-ui/react';
+// Style imports
 import styles from './loading.module.css';
+
 
 export const Loading = () => {
     return (
         <Flex className={styles.loadingBox}>
             <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
             />
         </Flex>
     );

@@ -1,3 +1,4 @@
+// React imports
 import { ReactNode } from 'react';
 
 export interface BasePageProps {

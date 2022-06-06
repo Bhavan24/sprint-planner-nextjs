@@ -1,3 +1,4 @@
+// React imports
 import { MouseEventHandler } from 'react';
 
 interface AvatarProps {
