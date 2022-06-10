@@ -16,6 +16,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
     const player = {
         name: newSession.userName,
         id: newSession.userId,
+        isSpectator: newSession.isSpectator,
         status: GAME_STATUS.NOT_STARTED,
     };
     const gameData = {
@@ -26,6 +27,8 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
         createdById: player.id,
         gameStatus: GAME_STATUS.STARTED,
         average: 0,
+        sprintId: newSession.sprintId,
+        issueId: '',
     };
     await addGameToStore(gameData.id, gameData);
     await addPlayerToGameInStore(gameData.id, player);
@@ -75,6 +78,17 @@ export const finishGame = async (gameId: string) => {
     }
 };
 
+export const updateIssueId = async (gameId: string, issueId: string) => {
+    const game = await getGameFromStore(gameId);
+
+    if (game) {
+        const updatedGame = {
+            issueId: issueId,
+        };
+        updateGame(gameId, updatedGame);
+    }
+};
+
 export const getAverage = (players: IPlayer[]): number => {
     let values = 0;
     let numberOfPlayersPlayed = 0;
@@ -84,7 +98,7 @@ export const getAverage = (players: IPlayer[]): number => {
             numberOfPlayersPlayed++;
         }
     });
-    return Math.round(values / numberOfPlayersPlayed);
+    return values / numberOfPlayersPlayed;
 };
 
 export const getGameStatus = (players: IPlayer[]): GAME_STATUS => {

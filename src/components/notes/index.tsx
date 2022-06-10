@@ -1,4 +1,6 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+// React imports
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+// Chakra-UI imports
 import {
     Box,
     Button,
@@ -13,14 +15,24 @@ import {
     Tooltip,
     Tr,
     useDisclosure,
-    useMediaQuery,
+    useMediaQuery
 } from '@chakra-ui/react';
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { NOTES } from '../../constants';
-import AlertBox from '../alertbox';
-import { TextEditorComponent } from './editor';
 import { FocusableElement } from '@chakra-ui/utils';
+// Component imports
+import { TextEditorComponent } from './editor';
+import AlertBox from '../alertbox';
+import {
+    addNoteToStorage,
+    deleteNotesFromStorage,
+    getNotesFromStorage,
+    removeNoteFromStorage
+} from '../../services/notes/storage';
+// Icon imports
+import { DeleteIcon } from '@chakra-ui/icons';
+import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+// Constant imports
+import { ELEMENT_TEXT } from '../../constants';
+
 
 const NotesComponent = () => {
     const [note, setNote] = useState('');
@@ -34,18 +46,16 @@ const NotesComponent = () => {
     const cancelRef = useRef() as RefObject<FocusableElement>;
 
     useEffect(() => {
-        localStorage.getItem(NOTES) &&
-            setNotes(JSON.parse(localStorage.getItem(NOTES) || ''));
+        setNotes(getNotesFromStorage());
     }, []);
 
-    const onChange = useCallback((value: string) => {
-        setNote(value);
+    const onChange = useCallback((newValue: any, editor: any) => {
+        setNote(newValue);
     }, []);
 
     const addNote = () => {
         const new_array = note ? [...notes, note] : [...notes];
-        localStorage.setItem(NOTES, '');
-        localStorage.setItem(NOTES, JSON.stringify(new_array));
+        addNoteToStorage(new_array);
         setNotes(new_array);
     };
 
@@ -54,7 +64,7 @@ const NotesComponent = () => {
     };
 
     const deleteNotes = () => {
-        localStorage.removeItem(NOTES);
+        deleteNotesFromStorage();
         setNotes([]);
         onClose();
     };
@@ -62,51 +72,49 @@ const NotesComponent = () => {
     const removeNote = (index: number) => {
         const new_array = [...notes];
         new_array.splice(index, 1);
-        localStorage.setItem(NOTES, '');
-        localStorage.setItem(NOTES, JSON.stringify(new_array));
+        removeNoteFromStorage(new_array);
         setNotes(new_array);
     };
 
     return (
         <>
-            <Flex m={3} flexDir="column" justifyContent="center">
-                <Box p={2} justifyContent="center">
+            <Flex m={3} flexDir='column' justifyContent='center'>
+                <Box p={2} justifyContent='center'>
                     <TextEditorComponent value={note} onChange={onChange} />
                 </Box>
                 <Flex
                     flexDir={isPhone ? 'column' : 'row'}
-                    alignItems="center"
-                    justifyContent="center"
-                    mt={isPhone ? '5em' : '3em'}
+                    alignItems='center'
+                    justifyContent='center'
                 >
-                    <Tooltip title="Add Note">
+                    <Tooltip title='Add Note'>
                         <Button
                             rightIcon={<AiOutlinePlus />}
                             onClick={addNote}
                             m={1}
-                            w="15em"
+                            w='15em'
                         >
-                            Add Note
+                            {ELEMENT_TEXT.NOTES_ADD_BUTTON}
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Clear Note">
+                    <Tooltip title='Clear Note'>
                         <Button
                             rightIcon={<AiOutlineMinus />}
                             onClick={clearNote}
                             m={1}
-                            w="15em"
+                            w='15em'
                         >
-                            Clear Note
+                            {ELEMENT_TEXT.NOTES_CLEAR_BUTTON}
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Delete All Notes">
+                    <Tooltip title='Delete All Notes'>
                         <Button
                             rightIcon={<DeleteIcon />}
                             onClick={onOpen}
                             m={1}
-                            w="15em"
+                            w='15em'
                         >
-                            Delete All Notes
+                            {ELEMENT_TEXT.NOTES_DELETE_ALL_BUTTON}
                         </Button>
                     </Tooltip>
                     <AlertBox
@@ -122,16 +130,16 @@ const NotesComponent = () => {
                     />
                 </Flex>
             </Flex>
-            <Box p={2} m="5em 0">
+            <Box p={2}>
                 <Box m={1}>
                     <Box>
                         <TableContainer>
-                            <Table variant="simple">
+                            <Table variant='simple'>
                                 <Thead>
                                     <Tr>
-                                        <Th width="90%">Note</Th>
-                                        <Th width="10%">
-                                            <Flex justifyContent="center">Actions</Flex>
+                                        <Th width='90%'>Note</Th>
+                                        <Th width='10%'>
+                                            <Flex justifyContent='center'>Actions</Flex>
                                         </Th>
                                     </Tr>
                                 </Thead>
@@ -141,12 +149,12 @@ const NotesComponent = () => {
                                             <Td>
                                                 <div
                                                     dangerouslySetInnerHTML={{
-                                                        __html: note,
+                                                        __html: note
                                                     }}
                                                 />
                                             </Td>
                                             <Td>
-                                                <Flex justifyContent="center">
+                                                <Flex justifyContent='center'>
                                                     <IconButton
                                                         onClick={() => {
                                                             removeNote(index);

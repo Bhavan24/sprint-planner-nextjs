@@ -1,32 +1,30 @@
 import { ulid } from 'ulid';
-import { ISprintColData } from './../../interfaces/index';
-import {
-    addSprintToStore,
-    getSprintFromStore,
-    getSprintsFromStore,
-    updateSprintDataInStore,
-} from './firebase';
+import { ISprintColData, ISprintPokerColData } from '../../interfaces';
+import { addSprintToStore, getSprintFromStore, getSprintsFromStore, updateSprintDataInStore } from './firebase';
 
 export const addNewSprint = async (data: ISprintColData): Promise<string> => {
     const sprintData = {
         id: ulid(),
         name: data.name,
         createdById: data.createdById,
-        progess: data.progess,
-        retro: data.retro,
+        progress: data.progress,
+        retro: data.retro
     };
     await addSprintToStore(sprintData.id, sprintData);
     return sprintData.id;
 };
 
 export const getSprints = async () => {
-    const result = await getSprintsFromStore();
-    return result;
+    return await getSprintsFromStore();
 };
 
 export const getSprint = async (sprintId: string) => {
-    const result = await getSprintFromStore(sprintId);
-    return result;
+    return await getSprintFromStore(sprintId);
+};
+
+export const getSprintPokerDetails = async (sprintId: string) => {
+    const result = await getSprint(sprintId);
+    return result?.poker as ISprintPokerColData[];
 };
 
 export const updateSprintData = async (sprintId: string, data: any): Promise<boolean> => {

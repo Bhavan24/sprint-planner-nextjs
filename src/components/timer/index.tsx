@@ -56,6 +56,7 @@ const TimerComponent = () => {
                 title: 'Time Limit Reached!!!',
                 status: 'warning',
                 isClosable: true,
+                position: 'bottom-left',
             });
         }
         return () => clearInterval(interval);

@@ -1,8 +1,7 @@
-import { IconProps } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import type { NextComponentType, NextPageContext } from 'next';
 import type { NextRouter } from 'next/router';
-import { MouseEventHandler, ReactNode, RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 
 export interface AppRenderProps {
     pageProps: object;
@@ -26,43 +25,8 @@ export interface AuthenticationLayoutProps {
     title?: string;
 }
 
-export interface IconPropsExtended extends IconProps {
-    size: number;
-    style: {};
-}
-
-interface AvatarProps {
-    name: string;
-    src: string;
-}
-
-export interface HeaderProps {
-    avatar: AvatarProps;
-    logOut: MouseEventHandler<HTMLButtonElement>;
-}
-
 export interface IndexProps {
     cookies?: string;
-}
-
-export interface BasePageProps {
-    cookies?: string;
-    children?: ReactNode;
-    title: string;
-}
-
-export interface SprintDetailsProps {
-    id: string;
-    isNew: boolean;
-    imageUrl: string;
-    imageAlt: string;
-    beds: number;
-    baths: number;
-    title: string;
-    formattedPrice: string;
-    reviewCount: number;
-    rating: number;
-    description: string;
 }
 
 export interface INewSession {
@@ -71,12 +35,15 @@ export interface INewSession {
     userName: string;
     userId: string;
     createdAt: Date;
+    sprintId: string;
+    isSpectator: boolean;
 }
 
 export interface IPlayer {
     name: string;
     id: string;
     status: string;
+    isSpectator: boolean;
     value?: number;
     emoji?: string;
 }
@@ -96,6 +63,8 @@ export interface IGame {
     createdById: string;
     createdAt: Date;
     updatedAt?: Date;
+    sprintId: string;
+    issueId?: string;
 }
 
 export interface ICardPickerProps {
@@ -143,23 +112,6 @@ export interface INewRetroItemProps {
     refresh: boolean;
 }
 
-export interface INotesEditorProps {
-    value: string;
-    onChange: (value: string) => void;
-}
-
-export interface IAlertBoxProps {
-    isOpen: boolean;
-    onOpen: () => void;
-    onClose: () => void;
-    cancelRef: RefObject<FocusableElement>;
-    onAction: MouseEventHandler<HTMLButtonElement>;
-    btnText: string;
-    btnColor: string;
-    title: string;
-    body?: string;
-}
-
 export interface ISaveSprintBoxProps {
     isOpen: boolean;
     onOpen: () => void;
@@ -168,6 +120,26 @@ export interface ISaveSprintBoxProps {
     finalRef: RefObject<FocusableElement>;
     title: string;
     body?: string;
+}
+
+export interface ISavePokerSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    initialRef: RefObject<FocusableElement>;
+    finalRef: RefObject<FocusableElement>;
+    title: string;
+    body?: string;
+    game: IGame;
+}
+
+export interface ISSettingsPokerControllerSprintBoxProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    title: string;
+    body?: string;
+    gameId: string;
 }
 
 export interface IEditSprintBoxProps {
@@ -185,7 +157,7 @@ export interface ISprintColData {
     id?: string;
     name: string;
     createdById: string;
-    progess: {
+    progress: {
         open: number;
         reopen: number;
         inprogress: number;
@@ -206,6 +178,7 @@ export interface ISprintPokerColData {
     title: string;
     desc: string;
     link: string;
+    assignee: string;
     points: number;
 }
 
@@ -225,4 +198,27 @@ export interface ISprintDetailsBoxProps {
 
 export interface ISprintDetailsItemProps {
     data: ISprintColData;
+}
+
+export interface ISprintEngineerPointsProps {
+    sprintId: string;
+}
+
+export interface IAssigneeDetails {
+    name: string;
+    point: number;
+}
+
+export interface ICommonUser {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+}
+
+export interface IJiraIssue {
+    issueKey: string;
+    priority: string;
+    summary: string;
+    description: string;
 }

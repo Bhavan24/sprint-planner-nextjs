@@ -1,7 +1,11 @@
 import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
     Box,
     Button,
-    Divider,
     Flex,
     Modal,
     ModalBody,
@@ -21,7 +25,7 @@ import {
     Thead,
     Tr,
     useDisclosure,
-    useToast,
+    useToast
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { useRouter } from 'next/router';
@@ -29,16 +33,15 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BiEdit } from 'react-icons/bi';
 import { auth as authCofig } from '../../../firebase/config';
-import {
-    ProgressDetails,
-    RetrospectiveDetails,
-    StoryPointsDetails,
-} from '../../components/sprints/sprint-items';
 import { IEditSprintBoxProps, ISprintColData } from '../../interfaces';
 import { getSprint, updateSprintData } from '../../services/sprint/sprints';
 import { Chakra } from '../../theme/chakra-theme';
 import { getIssues } from '../../utils/sprint-util';
 import { Loading } from '../loading';
+import { StoryPointsEngineerDetails } from './assignee-details';
+import { ProgressDetails } from './progress-details';
+import { RetrospectiveDetails } from './retrospective-details';
+import { StoryPointsDetails } from './stroy-points-details';
 
 const EditSprint = (props: IEditSprintBoxProps) => {
     // user
@@ -46,7 +49,7 @@ const EditSprint = (props: IEditSprintBoxProps) => {
     // toast
     const toast = useToast();
     // issues
-    const issues = getIssues(props.sprint.progess);
+    const issues = getIssues(props.sprint.progress);
     // form
     const [inputs, setInputs] = useState({
         open: issues[0].value,
@@ -55,13 +58,15 @@ const EditSprint = (props: IEditSprintBoxProps) => {
         prcreated: issues[3].value,
         prmerged: issues[4].value,
         inverification: issues[5].value,
-        resolved: issues[6].value,
+        resolved: issues[6].value
     });
 
     const handleChange = (event: any) => {
         const name = event.target.name;
         const value = Number(event.target.value);
-        setInputs(values => ({ ...values, [name]: value }));
+        setInputs(values => (
+            { ...values, [name]: value }
+        ));
     };
 
     const handleSubmit = async () => {
@@ -75,40 +80,42 @@ const EditSprint = (props: IEditSprintBoxProps) => {
             inputs.resolved &&
             user
         ) {
-            const progess = {
+            const progress = {
                 open: inputs.open,
                 reopen: inputs.reopen,
                 inprogress: inputs.inprogress,
                 prcreated: inputs.prcreated,
                 prmerged: inputs.prmerged,
                 inverification: inputs.inverification,
-                resolved: inputs.resolved,
+                resolved: inputs.resolved
             };
             // update details
-            console.log(progess);
+            console.log(progress);
             const done =
                 props.sprint.id &&
-                progess &&
+                progress &&
                 updateSprintData(props.sprint.id, {
-                    progess: progess,
+                    progress: progress
                 });
             props.onClose();
             done &&
-                toast({
-                    title: 'Updated Successfully!!!',
-                    status: 'success',
-                    isClosable: true,
-                });
+            toast({
+                title: 'Updated Successfully!!!',
+                status: 'success',
+                isClosable: true,
+                position: 'bottom-left'
+            });
             done &&
-                // TODO: temporary sollution
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
+            // TODO: temporary sollution
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } else {
             toast({
                 title: 'Please fill all fields !!!',
                 status: 'error',
                 isClosable: true,
+                position: 'bottom-left'
             });
         }
     };
@@ -126,10 +133,10 @@ const EditSprint = (props: IEditSprintBoxProps) => {
                     <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <Flex justifyContent="center">
-                            <Box maxW="25em">
+                        <Flex justifyContent='center'>
+                            <Box maxW='25em'>
                                 <TableContainer>
-                                    <Table variant="striped">
+                                    <Table variant='striped'>
                                         <Thead>
                                             <Tr>
                                                 <Th>Status</Th>
@@ -160,7 +167,7 @@ const EditSprint = (props: IEditSprintBoxProps) => {
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                        <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
                             Save
                         </Button>
                         <Button onClick={props.onClose}>Cancel</Button>
@@ -191,6 +198,7 @@ const SprintDetailComponent = () => {
     useEffect(() => {
         if (!router.isReady) return;
         const { id } = router.query;
+
         async function fetchData(id: string) {
             setIsLoading(true);
             getSprint(id)
@@ -202,6 +210,7 @@ const SprintDetailComponent = () => {
                     console.log('err: ', err);
                 });
         }
+
         id && fetchData(id.toString());
         setIsLoading(false);
     }, [router.isReady]);
@@ -218,8 +227,15 @@ const SprintDetailComponent = () => {
         <>
             {sprint ? (
                 <>
-                    <Flex justifyContent="center" alignItems="center">
-                        <Text textAlign="center"> {sprint?.name}</Text>
+                    <Flex
+                        justifyContent='center'
+                        alignItems='center'
+                        flexDirection='column'
+                        m={5}
+                    >
+                        <Text fontSize='5xl' textAlign='center'>
+                            {sprint?.name}
+                        </Text>
                         {isEditor && (
                             <>
                                 <Button m={2} rightIcon={<BiEdit />} onClick={onOpen}>
@@ -237,15 +253,65 @@ const SprintDetailComponent = () => {
                             </>
                         )}
                     </Flex>
-                    <Divider m={5} />
-                    <ProgressDetails data={sprint} />
-                    <Divider m={5} />
-                    <RetrospectiveDetails data={sprint} />
-                    <Divider m={5} />
-                    <StoryPointsDetails data={sprint} />
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex='1' textAlign='left'>
+                                        <Text fontSize='3xl'>Sprint Progress</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <ProgressDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex='1' textAlign='left'>
+                                        <Text fontSize='3xl'>Retrospective Outcomes</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <RetrospectiveDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex='1' textAlign='left'>
+                                        <Text fontSize='3xl'>Story Details</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                <StoryPointsDetails data={sprint} />
+                            </AccordionPanel>
+                        </AccordionItem>
+                        <AccordionItem>
+                            <h1>
+                                <AccordionButton>
+                                    <Box flex='1' textAlign='left'>
+                                        <Text fontSize='3xl'>Assignee Details</Text>
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h1>
+                            <AccordionPanel pb={4}>
+                                {sprint.id && (
+                                    <StoryPointsEngineerDetails sprintId={sprint.id} />
+                                )}
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
                 </>
             ) : (
-                <Text textAlign="center">No Details Found</Text>
+                <Text textAlign='center'>No Details Found</Text>
             )}
         </>
     );

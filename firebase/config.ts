@@ -1,16 +1,16 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyD7qVgCUIBGO3oCNCgWEeLIq0hqk11tKRU',
-    authDomain: 'sprint-planner-ab5df.firebaseapp.com',
-    databaseURL: 'https://sprint-planner-ab5df-default-rtdb.firebaseio.com',
-    projectId: 'sprint-planner-ab5df',
-    storageBucket: 'sprint-planner-ab5df.appspot.com',
-    messagingSenderId: '476682090893',
-    appId: '1:476682090893:web:85eb313f3cda369f3425c4',
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

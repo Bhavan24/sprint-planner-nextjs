@@ -4,6 +4,7 @@ import {
     FormLabel,
     Input,
     Stack,
+    Switch,
     useColorModeValue,
     useToast,
 } from '@chakra-ui/react';
@@ -11,8 +12,10 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../../firebase/config';
-import { getGame } from '../../../services/poker/games';
-import { addPlayerToGame, isCurrentPlayerInGame } from '../../../services/poker/players';
+import {
+    addPlayerToGame,
+    isCurrentPlayerIdInGame,
+} from '../../../services/poker/players';
 
 const JoinSession = () => {
     // router
@@ -21,6 +24,7 @@ const JoinSession = () => {
     const [user] = useAuthState(auth);
     // states
     const [sessionCode, setSessionCode] = useState('');
+    const [isSpectator, setSpectator] = useState(false);
     // toast
     const toast = useToast();
 
@@ -31,12 +35,9 @@ const JoinSession = () => {
     }, [router.isReady]);
 
     async function fetchData() {
-        if (sessionCode) {
-            if (await getGame(sessionCode)) {
-                if (isCurrentPlayerInGame(sessionCode)) {
-                    router.push(`/sprint-poker/${sessionCode}`);
-                    return true;
-                }
+        if (sessionCode && user) {
+            if (await isCurrentPlayerIdInGame(sessionCode, user.uid)) {
+                return true;
             }
         }
         return false;
@@ -53,12 +54,16 @@ const JoinSession = () => {
 
     const joinSession = async () => {
         fetchData().then(async isPlayer => {
-            if (!isPlayer) {
+            if (isPlayer) {
+                router.push(`/sprint-poker/${sessionCode}`);
+            } else {
                 if (sessionCode) {
                     const res = user
                         ? await addPlayerToGame(
                               sessionCode,
-                              user.displayName || user.email || ''
+                              user.uid,
+                              user.displayName || user.email || '',
+                              isSpectator
                           )
                         : null;
                     res && router.push(`/sprint-poker/${sessionCode}`);
@@ -67,6 +72,7 @@ const JoinSession = () => {
                         title: 'Please fill all fields !!!',
                         status: 'error',
                         isClosable: true,
+                        position: 'bottom-left',
                     });
                 }
             }
@@ -84,6 +90,18 @@ const JoinSession = () => {
                         placeholder="Room Code"
                         onChange={handleSessionCodeChange}
                     />
+                </FormControl>
+                <FormControl display="flex" alignItems="center">
+                    <Switch
+                        id="switch-spectator"
+                        mr={5}
+                        onChange={() => {
+                            setSpectator(!isSpectator);
+                        }}
+                    />
+                    <FormLabel htmlFor="switch-spectator" mb="0">
+                        Join as spectator
+                    </FormLabel>
                 </FormControl>
             </Stack>
             <Button

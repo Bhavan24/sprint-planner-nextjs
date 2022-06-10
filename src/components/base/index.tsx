@@ -1,52 +1,41 @@
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+// React imports
 import { useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, firestore } from '../../../firebase/config';
-import { BasePageProps } from '../../interfaces';
+// Chakra-UI imports
+import { Chakra } from '../../theme/chakra-theme';
+// Component imports
 import { DashboardLayout } from '../../layouts/dashboard';
 import LoginPage from '../../pages/auth';
-import { Chakra } from '../../theme/chakra-theme';
 import { Loading } from '../loading';
+// Firebase imports
+import { auth } from '../../../firebase/config';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { loginToFirebase } from '../../services/user/users';
+// Type imports
+import { BasePageProps } from './types';
+
 
 const BasePage = ({ cookies, children, title }: BasePageProps) => {
     const [user, loading] = useAuthState(auth);
 
     useEffect(() => {
         if (user) {
-            const c = collection(firestore, 'users');
-            setDoc(
-                doc(c, user.uid),
-                {
-                    email: user.email,
-                    lastSeen: serverTimestamp(),
-                    photoURL: user.photoURL,
-                },
-                { merge: true } // update fields if exists
-            );
+            loginToFirebase(user);
         }
     }, [user]);
 
-    if (loading) {
-        return (
-            <Chakra cookies={cookies}>
-                <Loading />
-            </Chakra>
-        );
-    }
-
-    if (!user) {
-        return (
-            <Chakra cookies={cookies}>
-                <LoginPage />
-            </Chakra>
-        );
-    } else {
-        return (
-            <Chakra cookies={cookies}>
-                <DashboardLayout title={title}>{children}</DashboardLayout>
-            </Chakra>
-        );
-    }
+    return (
+        <Chakra cookies={cookies}>
+            {loading && <Loading />}
+            {!loading &&
+                (
+                    user ? (
+                        <DashboardLayout title={title}>{children}</DashboardLayout>
+                    ) : (
+                        <LoginPage />
+                    )
+                )}
+        </Chakra>
+    );
 };
 
 export default BasePage;

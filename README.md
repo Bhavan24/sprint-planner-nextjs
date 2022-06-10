@@ -79,6 +79,8 @@ this, for example, in your `test` scripts.
 Builds the app for production to the `build` folder.
 Make sure you have correct configuration in .env file
 
-### `firebase target:apply hosting sprint-planner-dev`
+### `firebase target:apply hosting kaya-sprint-planner kaya-sprint-planner`
 
-### `firebase deploy --only hosting:sprint-planner-dev`
+### `firebase deploy --only hosting:kaya-sprint-planner`
+
+kaya-sprint-planner.web.app

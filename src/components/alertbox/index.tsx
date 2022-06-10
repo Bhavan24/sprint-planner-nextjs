@@ -1,3 +1,6 @@
+// React imports
+import React from 'react';
+// Chakra-UI imports
 import {
     AlertDialog,
     AlertDialogBody,
@@ -5,32 +8,39 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogOverlay,
-    Button,
+    Button
 } from '@chakra-ui/react';
-import { IAlertBoxProps } from '../../interfaces';
+// Type imports
+import { IAlertBoxProps } from './types';
 
-const AlertBox = (props: IAlertBoxProps) => {
+
+const AlertBox: React.FC<IAlertBoxProps> = ({
+    isOpen,
+    onClose,
+    cancelRef,
+    title,
+    body,
+    btnText,
+    btnColor,
+    onAction
+}) => {
     return (
         <>
             <AlertDialog
-                isOpen={props.isOpen}
-                onClose={props.onClose}
-                leastDestructiveRef={props.cancelRef}
+                isOpen={isOpen}
+                onClose={onClose}
+                leastDestructiveRef={cancelRef}
             >
                 <AlertDialogOverlay>
                     <AlertDialogContent>
-                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            {props.title}
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            {title}
                         </AlertDialogHeader>
-                        <AlertDialogBody>{props.body}</AlertDialogBody>
+                        <AlertDialogBody>{body}</AlertDialogBody>
                         <AlertDialogFooter>
-                            <Button onClick={props.onClose}>Cancel</Button>
-                            <Button
-                                colorScheme={props.btnColor}
-                                onClick={props.onAction}
-                                ml={3}
-                            >
-                                {props.btnText}
+                            <Button onClick={onClose}>Cancel</Button>
+                            <Button colorScheme={btnColor} onClick={onAction} ml={3}>
+                                {btnText}
                             </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -41,22 +51,3 @@ const AlertBox = (props: IAlertBoxProps) => {
 };
 
 export default AlertBox;
-
-/*
-import { FocusableElement } from '@chakra-ui/utils';
-
-const { isOpen, onOpen, onClose } = useDisclosure();
-const cancelRef = useRef() as RefObject<FocusableElement>;
-<AlertBox
-    isOpen={isOpen}
-    onOpen={onOpen}
-    onClose={onClose}
-    cancelRef={cancelRef}
-    onAction={resetItems}
-    btnText={'Delete'}
-    btnColor={'red'}
-    title={'Clear All Items'}
-    body={`Are you sure? You can't undo this action afterwards.`}
-/>
-
-*/

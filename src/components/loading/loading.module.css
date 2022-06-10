@@ -1,0 +1,13 @@
+.loadingBox {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-top: 23%;
+}
+
+@media screen and (max-width: 580px) {
+    .loadingBox {
+        margin-top: 50% !important;
+    }
+}

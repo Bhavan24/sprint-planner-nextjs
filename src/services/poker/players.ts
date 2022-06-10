@@ -73,9 +73,23 @@ export const isCurrentPlayerInGame = (gameId: string): boolean => {
     return isGameInPlayerCache(gameId);
 };
 
+export const isCurrentPlayerIdInGame = async (
+    gameId: string,
+    playerId: string
+): Promise<boolean> => {
+    if (isGameInPlayerCache(gameId)) {
+        return true;
+    } else {
+        const player = await getPlayerFromStore(gameId, playerId);
+        return player ? true : false;
+    }
+};
+
 export const addPlayerToGame = async (
     gameId: string,
-    playerName: string
+    playerId: string,
+    playerName: string,
+    isSpectator: boolean
 ): Promise<boolean> => {
     const joiningGame = await getGameFromStore(gameId);
 
@@ -83,7 +97,12 @@ export const addPlayerToGame = async (
         console.log('Game not found');
         return false;
     }
-    const newPlayer = { name: playerName, id: ulid(), status: GAME_STATUS.NOT_STARTED };
+    const newPlayer = {
+        name: playerName,
+        id: playerId,
+        isSpectator: isSpectator,
+        status: GAME_STATUS.NOT_STARTED,
+    };
 
     updatePlayerGames(gameId, newPlayer.id);
     await addPlayerToGameInStore(gameId, newPlayer);

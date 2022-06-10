@@ -1,8 +1,4 @@
-import {
-    ChakraProvider,
-    createCookieStorageManager,
-    localStorageManager,
-} from '@chakra-ui/react';
+import { ChakraProvider, createCookieStorageManager, localStorageManager } from '@chakra-ui/react';
 import { GetServerSidePropsContext } from 'next';
 import { ChakraProps } from '../interfaces';
 
@@ -25,7 +21,7 @@ export function getServerSideProps({
 }: GetServerSidePropsContext): ServerSideProps<{ cookies?: string }> {
     return {
         props: {
-            cookies: req.headers.cookie ?? '',
-        },
+            cookies: req.headers.cookie ?? ''
+        }
     };
 }

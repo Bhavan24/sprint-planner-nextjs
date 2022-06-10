@@ -1,15 +1,7 @@
-import {
-    collection,
-    doc,
-    getDoc,
-    getDocs,
-    query,
-    setDoc,
-    updateDoc,
-} from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { ISprintColData } from '../../interfaces';
-import { FB_DB_SPRINTS } from './../../constants/index';
+import { FB_DB_SPRINTS } from '../../constants';
 
 // Firebase
 export const addSprintToStore = async (id: string, data: any) => {
