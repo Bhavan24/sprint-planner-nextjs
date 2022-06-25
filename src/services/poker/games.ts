@@ -1,5 +1,5 @@
-import { ulid } from 'ulid';
 import { GAME_STATUS } from '../../constants';
+import { getUniqueId } from '../../utils/sprint-util';
 import { INewSession, IPlayer } from './../../interfaces/index';
 import {
     addGameToStore,
@@ -20,7 +20,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
         status: GAME_STATUS.NOT_STARTED,
     };
     const gameData = {
-        id: ulid(),
+        id: getUniqueId(),
         name: newSession.name,
         gameType: newSession.gameType,
         createdAt: newSession.createdAt,
