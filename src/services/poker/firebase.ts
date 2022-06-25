@@ -6,6 +6,7 @@ import {
     query,
     setDoc,
     updateDoc,
+    orderBy,
 } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { FB_DB_GAMES, FB_DB_PLAYERS } from '../../constants';
@@ -64,6 +65,7 @@ export const streamData = (id: string) => {
     const docRef = doc(firestore, FB_DB_GAMES, id);
     return docRef;
 };
+
 export const streamPlayersFromStore = (id: string) => {
     const colRef = collection(firestore, FB_DB_GAMES, id, FB_DB_PLAYERS);
     return colRef;
@@ -88,4 +90,12 @@ export const updatePlayerInStore = async (gameId: string, player: any) => {
     const docRef = doc(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS, player.id);
     await updateDoc(docRef, player);
     return true;
+};
+
+export const streamAllGames = async () => {
+    const querySnap = query(
+        collection(firestore, FB_DB_GAMES),
+        orderBy('createdAt', 'desc')
+    );
+    return getDocs(querySnap);
 };

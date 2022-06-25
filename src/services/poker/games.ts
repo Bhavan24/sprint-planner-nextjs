@@ -9,6 +9,7 @@ import {
     streamData,
     streamPlayersFromStore,
     updateGameDataInStore,
+    streamAllGames,
 } from './firebase';
 import { resetPlayers, updatePlayerGames } from './players';
 
@@ -46,6 +47,10 @@ export const streamPlayers = (id: string) => {
 
 export const getGame = (id: string) => {
     return getGameFromStore(id);
+};
+
+export const getAllGames = () => {
+    return streamAllGames();
 };
 
 export const updateGame = async (gameId: string, updatedGame: any): Promise<boolean> => {
