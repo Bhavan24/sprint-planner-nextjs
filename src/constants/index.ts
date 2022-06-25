@@ -122,3 +122,5 @@ export const TICKET_STATUS = [
     { name: 'IN VERIFICATION', type: 'inverification' },
     { name: 'RESOLVED', type: 'resolved' }
 ];
+
+export const MAX_STORY_POINTS = 8;
