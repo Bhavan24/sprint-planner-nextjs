@@ -81,11 +81,13 @@ export interface IPokerControllerProps {
 export interface IPlayerCardProps {
     game: IGame;
     player: IPlayer;
+    isAdmin: boolean;
 }
 
 export interface IPokerPlayersProps {
     game: IGame;
     players: IPlayer[];
+    currentPlayerId: string;
 }
 
 export interface ICardConfig {

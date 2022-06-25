@@ -7,6 +7,7 @@ import {
     setDoc,
     updateDoc,
     orderBy,
+    deleteDoc,
 } from 'firebase/firestore';
 import { firestore } from '../../../firebase/config';
 import { FB_DB_GAMES, FB_DB_PLAYERS } from '../../constants';
@@ -98,4 +99,13 @@ export const streamAllGames = async () => {
         orderBy('createdAt', 'desc')
     );
     return getDocs(querySnap);
+};
+
+export const deletePlayerFromStore = async (
+    gameId: string,
+    playerId: any
+): Promise<boolean> => {
+    const docRef = doc(firestore, FB_DB_GAMES, gameId, FB_DB_PLAYERS, playerId);
+    await deleteDoc(docRef);
+    return true;
 };

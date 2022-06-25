@@ -20,7 +20,6 @@ import { Chakra } from '../../theme/chakra-theme';
 import { IGame, IPlayer } from '../../interfaces';
 // Constant imports
 
-
 const SprintPokerGameComponent = () => {
     const router = useRouter();
 
@@ -92,16 +91,20 @@ const SprintPokerGameComponent = () => {
         <>
             {game && players && currentPlayerId ? (
                 <>
-                    <Box textAlign='center' m={5}>
-                        <PokerPlayers game={game} players={players} />
+                    <Box textAlign="center" m={5}>
+                        <PokerPlayers
+                            game={game}
+                            players={players}
+                            currentPlayerId={currentPlayerId}
+                        />
                     </Box>
-                    <Box textAlign='center' m={5}>
+                    <Box textAlign="center" m={5}>
                         <PokerController game={game} currentPlayerId={currentPlayerId} />
                     </Box>
                     {isSpectator ? (
                         <>You are on spectator mode 🧐</>
                     ) : (
-                        <Box textAlign='center' m={5}>
+                        <Box textAlign="center" m={5}>
                             <Box m={2}>{'Choose your card 👇'}</Box>
                             <PokerCardPicker
                                 game={game}
@@ -112,7 +115,7 @@ const SprintPokerGameComponent = () => {
                     )}
                 </>
             ) : (
-                <Text color='red.400'> Game not found!!! </Text>
+                <Text color="red.400"> Game not found!!! </Text>
             )}
         </>
     );
