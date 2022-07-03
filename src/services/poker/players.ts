@@ -1,4 +1,3 @@
-import { ulid } from 'ulid';
 import { GAME_STATUS } from './../../constants/index';
 import { IGame, IPlayer, IPlayerGame } from './../../interfaces';
 import {
@@ -7,6 +6,7 @@ import {
     getPlayerFromStore,
     getPlayersFromStore,
     updatePlayerInStore,
+    deletePlayerFromStore,
 } from './firebase';
 import { updateGameStatus } from './games';
 import {
@@ -121,4 +121,9 @@ export const resetPlayers = async (gameId: string) => {
         };
         await updatePlayerInStore(gameId, updatedPlayer);
     });
+};
+
+export const deletePlayerFromGame = async (gameId: string, playerId: string) => {
+    const player = await deletePlayerFromStore(gameId, playerId);
+    return player ? true : false;
 };

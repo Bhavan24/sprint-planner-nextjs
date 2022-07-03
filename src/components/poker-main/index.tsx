@@ -13,13 +13,13 @@ import {
     TabPanels,
     Tabs,
     useBreakpointValue,
-    useColorModeValue
+    useColorModeValue,
 } from '@chakra-ui/react';
 // Component imports
 import CreateSession from './components/create-session';
 import JoinSession from './components/join-session';
 import SelectSession from './components/select-session';
-
+import OnGoingSessions from './components/ongoing-sessions';
 
 const PokerMainComponent = () => {
     // router
@@ -36,26 +36,26 @@ const PokerMainComponent = () => {
     return (
         <>
             <Container
-                maxW='max-content'
+                maxW="max-content"
                 py={{ base: '12', md: '24' }}
                 px={{ base: '0', sm: '8' }}
             >
-                <Stack spacing='8'>
+                <Stack spacing="8">
                     <Box
                         py={{ base: '0', sm: '8' }}
                         px={{ base: '4', sm: '10' }}
                         bg={useBreakpointValue({ base: 'transparent', sm: 'bg-surface' })}
                         boxShadow={{
                             base: 'none',
-                            sm: useColorModeValue('md', 'md-dark')
+                            sm: useColorModeValue('md', 'md-dark'),
                         }}
                         borderRadius={{ base: 'none', sm: 'xl' }}
                     >
-                        <Stack spacing='5'>
-                            <Stack spacing='4'>
+                        <Stack spacing="5">
+                            <Stack spacing="4">
                                 <Tabs
-                                    variant='soft-rounded'
-                                    colorScheme='green'
+                                    variant="soft-rounded"
+                                    colorScheme="green"
                                     index={tabIndex}
                                 >
                                     <TabList sx={{ justifyContent: 'space-around' }}>
@@ -80,6 +80,13 @@ const PokerMainComponent = () => {
                                         >
                                             Select Session
                                         </Tab>
+                                        <Tab
+                                            onClick={() => {
+                                                setTabIndex(3);
+                                            }}
+                                        >
+                                            Ongoing Sessions
+                                        </Tab>
                                     </TabList>
                                     <TabPanels>
                                         <TabPanel>
@@ -90,6 +97,9 @@ const PokerMainComponent = () => {
                                         </TabPanel>
                                         <TabPanel>
                                             <SelectSession />
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <OnGoingSessions />
                                         </TabPanel>
                                     </TabPanels>
                                 </Tabs>

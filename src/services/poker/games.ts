@@ -1,5 +1,5 @@
-import { ulid } from 'ulid';
 import { GAME_STATUS } from '../../constants';
+import { getUniqueId } from '../../utils/sprint-util';
 import { INewSession, IPlayer } from './../../interfaces/index';
 import {
     addGameToStore,
@@ -9,6 +9,7 @@ import {
     streamData,
     streamPlayersFromStore,
     updateGameDataInStore,
+    streamAllGames,
 } from './firebase';
 import { resetPlayers, updatePlayerGames } from './players';
 
@@ -20,7 +21,7 @@ export const addNewGame = async (newSession: INewSession): Promise<string> => {
         status: GAME_STATUS.NOT_STARTED,
     };
     const gameData = {
-        id: ulid(),
+        id: getUniqueId(),
         name: newSession.name,
         gameType: newSession.gameType,
         createdAt: newSession.createdAt,
@@ -46,6 +47,10 @@ export const streamPlayers = (id: string) => {
 
 export const getGame = (id: string) => {
     return getGameFromStore(id);
+};
+
+export const getAllGames = () => {
+    return streamAllGames();
 };
 
 export const updateGame = async (gameId: string, updatedGame: any): Promise<boolean> => {

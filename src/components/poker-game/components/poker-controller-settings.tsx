@@ -25,7 +25,7 @@ import {
     Th,
     Thead,
     Tr,
-    useToast
+    useToast,
 } from '@chakra-ui/react';
 // Component imports
 import Papa from 'papaparse';
@@ -35,45 +35,47 @@ import { setCurrentJiraIssue } from '../../../services/poker/storage';
 // Type imports
 import { IJiraIssue, ISSettingsPokerControllerSprintBoxProps } from '../../../interfaces';
 
-
 export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxProps) => {
     // toast
     const toast = useToast();
 
     // states
-    const [issueId, setIssueId] = useState('');
     const [csvFile, setCsvFile] = useState('');
     const [jiraIssues, setJiraIssues] = useState<IJiraIssue[]>([]);
 
-    const handleSubmit = () => {
-        updateIssueId(props.gameId, issueId).then(r => console.log(r));
-        props.onClose();
+    const updateIssue = (id: any) => {
+        updateIssueId(props.gameId, id).then(r => console.log(r));
+
         toast({
-            title: 'Issue Updated!!!',
+            title: `${id} Selected!!!`,
             status: 'success',
             isClosable: true,
-            position: 'bottom-left'
+            position: 'bottom-left',
         });
-        setJiraIssue();
+
+        const currentIssue = jiraIssues.find(jiraIssue => jiraIssue.issueKey === id);
+        currentIssue && setCurrentJiraIssue(currentIssue);
+
+        props.onClose();
     };
 
-    const setJiraIssue = () => {
-        const currentIssue = jiraIssues.find(jiraIssue => jiraIssue.issueKey === issueId);
-        currentIssue && setCurrentJiraIssue(currentIssue);
+    const handleChange = (e: any) => {
+        const issueId = e.target.value;
+        issueId && updateIssue(issueId);
     };
 
     const importCsvFile = () => {
         Papa.parse(csvFile, {
             header: true,
             skipEmptyLines: true,
-            complete: function(results: any) {
+            complete: function (results: any) {
                 const currentJiraIssues: IJiraIssue[] = [];
                 results.data.forEach((result: any) => {
                     currentJiraIssues.push({
                         issueKey: result['Issue key'],
                         priority: result['Priority'],
                         summary: result['Summary'],
-                        description: result['Description']
+                        description: result['Description'],
                     });
                 });
                 setJiraIssues(currentJiraIssues);
@@ -81,25 +83,25 @@ export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxPro
                     title: 'Issues Imported!!!',
                     status: 'success',
                     isClosable: true,
-                    position: 'bottom-left'
+                    position: 'bottom-left',
                 });
-            }
+            },
         });
     };
 
     return (
         <>
-            <Modal isOpen={props.isOpen} onClose={props.onClose} size='3xl'>
+            <Modal isOpen={props.isOpen} onClose={props.onClose} size="3xl">
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>{props.title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <Accordion allowToggle>
+                        <Accordion allowToggle defaultIndex={[0]}>
                             <AccordionItem>
                                 <h2>
                                     <AccordionButton>
-                                        <Box flex='1' textAlign='left'>
+                                        <Box flex="1" textAlign="left">
                                             Select Current Jira Issue
                                         </Box>
                                         <AccordionIcon />
@@ -108,26 +110,16 @@ export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxPro
                                 <AccordionPanel pb={4}>
                                     <FormControl isRequired m={1}>
                                         <SelectCurrentIssue
-                                            onChange={(e: any) => {
-                                                setIssueId(e.target.value);
-                                            }}
+                                            onChange={handleChange}
                                             issues={jiraIssues}
                                         />
-                                        <Button
-                                            colorScheme='blue'
-                                            my={2}
-                                            w='inherit'
-                                            onClick={handleSubmit}
-                                        >
-                                            Save
-                                        </Button>
                                     </FormControl>
                                 </AccordionPanel>
                             </AccordionItem>
                             <AccordionItem>
                                 <h2>
                                     <AccordionButton>
-                                        <Box flex='1' textAlign='left'>
+                                        <Box flex="1" textAlign="left">
                                             Import Jira Issues
                                         </Box>
                                         <AccordionIcon />
@@ -136,23 +128,23 @@ export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxPro
                                 <AccordionPanel pb={4}>
                                     <FormControl isRequired m={1}>
                                         <Input
-                                            type='file'
-                                            variant='flushed'
-                                            id='file'
-                                            accept='.csv'
+                                            type="file"
+                                            variant="flushed"
+                                            id="file"
+                                            accept=".csv"
                                             onChange={(event: any) => {
                                                 setCsvFile(event.target.files[0]);
                                             }}
                                             style={{
                                                 display: 'block',
-                                                margin: '10px auto'
+                                                margin: '10px auto',
                                             }}
                                         />
                                         <Button
-                                            colorScheme='blue'
+                                            colorScheme="blue"
                                             mr={3}
                                             onClick={importCsvFile}
-                                            w='inherit'
+                                            w="inherit"
                                             disabled={csvFile === ''}
                                         >
                                             Import
@@ -163,7 +155,7 @@ export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxPro
                             <AccordionItem>
                                 <h2>
                                     <AccordionButton>
-                                        <Box flex='1' textAlign='left'>
+                                        <Box flex="1" textAlign="left">
                                             View Jira Issues
                                         </Box>
                                         <AccordionIcon />
@@ -180,15 +172,18 @@ export const SettingsSprintPoker = (props: ISSettingsPokerControllerSprintBoxPro
                                                 </Tr>
                                             </Thead>
                                             <Tbody>
-                                                {
-                                                    jiraIssues.map((jiraIssue: IJiraIssue, i: number) => (
+                                                {jiraIssues.map(
+                                                    (
+                                                        jiraIssue: IJiraIssue,
+                                                        i: number
+                                                    ) => (
                                                         <Tr key={i}>
                                                             <Td>{jiraIssue.issueKey}</Td>
                                                             <Td>{jiraIssue.summary}</Td>
                                                             <Td>{jiraIssue.priority}</Td>
                                                         </Tr>
-                                                    ))
-                                                }
+                                                    )
+                                                )}
                                             </Tbody>
                                         </Table>
                                     </TableContainer>
