@@ -132,7 +132,7 @@ const PokerController: React.FC<IPokerControllerProps> = props => {
                             lineHeight="tight"
                             noOfLines={1}
                         >
-                            Average : {props.game.average || 0}
+                            Average : {props.game.average.toFixed(2) || 0}
                         </Box>
                         <Box gap="2" p="2">
                             {isModerator(
