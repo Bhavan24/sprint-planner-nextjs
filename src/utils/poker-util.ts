@@ -21,7 +21,7 @@ export const getCards = (game: IGame | undefined) => {
     for (let i = 0; i < array.values.length; i++) {
         cards.push({
             value: array.values[i],
-            displayValue: array.displayValues[i]
+            displayValue: array.displayValues[i],
         });
     }
 
@@ -41,15 +41,19 @@ function mapToProp(data: any) {
 export const getAssigneeDetails = (tickets: ISprintPokerColData[]) => {
     const tempList: IAssigneeDetails[] = [];
     const mainList: IAssigneeDetails[] = [];
-    tickets.forEach((ticket: ISprintPokerColData) => {
-        tempList.push({ name: ticket.assignee, point: ticket.points });
-    });
+
+    if (tickets) {
+        tickets.forEach((ticket: ISprintPokerColData) => {
+            tempList.push({ name: ticket.assignee, point: ticket.points });
+        });
+    }
+
     if (tempList) {
         const details = mapToProp(tempList);
         for (const key of Object.keys(details)) {
             mainList.push({
                 name: key,
-                point: details[key]
+                point: details[key],
             });
         }
     }
